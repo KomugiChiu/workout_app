@@ -12,15 +12,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komugi.workout.R
+import com.komugi.workout.ui.theme.AppTheme
+import com.komugi.workout.ui.theme.LocalAppTheme
 
 /**
  * 只取「最主要的訓練部位」：從部位文字中找出最早出現的關鍵字。
@@ -122,21 +126,27 @@ private fun muscleGroupView(group: MuscleGroup): String? = when (group) {
     else -> null
 }
 
+/**
+ * 依目前主題選擇對應高亮色的圖檔：森林綠／海洋藍／暖陽橘。
+ * 圖檔命名規則：muscle_<部位>（森林綠）、_ocean、_sunset。
+ */
+@Composable
 @DrawableRes
-private fun muscleGroupDrawable(group: MuscleGroup): Int = when (group) {
-    MuscleGroup.CHEST -> R.drawable.muscle_chest
-    MuscleGroup.BACK -> R.drawable.muscle_back
-    MuscleGroup.SHOULDERS -> R.drawable.muscle_shoulders
-    MuscleGroup.BICEPS -> R.drawable.muscle_biceps
-    MuscleGroup.TRICEPS -> R.drawable.muscle_triceps
-    MuscleGroup.FOREARMS -> R.drawable.muscle_forearms
-    MuscleGroup.ARMS -> R.drawable.muscle_arms
-    MuscleGroup.CORE -> R.drawable.muscle_core
-    MuscleGroup.GLUTES -> R.drawable.muscle_glutes
-    MuscleGroup.QUADS -> R.drawable.muscle_quads
-    MuscleGroup.HAMSTRINGS -> R.drawable.muscle_hamstrings
-    MuscleGroup.CALVES -> R.drawable.muscle_calves
-    MuscleGroup.FULL_BODY -> R.drawable.muscle_full_body
+private fun muscleGroupDrawable(group: MuscleGroup): Int {
+    val context = LocalContext.current
+    val theme = LocalAppTheme.current
+    val suffix = when (theme) {
+        AppTheme.FOREST -> ""
+        AppTheme.OCEAN -> "_ocean"
+        AppTheme.SUNSET -> "_sunset"
+    }
+    val resourceName = "muscle_${group.name.lowercase()}$suffix"
+    return remember(resourceName) {
+        context.resources
+            .getIdentifier(resourceName, "drawable", context.packageName)
+            .takeIf { it != 0 }
+            ?: R.drawable.muscle_full_body
+    }
 }
 
 /**

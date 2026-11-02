@@ -10,6 +10,8 @@ import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +33,9 @@ enum class AppTheme(
             entries.firstOrNull { it.id == id } ?: FOREST
     }
 }
+
+/** 目前套用的主題，供需要依主題切換圖檔的元件使用。 */
+val LocalAppTheme = staticCompositionLocalOf { AppTheme.FOREST }
 
 enum class ThemeMode(val id: String, val label: String) {
     SYSTEM("system", "跟隨系統"),
@@ -215,9 +220,11 @@ fun KomugiTheme(
     darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colorScheme = appColorScheme(appTheme, darkTheme),
-        typography = Typography(),
-        content = content
-    )
+    CompositionLocalProvider(LocalAppTheme provides appTheme) {
+        MaterialTheme(
+            colorScheme = appColorScheme(appTheme, darkTheme),
+            typography = Typography(),
+            content = content
+        )
+    }
 }

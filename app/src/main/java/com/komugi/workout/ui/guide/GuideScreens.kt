@@ -335,7 +335,7 @@ private fun MuscleAtlasScreen(
     ) {
         item {
             Text(
-                "局部圖示一覽（綠＝目標肌群，灰＝身體部位）",
+                "局部圖示一覽（主題色＝目標肌群，灰＝身體部位）",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
