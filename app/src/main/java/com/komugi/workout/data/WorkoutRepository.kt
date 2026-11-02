@@ -133,16 +133,21 @@ class WorkoutRepository(
     suspend fun exerciseByName(name: String): ExerciseEntity? =
         dao.exerciseByName(name.trim())
 
-    suspend fun rememberExercise(name: String) {
+    suspend fun rememberExercise(name: String, parts: String? = null) {
         val clean = name.trim()
-        if (clean.isNotEmpty() && dao.exerciseIdByName(clean) == null) {
+        if (clean.isEmpty()) return
+        val existing = dao.exerciseByName(clean)
+        if (existing == null) {
             dao.insertExercise(
                 ExerciseEntity(
                     name = clean,
+                    parts = parts,
                     isCustom = true,
                     createdAt = System.currentTimeMillis()
                 )
             )
+        } else if (existing.parts == null && parts != null) {
+            dao.updateExercise(existing.copy(parts = parts))
         }
     }
 
@@ -206,6 +211,26 @@ class WorkoutRepository(
 
     suspend fun createEmptySession(epochDay: Long): Long =
         dao.insertSession(SessionEntity(dateEpochDay = epochDay))
+
+    /**
+     * 把整筆訓練（動作＋組數）複製到指定日期。
+     */
+    suspend fun copySessionToDate(sessionId: Long, targetEpochDay: Long): Long {
+        val source = dao.sessionById(sessionId) ?: return -1L
+        val sourceEntries = dao.entriesOf(sessionId)
+        return db.withTransaction {
+            val newSessionId = dao.insertSession(
+                source.copy(id = 0, dateEpochDay = targetEpochDay)
+            )
+            sourceEntries.forEach { entry ->
+                val newEntryId = dao.insertEntry(entry.copy(id = 0, sessionId = newSessionId))
+                dao.setsOf(entry.id).forEach { set ->
+                    dao.insertSet(set.copy(id = 0, entryId = newEntryId))
+                }
+            }
+            newSessionId
+        }
+    }
 
     suspend fun updateDate(session: SessionEntity, epochDay: Long) =
         dao.updateSession(session.copy(dateEpochDay = epochDay))

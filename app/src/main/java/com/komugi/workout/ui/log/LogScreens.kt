@@ -1,5 +1,6 @@
 package com.komugi.workout.ui.log
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -65,10 +66,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.EntryEntity
 import com.komugi.workout.data.EntryUi
+import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.SessionSummary
 import com.komugi.workout.data.SetEntity
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.MuscleMap
+import com.komugi.workout.ui.components.muscleGroupLabel
 import com.komugi.workout.ui.components.primaryMuscleGroup
 import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.formatEpochDay
@@ -86,12 +90,14 @@ fun LogListScreen(
 ) {
     val summaries by repository.observeSummaries().collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     var selectedEpochDay by remember { mutableStateOf(LocalDate.now().toEpochDay()) }
     val daysWithRecords = remember(summaries) {
         summaries.map { it.session.dateEpochDay }.toSet()
     }
     val daySessions = summaries.filter { it.session.dateEpochDay == selectedEpochDay }
     var pendingDelete by remember { mutableStateOf<SessionSummary?>(null) }
+    var copySource by remember { mutableStateOf<SessionSummary?>(null) }
 
     Scaffold(
         topBar = {
@@ -183,6 +189,9 @@ fun LogListScreen(
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
+                                TextButton(onClick = { copySource = summary }) {
+                                    Text("複製")
+                                }
                                 IconButton(onClick = { pendingDelete = summary }) {
                                     Icon(Icons.Filled.Delete, contentDescription = "刪除這筆")
                                 }
@@ -214,6 +223,24 @@ fun LogListScreen(
             }
         )
     }
+
+    copySource?.let { source ->
+        SessionCopyDatePicker(
+            initialEpochDay = LocalDate.now().toEpochDay(),
+            onDismiss = { copySource = null },
+            onConfirm = { targetDay ->
+                scope.launch {
+                    repository.copySessionToDate(source.session.id, targetDay)
+                    Toast.makeText(
+                        context,
+                        "已複製到 ${formatEpochDay(targetDay)}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                copySource = null
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -228,10 +255,9 @@ fun LogDetailScreen(
     val context = LocalContext.current
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
     val exercises by remember { repository.observeExercises() }.collectAsState(initial = emptyList())
-    val library = exercises.map { it.name }
-    val partsMap = exercises.mapNotNull { e -> e.parts?.let { e.name to it } }.toMap()
 
     var showDatePicker by remember { mutableStateOf(false) }
+    var showCopyPicker by remember { mutableStateOf(false) }
     var showAddExercise by remember { mutableStateOf(false) }
     var showDeleteSession by remember { mutableStateOf(false) }
     var sheetEntry by remember { mutableStateOf<EntryUi?>(null) }
@@ -249,6 +275,9 @@ fun LogDetailScreen(
                     }
                 },
                 actions = {
+                    TextButton(onClick = { showCopyPicker = true }) {
+                        Text("複製")
+                    }
                     IconButton(onClick = { showDatePicker = true }) {
                         Icon(Icons.Filled.DateRange, contentDescription = "修改日期")
                     }
@@ -372,6 +401,24 @@ fun LogDetailScreen(
         )
     }
 
+    if (showCopyPicker && session != null) {
+        SessionCopyDatePicker(
+            initialEpochDay = LocalDate.now().toEpochDay(),
+            onDismiss = { showCopyPicker = false },
+            onConfirm = { targetDay ->
+                showCopyPicker = false
+                scope.launch {
+                    repository.copySessionToDate(session.id, targetDay)
+                    Toast.makeText(
+                        context,
+                        "已複製到 ${formatEpochDay(targetDay)}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
+    }
+
     sheetEntry?.let { entryUi ->
         AddRecordSheet(
             entryName = entryUi.entry.name,
@@ -432,12 +479,11 @@ fun LogDetailScreen(
 
     if (showAddExercise) {
         AddExerciseDialog(
-            library = library,
-            partsMap = partsMap,
+            exercises = exercises,
             onDismiss = { showAddExercise = false },
             onConfirm = { name, equipment, targetParts ->
                 scope.launch {
-                    repository.rememberExercise(name)
+                    repository.rememberExercise(name, targetParts)
                     val exercise = repository.exerciseByName(name)
                     repository.addEntry(
                         sessionId = sessionId,
@@ -985,9 +1031,37 @@ private fun SetEditDialog(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+private fun SessionCopyDatePicker(
+    initialEpochDay: Long,
+    onDismiss: () -> Unit,
+    onConfirm: (Long) -> Unit
+) {
+    val state = rememberDatePickerState(
+        initialSelectedDateMillis = initialEpochDay * 86_400_000L
+    )
+    DatePickerDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    state.selectedDateMillis?.let { millis ->
+                        onConfirm(millis / 86_400_000L)
+                    } ?: onDismiss()
+                }
+            ) { Text("複製到這天") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("取消") }
+        }
+    ) {
+        DatePicker(state = state)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 private fun AddExerciseDialog(
-    library: List<String>,
-    partsMap: Map<String, String>,
+    exercises: List<ExerciseEntity>,
     onDismiss: () -> Unit,
     onConfirm: (String, String?, String?) -> Unit
 ) {
@@ -995,15 +1069,20 @@ private fun AddExerciseDialog(
     var equipment by remember { mutableStateOf("") }
     var parts by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
+    var partFilter by remember { mutableStateOf<MuscleGroup?>(null) }
+    var partExpanded by remember { mutableStateOf(false) }
 
-    val filtered = remember(name, library) {
-        if (name.isBlank()) {
-            library
-        } else {
-            library.filter { it.contains(name.trim(), ignoreCase = true) }
-        }
+    val names = remember(exercises) { exercises.map { it.name }.distinct() }
+    val partsMap = remember(exercises) {
+        exercises.mapNotNull { exercise -> exercise.parts?.let { exercise.name to it } }.toMap()
     }
-    val isNew = name.isNotBlank() && library.none { it.equals(name.trim(), ignoreCase = true) }
+    val filteredNames = remember(name, partFilter, exercises) {
+        exercises.filter { exercise ->
+            (name.isBlank() || exercise.name.contains(name.trim(), ignoreCase = true)) &&
+                (partFilter == null || primaryMuscleGroup(exercise.parts) == partFilter)
+        }.map { it.name }.distinct()
+    }
+    val isNew = name.isNotBlank() && names.none { it.equals(name.trim(), ignoreCase = true) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1033,10 +1112,10 @@ private fun AddExerciseDialog(
                             .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
-                        expanded = expanded && filtered.isNotEmpty(),
+                        expanded = expanded && filteredNames.isNotEmpty(),
                         onDismissRequest = { expanded = false }
                     ) {
-                        filtered.take(20).forEach { item ->
+                        filteredNames.take(20).forEach { item ->
                             DropdownMenuItem(
                                 text = { Text(item) },
                                 onClick = {
@@ -1048,6 +1127,57 @@ private fun AddExerciseDialog(
                         }
                     }
                 }
+
+                Spacer(Modifier.height(8.dp))
+                ExposedDropdownMenuBox(
+                    expanded = partExpanded,
+                    onExpandedChange = { partExpanded = it }
+                ) {
+                    OutlinedTextField(
+                        value = partFilter?.let { muscleGroupLabel(it) } ?: "全部部位",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("依部位篩選") },
+                        singleLine = true,
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = partExpanded)
+                        },
+                        modifier = Modifier
+                            .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                            .fillMaxWidth()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = partExpanded,
+                        onDismissRequest = { partExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("全部部位") },
+                            onClick = {
+                                partFilter = null
+                                partExpanded = false
+                            }
+                        )
+                        MuscleGroup.entries.forEach { group ->
+                            DropdownMenuItem(
+                                text = { Text(muscleGroupLabel(group)) },
+                                onClick = {
+                                    partFilter = group
+                                    partExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+                if (partFilter != null && filteredNames.isEmpty() && name.isBlank()) {
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "此部位目前沒有符合的動作，可直接輸入名稱",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
                 if (isNew) {
                     Spacer(Modifier.height(6.dp))
                     Text(

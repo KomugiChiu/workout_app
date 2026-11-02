@@ -60,6 +60,22 @@ fun primaryMuscleGroup(parts: String?): MuscleGroup? {
         ?.second
 }
 
+fun muscleGroupLabel(group: MuscleGroup): String = when (group) {
+    MuscleGroup.CHEST -> "胸"
+    MuscleGroup.BACK -> "背"
+    MuscleGroup.SHOULDERS -> "肩"
+    MuscleGroup.BICEPS -> "二頭"
+    MuscleGroup.TRICEPS -> "三頭"
+    MuscleGroup.FOREARMS -> "前臂"
+    MuscleGroup.ARMS -> "手臂"
+    MuscleGroup.CORE -> "核心"
+    MuscleGroup.GLUTES -> "臀"
+    MuscleGroup.QUADS -> "股四"
+    MuscleGroup.HAMSTRINGS -> "腿後"
+    MuscleGroup.CALVES -> "小腿"
+    MuscleGroup.FULL_BODY -> "全身"
+}
+
 /**
  * 簡化人形部位圖：灰色身體 + 綠色主要部位。
  * 背面肌群（背／臀／腿後）會以背面示意。
@@ -81,21 +97,7 @@ fun MuscleMap(
         group == MuscleGroup.HAMSTRINGS ||
         group == MuscleGroup.TRICEPS
 
-    val label = when (group) {
-        MuscleGroup.CHEST -> "胸"
-        MuscleGroup.BACK -> "背"
-        MuscleGroup.SHOULDERS -> "肩"
-        MuscleGroup.BICEPS -> "二頭"
-        MuscleGroup.TRICEPS -> "三頭"
-        MuscleGroup.FOREARMS -> "前臂"
-        MuscleGroup.ARMS -> "手臂"
-        MuscleGroup.CORE -> "核心"
-        MuscleGroup.GLUTES -> "臀"
-        MuscleGroup.QUADS -> "股四"
-        MuscleGroup.HAMSTRINGS -> "腿後"
-        MuscleGroup.CALVES -> "小腿"
-        MuscleGroup.FULL_BODY -> "全身"
-    }
+    val label = muscleGroupLabel(group)
 
     Column(modifier) {
         Canvas(Modifier.weight(1f).fillMaxWidth()) {
