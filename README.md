@@ -1,0 +1,67 @@
+# Komugi Workout（Android App）
+
+把 workout 訓練菜單變成手機 App：**菜單 / 紀錄 / 單項說明** 三個分頁，離線可用。
+
+## 功能
+
+- **菜單**：8 份內建菜單（恢復日、A/B/C 循環、TRX、居家輕裝、全啞鈴、彈力帶＋壺鈴），每份附動作組次建議、**訓練部位**、影片連結、動作說明入口
+- **一鍵開始紀錄**：菜單底部「開始紀錄（今天）」→ 自動建立當日訓練並預載全部動作
+- **紀錄（月曆式）**：
+  - 上方月曆選擇日期 → 下方即時列出該日訓練；**左右滑動可換月**，有紀錄的日期下方顯示綠點
+  - 清單每筆可單獨刪除（🗑️＋二次確認）；點列進入詳細頁
+  - 「新紀錄」建立在目前選取的日期
+  - 每個動作可記錄 **重量 / 次數 / 組數 / 時間 / 器材**（Add 下拉選單）
+  - **自重選項**：重量欄可勾選「自重（不計重量）」，明細顯示「自重」並計入組數統計
+  - **建議值自動預填**：新增時自動帶入上一組數值；首次則從菜單建議解析（器材 10kg×2 → 10、次數 8–10 → 8、30 秒 → 30、組數 3–4 → 3）
+  - 總計（組數／總次數／最高重量／自重組數／總時間）＋逐組明細
+  - 日期預設當天，可點右上日曆修改；垃圾桶可刪除整筆紀錄
+  - 點任一組列可編輯重量／次數／時間／自重；「＋組」快速複製上一組
+  - **新增動作**：可搜尋下拉選單（輸入關鍵字過濾）；手動輸入的新動作會自動加入動作庫（持久化）
+- **動作說明**：4 份完整拆解（划船／RDL／保加利亞／壺鈴擺盪），Markdown 渲染、影片連結可點開
+- **本機儲存**：Room（SQLite），完全離線
+
+## 技術規格
+
+| 項目 | 內容 |
+|------|------|
+| 語言 / UI | Kotlin 2.0.21 + Jetpack Compose (Material 3) |
+| minSdk / targetSdk | 26（Android 8.0）/ 34 |
+| 資料庫 | Room 2.6.1（KSP） |
+| 建置 | Gradle 8.7 + AGP 8.5.2（wrapper 已附） |
+
+## 建置
+
+```bash
+export ANDROID_HOME=/home/user/starboard-toolchains/AndroidSdk
+./gradlew :app:assembleDebug
+# APK: app/build/outputs/apk/debug/app-debug.apk
+```
+
+已驗證產出：`KomugiWorkout-debug.apk`（約 10 MB，debug 簽章，可直接安裝側載）。
+
+## 專案結構
+
+```
+app/src/main/
+├── assets/
+│   ├── menus.json          # 8 份菜單（動作／組次／影片／說明對應）
+│   ├── guides.json         # 動作說明索引
+│   └── exercises/*.md      # 4 份動作詳解（來自 workout repo）
+└── java/com/komugi/workout/
+    ├── MainActivity.kt
+    ├── data/               # Room 實體、DAO、Repository、菜單模型
+    ├── ui/
+    │   ├── AppRoot.kt      # 三頁導航＋底部列
+    │   ├── menu/           # 菜單列表／詳情
+    │   ├── log/            # 紀錄列表／詳情／Add 下拉
+    │   ├── guide/          # 動作說明
+    │   └── theme/
+    └── util/               # 日期格式、Markdown→HTML、WebView
+```
+
+## 後續可加
+
+- Google Drive AppDataFolder 自動備份（需 Google Cloud OAuth Client ID＋SHA-1 註冊）
+- 匯出／匯入 JSON（換裝置還原）
+- 訓練歷史圖表（容量／重量趨勢）
+- 計時器（組間休息倒數）

@@ -1,0 +1,34 @@
+{
+  "guides": [
+    {
+      "id": "row",
+      "title": "划船完整拆解（啞鈴＋彈力帶）",
+      "asset": "exercises/one-arm-dumbbell-row.md",
+      "subtitle": "推拉平衡的補拉主藥"
+    },
+    {
+      "id": "rdl",
+      "title": "RDL（羅馬尼亞硬舉）完整拆解",
+      "asset": "exercises/romanian-deadlift-rdl.md",
+      "subtitle": "膝蓋凍結、屁股找牆、重量貼腿"
+    },
+    {
+      "id": "bulgarian",
+      "title": "保加利亞分腿蹲完整拆解",
+      "asset": "exercises/bulgarian-split-squat.md",
+      "subtitle": "單邊蹲的技術王"
+    },
+    {
+      "id": "swing",
+      "title": "壺鈴擺盪完整拆解",
+      "asset": "exercises/kettlebell-swing.md",
+      "subtitle": "髖鉸鏈的彈，不是蹲"
+    },
+    {
+      "id": "fly",
+      "title": "飛鳥完整拆解（全分支）",
+      "asset": "exercises/chest-fly.md",
+      "subtitle": "手肘凍結、胸帶手抱、頂端夾扁"
+    }
+  ]
+}
