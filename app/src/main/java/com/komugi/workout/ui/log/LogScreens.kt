@@ -73,6 +73,7 @@ import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.MuscleMap
 import com.komugi.workout.ui.components.muscleGroupLabel
+import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.components.primaryMuscleGroup
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.TargetParser
@@ -640,18 +641,23 @@ private fun EntryCard(
                         )
                     }
                 }
-                entry.targetParts?.let { parts ->
-                    primaryMuscleGroup(parts)?.let { group ->
-                        MuscleMap(
-                            group = group,
-                            modifier = Modifier
-                                .padding(end = 4.dp)
-                                .size(46.dp, 64.dp)
-                        )
-                    }
-                }
                 IconButton(onClick = onDeleteEntry) {
                     Icon(Icons.Filled.Delete, contentDescription = "刪除動作")
+                }
+            }
+
+            val groups = muscleGroupsIn(entry.targetParts, limit = 3)
+            if (groups.isNotEmpty()) {
+                Row(
+                    Modifier.padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    groups.forEach { group ->
+                        MuscleMap(
+                            group = group,
+                            modifier = Modifier.size(42.dp, 56.dp)
+                        )
+                    }
                 }
             }
 

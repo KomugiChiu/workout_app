@@ -30,39 +30,62 @@ enum class MuscleGroup {
     GLUTES, QUADS, HAMSTRINGS, CALVES, FULL_BODY
 }
 
+private val MuscleKeywords = listOf(
+    "胸" to MuscleGroup.CHEST,
+    "背闊" to MuscleGroup.BACK,
+    "菱形" to MuscleGroup.BACK,
+    "斜方" to MuscleGroup.BACK,
+    "豎脊" to MuscleGroup.BACK,
+    "三角" to MuscleGroup.SHOULDERS,
+    "旋轉肌群" to MuscleGroup.SHOULDERS,
+    "肱二頭" to MuscleGroup.BICEPS,
+    "肱三頭" to MuscleGroup.TRICEPS,
+    "肱橈肌" to MuscleGroup.FOREARMS,
+    "握力" to MuscleGroup.FOREARMS,
+    "前臂" to MuscleGroup.FOREARMS,
+    "手臂" to MuscleGroup.ARMS,
+    "腹" to MuscleGroup.CORE,
+    "核心" to MuscleGroup.CORE,
+    "臀" to MuscleGroup.GLUTES,
+    "股四" to MuscleGroup.QUADS,
+    "腿後" to MuscleGroup.HAMSTRINGS,
+    "小腿" to MuscleGroup.CALVES
+)
+
 fun primaryMuscleGroup(parts: String?): MuscleGroup? {
     val text = parts?.trim().orEmpty()
     if (text.isEmpty()) return null
     if (text.contains("全身")) return MuscleGroup.FULL_BODY
 
-    val keywords = listOf(
-        "胸" to MuscleGroup.CHEST,
-        "背闊" to MuscleGroup.BACK,
-        "菱形" to MuscleGroup.BACK,
-        "斜方" to MuscleGroup.BACK,
-        "豎脊" to MuscleGroup.BACK,
-        "三角" to MuscleGroup.SHOULDERS,
-        "旋轉肌群" to MuscleGroup.SHOULDERS,
-        "肱二頭" to MuscleGroup.BICEPS,
-        "肱三頭" to MuscleGroup.TRICEPS,
-        "肱橈肌" to MuscleGroup.FOREARMS,
-        "握力" to MuscleGroup.FOREARMS,
-        "前臂" to MuscleGroup.FOREARMS,
-        "手臂" to MuscleGroup.ARMS,
-        "腹" to MuscleGroup.CORE,
-        "核心" to MuscleGroup.CORE,
-        "臀" to MuscleGroup.GLUTES,
-        "股四" to MuscleGroup.QUADS,
-        "腿後" to MuscleGroup.HAMSTRINGS,
-        "小腿" to MuscleGroup.CALVES
-    )
-
-    return keywords
+    return MuscleKeywords
         .mapNotNull { (keyword, group) ->
             text.indexOf(keyword).takeIf { it >= 0 }?.let { it to group }
         }
         .minByOrNull { it.first }
         ?.second
+}
+
+/**
+ * 列出文字中提到的所有主要部位（依出現順序、去重），最多 [limit] 個。
+ */
+fun muscleGroupsIn(parts: String?, limit: Int = 3): List<MuscleGroup> {
+    val text = parts?.trim().orEmpty()
+    if (text.isEmpty()) return emptyList()
+    if (text.contains("全身")) return listOf(MuscleGroup.FULL_BODY)
+
+    val hits = mutableListOf<Pair<Int, MuscleGroup>>()
+    MuscleKeywords.forEach { (keyword, group) ->
+        var index = text.indexOf(keyword)
+        while (index >= 0) {
+            hits.add(index to group)
+            index = text.indexOf(keyword, index + keyword.length)
+        }
+    }
+    return hits
+        .sortedBy { it.first }
+        .map { it.second }
+        .distinct()
+        .take(limit)
 }
 
 fun muscleGroupLabel(group: MuscleGroup): String = when (group) {

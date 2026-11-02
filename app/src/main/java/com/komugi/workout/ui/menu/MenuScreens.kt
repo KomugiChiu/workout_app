@@ -45,7 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleMap
-import com.komugi.workout.ui.components.primaryMuscleGroup
+import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
@@ -254,13 +254,19 @@ fun MenuDetailScreen(
                                     )
                                 }
                             }
-                            primaryMuscleGroup(row.parts)?.let { group ->
-                                MuscleMap(
-                                    group = group,
-                                    modifier = Modifier
-                                        .padding(start = 6.dp)
-                                        .size(54.dp, 76.dp)
-                                )
+                        }
+                        val groups = muscleGroupsIn(row.parts, limit = 3)
+                        if (groups.isNotEmpty()) {
+                            Row(
+                                Modifier.padding(start = 28.dp, top = 8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                groups.forEach { group ->
+                                    MuscleMap(
+                                        group = group,
+                                        modifier = Modifier.size(46.dp, 62.dp)
+                                    )
+                                }
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {

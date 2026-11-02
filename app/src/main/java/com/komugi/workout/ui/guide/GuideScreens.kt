@@ -40,7 +40,7 @@ import com.komugi.workout.data.GuideRef
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.MuscleMap
-import com.komugi.workout.ui.components.primaryMuscleGroup
+import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.MarkdownWebView
 
@@ -201,12 +201,12 @@ fun GuideDetailScreen(
                             .padding(horizontal = 16.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        primaryMuscleGroup(parts)?.let { group ->
+                        muscleGroupsIn(parts, limit = 3).forEach { group ->
                             MuscleMap(
                                 group = group,
-                                modifier = Modifier.size(46.dp, 64.dp)
+                                modifier = Modifier.size(44.dp, 60.dp)
                             )
-                            Spacer(Modifier.width(12.dp))
+                            Spacer(Modifier.width(8.dp))
                         }
                         Column {
                             Text(
