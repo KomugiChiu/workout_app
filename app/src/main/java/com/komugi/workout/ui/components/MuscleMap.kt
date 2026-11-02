@@ -182,18 +182,20 @@ fun MuscleMap(
             }
 
             fun drawThigh() {
-                circle(50f, 12f, 10f, base)
-                line(50f, 20f, 50f, 82f, 26f, base)
-                circle(50f, 86f, 11f, base)
-                line(50f, 94f, 50f, 122f, 13f, base)
-                oval(50f, 130f, 9f, 6f, base)
+                // 彎曲腿：髖 → 膝 → 踝
+                circle(30f, 14f, 10f, base)
+                line(30f, 22f, 62f, 68f, 26f, base)
+                circle(62f, 68f, 11f, base)
+                line(62f, 68f, 40f, 112f, 13f, base)
+                oval(36f, 122f, 9f, 6f, base)
             }
 
             fun drawCalf() {
-                circle(50f, 16f, 12f, base)
-                line(50f, 26f, 50f, 100f, 15f, base)
-                circle(50f, 104f, 7f, base)
-                oval(50f, 116f, 10f, 6f, base)
+                // 彎曲小腿：膝 → 踝
+                circle(40f, 16f, 12f, base)
+                line(40f, 24f, 62f, 92f, 15f, base)
+                circle(62f, 96f, 7f, base)
+                oval(64f, 108f, 10f, 6f, base)
             }
 
             fun drawHips() {
@@ -267,19 +269,19 @@ fun MuscleMap(
                 }
                 MuscleGroup.QUADS -> {
                     drawThigh()
-                    oval(50f, 48f, 10f, 22f, accent)
+                    line(32f, 30f, 58f, 62f, 20f, accent)
                     // 股內側肌（膝內上方淚滴）
-                    oval(44f, 72f, 4.5f, 8f, accent)
+                    oval(56f, 58f, 4.5f, 8f, accent)
                 }
                 MuscleGroup.HAMSTRINGS -> {
                     drawThigh()
-                    oval(44f, 52f, 6f, 21f, accent)
-                    oval(56f, 52f, 6f, 21f, accent)
+                    line(26f, 32f, 54f, 62f, 8f, accent)
+                    line(36f, 30f, 64f, 60f, 8f, accent)
                 }
                 MuscleGroup.CALVES -> {
                     drawCalf()
-                    oval(45f, 62f, 6f, 18f, accent)
-                    oval(55f, 62f, 6f, 18f, accent)
+                    line(36f, 38f, 54f, 78f, 7f, accent)
+                    line(46f, 36f, 62f, 76f, 7f, accent)
                 }
                 MuscleGroup.FULL_BODY -> {
                     circle(50f, 12f, 9f, accent)
