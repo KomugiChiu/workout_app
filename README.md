@@ -17,7 +17,7 @@
   - 日期預設當天，可點右上日曆修改；垃圾桶可刪除整筆紀錄
   - 點任一組列可編輯重量／次數／時間／自重；「＋組」快速複製上一組
   - **新增動作**：可搜尋下拉選單（輸入關鍵字過濾）；手動輸入的新動作會自動加入動作庫（持久化）
-- **動作說明**：4 份完整拆解（划船／RDL／保加利亞／壺鈴擺盪），Markdown 渲染、影片連結可點開
+- **動作說明**：8 份完整拆解（划船／RDL／保加利亞／壺鈴擺盪／飛鳥／農夫行走／三停彎舉／單手擺盪），Markdown 渲染、影片連結可點開
 - **本機儲存**：Room（SQLite），完全離線
 
 ## 技術規格
@@ -45,8 +45,8 @@ export ANDROID_HOME=/home/user/starboard-toolchains/AndroidSdk
 app/src/main/
 ├── assets/
 │   ├── menus.json          # 8 份菜單（首次啟動種子資料）
-│   ├── guides.json         # 動作說明索引
-│   └── exercises/*.md      # 5 份動作詳解
+│   ├── guides.json         # 動作說明索引（8 份）
+│   └── exercises/*.md      # 8 份動作詳解
 └── java/com/komugi/workout/
     ├── MainActivity.kt
     ├── data/               # Room 實體、DAO、Repository、菜單模型

@@ -29,6 +29,24 @@
       "title": "飛鳥完整拆解（全分支）",
       "asset": "exercises/chest-fly.md",
       "subtitle": "手肘凍結、胸帶手抱、頂端夾扁"
+    },
+    {
+      "id": "farmer",
+      "title": "農夫行走完整拆解",
+      "asset": "exercises/farmer-carry.md",
+      "subtitle": "握力、上背、核心抗側屈"
+    },
+    {
+      "id": "pause-curl",
+      "title": "三停彎舉完整拆解",
+      "asset": "exercises/pause-curl.md",
+      "subtitle": "三個角度各停 2–3 秒"
+    },
+    {
+      "id": "one-arm-swing",
+      "title": "單手壺鈴擺盪完整拆解",
+      "asset": "exercises/one-arm-swing.md",
+      "subtitle": "髖爆發＋抗旋核心"
     }
   ]
 }
