@@ -155,10 +155,12 @@ fun MuscleMap(
             }
 
             fun drawArm() {
-                circle(50f, 14f, 9f, base)
-                line(50f, 22f, 50f, 72f, 20f, base)
-                line(50f, 72f, 50f, 112f, 14f, base)
-                oval(50f, 122f, 7f, 8f, base)
+                // 彎曲手臂：肩 → 肘 → 腕
+                circle(28f, 18f, 9f, base)
+                line(28f, 26f, 58f, 70f, 20f, base)
+                circle(58f, 70f, 10f, base)
+                line(58f, 70f, 38f, 108f, 14f, base)
+                circle(34f, 118f, 7f, base)
             }
 
             fun drawThigh() {
@@ -225,20 +227,19 @@ fun MuscleMap(
                 }
                 MuscleGroup.BICEPS -> {
                     drawArm()
-                    oval(50f, 46f, 8f, 17f, accent)
+                    line(30f, 38f, 54f, 64f, 11f, accent)
                 }
                 MuscleGroup.TRICEPS -> {
                     drawArm()
-                    oval(50f, 46f, 10f, 18f, accent)
-                    line(50f, 34f, 50f, 58f, 2f, badgeColor)
+                    line(36f, 36f, 62f, 62f, 11f, accent)
                 }
                 MuscleGroup.FOREARMS -> {
                     drawArm()
-                    oval(50f, 90f, 7f, 18f, accent)
+                    line(56f, 76f, 40f, 104f, 9f, accent)
                 }
                 MuscleGroup.ARMS -> {
                     drawArm()
-                    oval(50f, 46f, 9f, 18f, accent)
+                    line(28f, 30f, 56f, 68f, 11f, accent)
                 }
                 MuscleGroup.GLUTES -> {
                     drawHips()
