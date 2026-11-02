@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,6 +29,8 @@ import com.komugi.workout.ui.log.LogDetailScreen
 import com.komugi.workout.ui.log.LogListScreen
 import com.komugi.workout.ui.menu.MenuDetailScreen
 import com.komugi.workout.ui.menu.MenuListScreen
+import com.komugi.workout.ui.settings.SettingsScreen
+import com.komugi.workout.ui.theme.ThemeManager
 
 private data class Tab(
     val route: String,
@@ -36,7 +39,10 @@ private data class Tab(
 )
 
 @Composable
-fun AppRoot(repository: WorkoutRepository) {
+fun AppRoot(
+    repository: WorkoutRepository,
+    themeManager: ThemeManager
+) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val route = backStackEntry?.destination?.route
@@ -44,7 +50,8 @@ fun AppRoot(repository: WorkoutRepository) {
     val tabs = listOf(
         Tab("menus", "菜單", Icons.AutoMirrored.Filled.List),
         Tab("logs", "紀錄", Icons.Filled.DateRange),
-        Tab("guides", "動作說明", Icons.Filled.Info)
+        Tab("guides", "動作說明", Icons.Filled.Info),
+        Tab("settings", "選項", Icons.Filled.Settings)
     )
 
     Scaffold(
@@ -54,7 +61,8 @@ fun AppRoot(repository: WorkoutRepository) {
                     val selected = when (tab.route) {
                         "menus" -> route == "menus" || route?.startsWith("menu/") == true
                         "logs" -> route == "logs" || route?.startsWith("log/") == true
-                        else -> route == "guides" || route?.startsWith("guide/") == true
+                        "guides" -> route == "guides" || route?.startsWith("guide/") == true
+                        else -> route == "settings"
                     }
                     NavigationBarItem(
                         selected = selected,
@@ -131,6 +139,9 @@ fun AppRoot(repository: WorkoutRepository) {
                     guideId = entry.arguments?.getString("guideId"),
                     onBack = { navController.popBackStack() }
                 )
+            }
+            composable("settings") {
+                SettingsScreen(themeManager = themeManager)
             }
         }
     }
