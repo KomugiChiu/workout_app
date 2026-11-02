@@ -124,7 +124,7 @@
       { "name": "三停三頭肌伸展", "equipment": "啞鈴 2–5kg", "parts": "肱三頭（長／外側／內側頭）", "sets": "2–3", "reps": "1（每點 10 秒）", "rest": "60–90s", "guide": "pause-curl" },
       { "name": "雙邊農夫行走", "equipment": "啞鈴 8–10kg×2", "parts": "前臂握力、腹斜肌、臀中肌、上背", "sets": "3", "reps": "30–40 公尺", "rest": "60s", "video": "https://www.youtube.com/watch?v=lLAw6fUccKA", "guide": "farmer" },
       { "name": "錘式彎舉", "equipment": "啞鈴 4–6kg", "parts": "肱肌、肱橈肌、肱二頭", "sets": "2", "reps": "10–12", "rest": "45–60s" },
-      { "name": "彈力帶三頭下壓", "equipment": "30kg 帶", "parts": "肱三頭（外側頭）", "sets": "2", "reps": "12–15", "rest": "45s", "video": "https://www.youtube.com/watch?v=Y3CDzx-oj3k" },
+      { "name": "啞鈴過頭三頭伸展", "equipment": "啞鈴 3–5kg", "parts": "肱三頭（長頭優先）", "sets": "3", "reps": "10–12", "rest": "60s", "video": "https://www.youtube.com/watch?v=v1qDINLCb8Q", "guide": "pause-curl" },
       { "name": "彈力帶反向飛鳥", "equipment": "30kg 帶", "parts": "後三角、菱形肌、中下斜方", "sets": "2", "reps": "12–15", "rest": "45s", "video": "https://www.youtube.com/watch?v=cyihFNmsq-A" },
       { "name": "壺鈴單手擺盪", "equipment": "8kg 壺鈴", "parts": "臀大肌、腿後腱、核心（抗旋）、握力", "sets": "3", "reps": "10/邊", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=axaCQqM0R1k", "guide": "one-arm-swing" }
     ]
