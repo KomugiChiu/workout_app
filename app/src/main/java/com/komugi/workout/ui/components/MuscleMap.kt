@@ -75,6 +75,24 @@ fun muscleGroupLabel(group: MuscleGroup): String = when (group) {
     MuscleGroup.FULL_BODY -> "全身"
 }
 
+/** 圖示視角：前側或後側 */
+private fun muscleGroupView(group: MuscleGroup): String? = when (group) {
+    MuscleGroup.CHEST,
+    MuscleGroup.SHOULDERS,
+    MuscleGroup.BICEPS,
+    MuscleGroup.FOREARMS,
+    MuscleGroup.CORE,
+    MuscleGroup.QUADS -> "前"
+
+    MuscleGroup.BACK,
+    MuscleGroup.TRICEPS,
+    MuscleGroup.GLUTES,
+    MuscleGroup.HAMSTRINGS,
+    MuscleGroup.CALVES -> "後"
+
+    else -> null
+}
+
 /**
  * 局部部位圖：只畫出該肌群所在的部位（例：二頭只畫手臂），
  * 灰色為身體、綠色為目標肌肉。
@@ -249,7 +267,9 @@ fun MuscleMap(
                 }
                 MuscleGroup.QUADS -> {
                     drawThigh()
-                    oval(50f, 50f, 10f, 24f, accent)
+                    oval(50f, 48f, 10f, 22f, accent)
+                    // 股內側肌（膝內上方淚滴）
+                    oval(44f, 72f, 4.5f, 8f, accent)
                 }
                 MuscleGroup.HAMSTRINGS -> {
                     drawThigh()
@@ -273,7 +293,9 @@ fun MuscleMap(
         }
 
         Text(
-            text = muscleGroupLabel(group),
+            text = muscleGroupView(group)?.let { view ->
+                "${muscleGroupLabel(group)}（$view）"
+            } ?: muscleGroupLabel(group),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             fontSize = 9.sp,
