@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WorkoutDao {
 
+    // ---------- 訓練紀錄 ----------
+
     @Query(
         "SELECT s.*, (SELECT COUNT(*) FROM entries e WHERE e.sessionId = s.id) AS entryCount " +
             "FROM sessions s ORDER BY s.dateEpochDay DESC, s.id DESC"
@@ -62,9 +64,63 @@ interface WorkoutDao {
     @Query("SELECT * FROM entries WHERE sessionId = :sessionId ORDER BY orderIndex ASC, id ASC")
     suspend fun entriesOf(sessionId: Long): List<EntryEntity>
 
-    @Query("SELECT * FROM custom_exercises ORDER BY addedAt DESC")
-    fun observeCustomExercises(): Flow<List<CustomExerciseEntity>>
+    // ---------- 菜單（正規化） ----------
+
+    @Query(
+        "SELECT m.*, (SELECT COUNT(*) FROM menu_exercises me WHERE me.menuId = m.id) AS exerciseCount " +
+            "FROM menus m ORDER BY m.orderIndex ASC"
+    )
+    fun observeMenuSummaries(): Flow<List<MenuSummary>>
+
+    @Query("SELECT * FROM menus WHERE id = :id")
+    fun observeMenu(id: String): Flow<MenuEntity?>
+
+    @Query("SELECT * FROM menus WHERE id = :id")
+    suspend fun menuById(id: String): MenuEntity?
+
+    @Query(
+        "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
+            "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
+            "me.targetReps AS targetReps, me.restSec AS restSec, e.name AS name, e.parts AS parts, " +
+            "e.videoUrl AS videoUrl, e.guideId AS guideId " +
+            "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
+            "WHERE me.menuId = :menuId ORDER BY me.orderIndex ASC"
+    )
+    fun observeMenuExerciseRows(menuId: String): Flow<List<MenuExerciseRow>>
+
+    @Query(
+        "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
+            "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
+            "me.targetReps AS targetReps, me.restSec AS restSec, e.name AS name, e.parts AS parts, " +
+            "e.videoUrl AS videoUrl, e.guideId AS guideId " +
+            "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
+            "WHERE me.menuId = :menuId ORDER BY me.orderIndex ASC"
+    )
+    suspend fun menuExerciseRows(menuId: String): List<MenuExerciseRow>
+
+    @Query("SELECT COUNT(*) FROM menus")
+    suspend fun menuCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertCustomExercise(item: CustomExerciseEntity)
+    suspend fun insertMenu(menu: MenuEntity)
+
+    @Insert
+    suspend fun insertMenuExercise(item: MenuExerciseEntity): Long
+
+    // ---------- 動作主檔 ----------
+
+    @Query("SELECT * FROM exercises ORDER BY name ASC")
+    fun observeExercises(): Flow<List<ExerciseEntity>>
+
+    @Query("SELECT * FROM exercises WHERE name = :name LIMIT 1")
+    suspend fun exerciseByName(name: String): ExerciseEntity?
+
+    @Query("SELECT id FROM exercises WHERE name = :name LIMIT 1")
+    suspend fun exerciseIdByName(name: String): Long?
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertExercise(exercise: ExerciseEntity): Long
+
+    @Update
+    suspend fun updateExercise(exercise: ExerciseEntity)
 }

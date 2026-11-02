@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,14 +32,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.komugi.workout.data.Menu
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
@@ -48,46 +51,67 @@ import kotlinx.coroutines.launch
 @Composable
 fun MenuListScreen(
     repository: WorkoutRepository,
-    onOpenMenu: (Menu) -> Unit
+    onOpenMenu: (String) -> Unit
 ) {
+    val menus by repository.observeMenuSummaries().collectAsState(initial = emptyList())
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("菜單") })
         }
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            item {
-                Text(
-                    "選一份課表開始今天的紀錄；所有內容離線可看。",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+        if (menus.isEmpty()) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    CircularProgressIndicator()
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "載入課表…",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
-            items(repository.menus, key = { it.id }) { menu ->
-                Card(
-                    onClick = { onOpenMenu(menu) },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(Modifier.padding(16.dp)) {
-                        Text(menu.name, style = MaterialTheme.typography.titleMedium)
-                        menu.subtitle?.let {
-                            Text(
-                                it,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                item {
+                    Text(
+                        "選一份課表開始今天的紀錄；所有內容離線可看。",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                items(menus, key = { it.menu.id }) { summary ->
+                    Card(
+                        onClick = { onOpenMenu(summary.menu.id) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(Modifier.padding(16.dp)) {
+                            Text(summary.menu.name, style = MaterialTheme.typography.titleMedium)
+                            summary.menu.subtitle?.let {
+                                Text(
+                                    it,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Spacer(Modifier.height(8.dp))
+                            AssistChip(
+                                onClick = { onOpenMenu(summary.menu.id) },
+                                label = { Text("${summary.exerciseCount} 個動作") }
                             )
                         }
-                        Spacer(Modifier.height(8.dp))
-                        AssistChip(
-                            onClick = { onOpenMenu(menu) },
-                            label = { Text("${menu.exercises.size} 個動作") }
-                        )
                     }
                 }
             }
@@ -104,7 +128,11 @@ fun MenuDetailScreen(
     onOpenGuide: (String) -> Unit,
     onSessionCreated: (Long) -> Unit
 ) {
-    val menu = repository.menuById(menuId)
+    val id = menuId ?: ""
+    val menu by remember(id) { repository.observeMenu(id) }.collectAsState(initial = null)
+    val rows by remember(id) {
+        repository.observeMenuExercises(id)
+    }.collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val creating = remember { mutableStateOf(false) }
@@ -128,11 +156,15 @@ fun MenuDetailScreen(
                             if (!creating.value) {
                                 creating.value = true
                                 scope.launch {
-                                    val id = repository.createSessionFromMenu(
-                                        menu,
+                                    val sessionId = repository.createSessionFromMenu(
+                                        id,
                                         LocalDate.now().toEpochDay()
                                     )
-                                    onSessionCreated(id)
+                                    if (sessionId > 0) {
+                                        onSessionCreated(sessionId)
+                                    } else {
+                                        creating.value = false
+                                    }
                                 }
                             }
                         },
@@ -156,7 +188,7 @@ fun MenuDetailScreen(
                     .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text("找不到菜單")
+                CircularProgressIndicator()
             }
             return@Scaffold
         }
@@ -169,8 +201,8 @@ fun MenuDetailScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
-                menu.subtitle?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
-                menu.note?.let {
+                menu?.subtitle?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
+                menu?.note?.let {
                     Text(
                         it,
                         style = MaterialTheme.typography.bodySmall,
@@ -178,7 +210,7 @@ fun MenuDetailScreen(
                     )
                 }
             }
-            itemsIndexed(menu.exercises) { index, exercise ->
+            itemsIndexed(rows) { index, row ->
                 Card(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.Top) {
@@ -189,11 +221,11 @@ fun MenuDetailScreen(
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Column(Modifier.weight(1f)) {
-                                Text(exercise.name, style = MaterialTheme.typography.titleMedium)
+                                Text(row.name, style = MaterialTheme.typography.titleMedium)
                                 val meta = listOfNotNull(
-                                    exercise.sets?.let { "$it 組" },
-                                    exercise.reps?.let { "$it 下" },
-                                    exercise.rest?.let { "休 $it" }
+                                    row.targetSets?.let { "$it 組" },
+                                    row.targetReps?.let { "$it 下" },
+                                    row.restSec?.let { "休 $it" }
                                 ).joinToString(" · ")
                                 if (meta.isNotBlank()) {
                                     Text(
@@ -202,14 +234,14 @@ fun MenuDetailScreen(
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
-                                exercise.equipment?.let {
+                                row.equipment?.let {
                                     Text(
                                         "器材：$it",
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.primary
                                     )
                                 }
-                                exercise.parts?.let {
+                                row.parts?.let {
                                     Text(
                                         "部位：$it",
                                         style = MaterialTheme.typography.labelMedium,
@@ -219,12 +251,12 @@ fun MenuDetailScreen(
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            exercise.guide?.let { guideId ->
+                            row.guideId?.let { guideId ->
                                 TextButton(onClick = { onOpenGuide(guideId) }) {
                                     Text("動作說明")
                                 }
                             }
-                            exercise.video?.let { url ->
+                            row.videoUrl?.let { url ->
                                 TextButton(onClick = { openUrl(context, url) }) {
                                     Icon(Icons.Filled.PlayArrow, contentDescription = null)
                                     Text("影片")

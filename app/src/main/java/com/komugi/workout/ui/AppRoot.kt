@@ -82,7 +82,7 @@ fun AppRoot(repository: WorkoutRepository) {
             composable("menus") {
                 MenuListScreen(
                     repository = repository,
-                    onOpenMenu = { navController.navigate("menu/${it.id}") }
+                    onOpenMenu = { navController.navigate("menu/$it") }
                 )
             }
             composable(

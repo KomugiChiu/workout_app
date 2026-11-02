@@ -44,20 +44,37 @@ export ANDROID_HOME=/home/user/starboard-toolchains/AndroidSdk
 ```
 app/src/main/
 ├── assets/
-│   ├── menus.json          # 8 份菜單（動作／組次／影片／說明對應）
+│   ├── menus.json          # 8 份菜單（首次啟動種子資料）
 │   ├── guides.json         # 動作說明索引
-│   └── exercises/*.md      # 4 份動作詳解（來自 workout repo）
+│   └── exercises/*.md      # 5 份動作詳解
 └── java/com/komugi/workout/
     ├── MainActivity.kt
     ├── data/               # Room 實體、DAO、Repository、菜單模型
     ├── ui/
     │   ├── AppRoot.kt      # 三頁導航＋底部列
     │   ├── menu/           # 菜單列表／詳情
-    │   ├── log/            # 紀錄列表／詳情／Add 下拉
+    │   ├── log/            # 紀錄月曆／詳情／Add 下拉
     │   ├── guide/          # 動作說明
     │   └── theme/
     └── util/               # 日期格式、Markdown→HTML、WebView
 ```
+
+## 資料模型（v5 正規化）
+
+```
+exercises（動作主檔）
+  id / name / parts / videoUrl / guideId / isCustom
+
+menus ──< menu_exercises >── exercises（多對多）
+             └ 器材、建議組數/次數、休息（菜單專屬設定）
+
+sessions ──< entries ──< sets
+             └ 訓練紀錄快照（含 exerciseId 供追溯；事後改菜單不影響歷史）
+```
+
+- 首次啟動／升級後由 `assets/menus.json` 自動種子匯入 DB
+- 自訂動作寫入 `exercises`（`isCustom = true`），可重複選用
+- 舊版 `custom_exercises` 於 migration 4→5 併入 `exercises` 後移除
 
 ## 後續可加
 

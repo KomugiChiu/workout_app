@@ -33,6 +33,7 @@ data class EntryEntity(
     val name: String,
     val equipment: String? = null,
     val targetParts: String? = null,
+    val exerciseId: Long? = null,
     val orderIndex: Int = 0,
     val targetSets: String? = null,
     val targetReps: String? = null,
@@ -68,8 +69,81 @@ data class SessionSummary(
     val entryCount: Int
 )
 
-@Entity(tableName = "custom_exercises")
-data class CustomExerciseEntity(
-    @PrimaryKey val name: String,
-    val addedAt: Long
+/**
+ * 動作主檔：所有動作的唯一來源（菜單動作＋自訂動作）。
+ */
+@Entity(
+    tableName = "exercises",
+    indices = [Index(value = ["name"], unique = true)]
+)
+data class ExerciseEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val name: String,
+    val parts: String? = null,
+    val videoUrl: String? = null,
+    val guideId: String? = null,
+    val isCustom: Boolean = false,
+    val createdAt: Long = 0
+)
+
+@Entity(tableName = "menus")
+data class MenuEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val subtitle: String? = null,
+    val note: String? = null,
+    val orderIndex: Int = 0
+)
+
+/**
+ * 菜單與動作的關聯（多對多）：同一動作可出現在多份菜單，
+ * 每份菜單可各自指定器材、組數、次數與休息。
+ */
+@Entity(
+    tableName = "menu_exercises",
+    foreignKeys = [
+        ForeignKey(
+            entity = MenuEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["menuId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ExerciseEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["exerciseId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index("menuId"), Index("exerciseId")]
+)
+data class MenuExerciseEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val menuId: String,
+    val exerciseId: Long,
+    val orderIndex: Int,
+    val equipment: String? = null,
+    val targetSets: String? = null,
+    val targetReps: String? = null,
+    val restSec: String? = null
+)
+
+data class MenuExerciseRow(
+    val menuExerciseId: Long,
+    val menuId: String,
+    val exerciseId: Long,
+    val orderIndex: Int,
+    val equipment: String?,
+    val targetSets: String?,
+    val targetReps: String?,
+    val restSec: String?,
+    val name: String,
+    val parts: String?,
+    val videoUrl: String?,
+    val guideId: String?
+)
+
+data class MenuSummary(
+    @Embedded val menu: MenuEntity,
+    val exerciseCount: Int
 )

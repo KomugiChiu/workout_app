@@ -225,8 +225,9 @@ fun LogDetailScreen(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
-    val library by remember { repository.exerciseLibrary() }
-        .collectAsState(initial = repository.menuExerciseNames())
+    val exercises by remember { repository.observeExercises() }.collectAsState(initial = emptyList())
+    val library = exercises.map { it.name }
+    val partsMap = exercises.mapNotNull { e -> e.parts?.let { e.name to it } }.toMap()
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showAddExercise by remember { mutableStateOf(false) }
@@ -430,12 +431,19 @@ fun LogDetailScreen(
     if (showAddExercise) {
         AddExerciseDialog(
             library = library,
-            partsMap = repository.exercisePartsMap(),
+            partsMap = partsMap,
             onDismiss = { showAddExercise = false },
             onConfirm = { name, equipment, targetParts ->
                 scope.launch {
                     repository.rememberExercise(name)
-                    repository.addEntry(sessionId, name, equipment, targetParts)
+                    val exercise = repository.exerciseByName(name)
+                    repository.addEntry(
+                        sessionId = sessionId,
+                        name = name,
+                        equipment = equipment,
+                        targetParts = targetParts,
+                        exerciseId = exercise?.id
+                    )
                 }
                 showAddExercise = false
             }

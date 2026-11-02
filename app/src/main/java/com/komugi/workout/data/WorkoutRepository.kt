@@ -1,9 +1,9 @@
 package com.komugi.workout.data
 
 import android.content.Context
+import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
 data class EntryUi(
@@ -17,12 +17,17 @@ data class SessionUi(
 )
 
 class WorkoutRepository(
-    private val dao: WorkoutDao,
+    private val db: AppDatabase,
     private val context: Context
 ) {
+    private val dao = db.dao()
     private val json = Json { ignoreUnknownKeys = true }
 
-    val menus: List<Menu> by lazy {
+    /**
+     * 首次啟動（或升級後）把 assets/menus.json 的菜單種子資料寫進資料庫。
+     * 菜單 → 動作主檔 → 菜單動作關聯。
+     */
+    private val menuSeed: List<Menu> by lazy {
         context.assets.open("menus.json").bufferedReader().use {
             json.decodeFromString<List<Menu>>(it.readText())
         }
@@ -34,37 +39,98 @@ class WorkoutRepository(
         }
     }
 
-    private val menuNames: List<String> by lazy {
-        menus.flatMap { it.exercises }.map { it.name }.distinct()
-    }
-
-    fun menuById(id: String?): Menu? = menus.firstOrNull { it.id == id }
-
     fun guideById(id: String?): GuideRef? = guides.firstOrNull { it.id == id }
 
     fun readGuide(assetPath: String): String =
         context.assets.open(assetPath).bufferedReader().use { it.readText() }
 
-    fun menuExerciseNames(): List<String> = menuNames.sorted()
-
-    fun exercisePartsMap(): Map<String, String> =
-        menus.flatMap { it.exercises }
-            .mapNotNull { ex -> ex.parts?.let { ex.name to it } }
-            .toMap()
-
-    fun exerciseLibrary(): Flow<List<String>> =
-        dao.observeCustomExercises().map { custom ->
-            (menuNames + custom.map { it.name }).distinct().sorted()
+    suspend fun ensureSeeded() {
+        if (dao.menuCount() > 0) return
+        db.withTransaction {
+            menuSeed.forEachIndexed { menuIndex, menu ->
+                dao.insertMenu(
+                    MenuEntity(
+                        id = menu.id,
+                        name = menu.name,
+                        subtitle = menu.subtitle,
+                        note = menu.note,
+                        orderIndex = menuIndex
+                    )
+                )
+                menu.exercises.forEachIndexed { exIndex, ex ->
+                    val existing = dao.exerciseByName(ex.name)
+                    val exerciseId = if (existing == null) {
+                        dao.insertExercise(
+                            ExerciseEntity(
+                                name = ex.name,
+                                parts = ex.parts,
+                                videoUrl = ex.video,
+                                guideId = ex.guide,
+                                isCustom = false,
+                                createdAt = System.currentTimeMillis()
+                            )
+                        )
+                    } else {
+                        if (existing.parts == null &&
+                            (ex.parts != null || ex.video != null || ex.guide != null)
+                        ) {
+                            dao.updateExercise(
+                                existing.copy(
+                                    parts = ex.parts ?: existing.parts,
+                                    videoUrl = ex.video ?: existing.videoUrl,
+                                    guideId = ex.guide ?: existing.guideId,
+                                    isCustom = false
+                                )
+                            )
+                        }
+                        existing.id
+                    }
+                    dao.insertMenuExercise(
+                        MenuExerciseEntity(
+                            menuId = menu.id,
+                            exerciseId = exerciseId,
+                            orderIndex = exIndex,
+                            equipment = ex.equipment,
+                            targetSets = ex.sets,
+                            targetReps = ex.reps,
+                            restSec = ex.rest
+                        )
+                    )
+                }
+            }
         }
+    }
+
+    // ---------- 菜單 ----------
+
+    fun observeMenuSummaries(): Flow<List<MenuSummary>> = dao.observeMenuSummaries()
+
+    fun observeMenu(id: String): Flow<MenuEntity?> = dao.observeMenu(id)
+
+    fun observeMenuExercises(id: String): Flow<List<MenuExerciseRow>> =
+        dao.observeMenuExerciseRows(id)
+
+    // ---------- 動作主檔 ----------
+
+    fun observeExercises(): Flow<List<ExerciseEntity>> = dao.observeExercises()
+
+    suspend fun exerciseByName(name: String): ExerciseEntity? =
+        dao.exerciseByName(name.trim())
 
     suspend fun rememberExercise(name: String) {
         val clean = name.trim()
-        if (clean.isNotEmpty()) {
-            dao.insertCustomExercise(
-                CustomExerciseEntity(name = clean, addedAt = System.currentTimeMillis())
+        if (clean.isNotEmpty() && dao.exerciseIdByName(clean) == null) {
+            dao.insertExercise(
+                ExerciseEntity(
+                    name = clean,
+                    isCustom = true,
+                    createdAt = System.currentTimeMillis()
+                )
             )
         }
     }
+
+    // ---------- 訓練紀錄 ----------
 
     fun observeSummaries(): Flow<List<SessionSummary>> = dao.observeSummaries()
 
@@ -88,23 +154,34 @@ class WorkoutRepository(
             }
         }
 
-    suspend fun createSessionFromMenu(menu: Menu, epochDay: Long): Long {
+    /**
+     * 從菜單建立訓練：把當下的菜單內容「快照」進紀錄，
+     * 之後修改菜單不會影響已建立的歷史。
+     */
+    suspend fun createSessionFromMenu(menuId: String, epochDay: Long): Long {
+        val menu = dao.menuById(menuId) ?: return -1L
+        val rows = dao.menuExerciseRows(menuId)
         val sessionId = dao.insertSession(
-            SessionEntity(dateEpochDay = epochDay, menuId = menu.id, menuName = menu.name)
+            SessionEntity(
+                dateEpochDay = epochDay,
+                menuId = menu.id,
+                menuName = menu.name
+            )
         )
-        menu.exercises.forEachIndexed { index, ex ->
+        rows.forEach { row ->
             dao.insertEntry(
                 EntryEntity(
                     sessionId = sessionId,
-                    name = ex.name,
-                    equipment = ex.equipment,
-                    targetParts = ex.parts,
-                    orderIndex = index,
-                    targetSets = ex.sets,
-                    targetReps = ex.reps,
-                    restSec = ex.rest,
-                    videoUrl = ex.video,
-                    guideAsset = ex.guide
+                    name = row.name,
+                    equipment = row.equipment,
+                    targetParts = row.parts,
+                    exerciseId = row.exerciseId,
+                    orderIndex = row.orderIndex,
+                    targetSets = row.targetSets,
+                    targetReps = row.targetReps,
+                    restSec = row.restSec,
+                    videoUrl = row.videoUrl,
+                    guideAsset = row.guideId
                 )
             )
         }
@@ -121,7 +198,8 @@ class WorkoutRepository(
         sessionId: Long,
         name: String,
         equipment: String? = null,
-        targetParts: String? = null
+        targetParts: String? = null,
+        exerciseId: Long? = null
     ) {
         val count = dao.entriesOf(sessionId).size
         dao.insertEntry(
@@ -130,6 +208,7 @@ class WorkoutRepository(
                 name = name,
                 equipment = equipment,
                 targetParts = targetParts,
+                exerciseId = exerciseId,
                 orderIndex = count
             )
         )

@@ -3,10 +3,21 @@ package com.komugi.workout
 import android.app.Application
 import com.komugi.workout.data.AppDatabase
 import com.komugi.workout.data.WorkoutRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class KomugiApp : Application() {
 
     val database by lazy { AppDatabase.get(this) }
 
-    val repository by lazy { WorkoutRepository(database.dao(), this) }
+    val repository by lazy { WorkoutRepository(database, this) }
+
+    override fun onCreate() {
+        super.onCreate()
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            repository.ensureSeeded()
+        }
+    }
 }
