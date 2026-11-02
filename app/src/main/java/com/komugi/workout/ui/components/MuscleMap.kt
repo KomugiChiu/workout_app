@@ -69,8 +69,9 @@ fun MuscleMap(
     group: MuscleGroup,
     modifier: Modifier = Modifier
 ) {
-    val baseBody = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.16f)
+    val baseBody = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.32f)
     val accent = MaterialTheme.colorScheme.primary
+    val badgeColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.55f)
 
     val bodyColor: Color =
         if (group == MuscleGroup.FULL_BODY) accent else baseBody
@@ -104,6 +105,14 @@ fun MuscleMap(
         fun px(v: Float): Float = v / 100f * w
         fun py(v: Float): Float = v / 140f * h
         fun sw(v: Float): Float = v / 100f * w
+
+        // 背景徽章（讓淺色人形更明顯）
+        drawRoundRect(
+            color = badgeColor,
+            topLeft = Offset(w * 0.04f, h * 0.02f),
+            size = Size(w * 0.92f, h * 0.94f),
+            cornerRadius = CornerRadius(w * 0.14f, w * 0.14f)
+        )
 
         // 腿
         drawLine(

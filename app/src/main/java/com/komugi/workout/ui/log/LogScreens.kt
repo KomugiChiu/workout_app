@@ -597,7 +597,7 @@ private fun EntryCard(
                             group = group,
                             modifier = Modifier
                                 .padding(end = 4.dp)
-                                .size(40.dp, 56.dp)
+                                .size(46.dp, 64.dp)
                         )
                     }
                 }

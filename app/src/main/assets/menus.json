@@ -71,8 +71,7 @@
     "subtitle": "1kg 啞鈴×2＋8kg 壺鈴｜有氧＋核心＋技術",
     "note": "負荷固定輕，用 tempo、停頓、單邊、距離補強度。",
     "exercises": [
-      { "name": "壺鈴擺盪（雙手）", "equipment": "8kg 壺鈴", "parts": "臀大肌、腿後腱、豎脊肌、核心、握力", "sets": "3", "reps": "15", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=bDCeXbMJVNs", "guide": "swing" },
-      { "name": "單手壺鈴擺盪", "equipment": "8kg 壺鈴", "parts": "臀大肌、腿後腱、核心（抗旋）、握力", "sets": "3", "reps": "10/邊", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=axaCQqM0R1k", "guide": "one-arm-swing" },
+      { "name": "壺鈴擺盪", "equipment": "8kg 壺鈴", "parts": "臀大肌、腿後腱、豎脊肌、核心、握力", "sets": "3", "reps": "15", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=bDCeXbMJVNs", "guide": "swing" },
       { "name": "高腳杯深蹲（底部停 2 秒）", "equipment": "8kg 壺鈴", "parts": "股四頭、臀大肌、核心", "sets": "4", "reps": "12–15", "rest": "90s", "video": "https://www.youtube.com/watch?v=HPshy4NiKgs" },
       { "name": "壺鈴登階", "equipment": "8kg 壺鈴", "parts": "股四頭、臀大肌、腿後腱、小腿", "sets": "3", "reps": "10/腿", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=9ZknEYboBOQ" },
       { "name": "單壺鈴彎身划船", "equipment": "8kg 壺鈴", "parts": "背闊肌、菱形肌、中下斜方、肱二頭（輔助）、握力", "sets": "3", "reps": "12/邊", "rest": "60s", "video": "https://www.youtube.com/watch?v=PgpQ4-jHiq4", "guide": "row" },
@@ -96,10 +95,7 @@
       { "name": "胸前蹲推 Thruster", "equipment": "4–6kg×2", "parts": "股四頭、臀大肌、三角肌、肱三頭、核心", "sets": "3", "reps": "10–12", "rest": "60–75s", "video": "https://www.youtube.com/watch?v=0RJXwEZmcCg" },
       { "name": "側平舉", "equipment": "2–4kg", "parts": "三角肌（中束）", "sets": "2", "reps": "12", "rest": "45s", "video": "https://www.youtube.com/watch?v=Y29xKcze8Ik" },
       { "name": "伏地挺身", "equipment": "自重", "parts": "胸大肌、前三角、肱三頭、核心", "sets": "3", "reps": "力竭前 2 下停", "rest": "60s" },
-      { "name": "死蟲式＋鳥狗式", "equipment": "自重", "parts": "腹橫肌、腹直肌、臀大肌、豎脊肌", "sets": "2–3", "reps": "8/邊", "rest": "45s" },
-      { "name": "三停彎舉", "equipment": "啞鈴 2–4kg", "parts": "肱二頭、肱肌、肱橈肌", "sets": "2–3", "reps": "6–10", "rest": "60s", "guide": "pause-curl" },
-      { "name": "三停三頭肌伸展", "equipment": "啞鈴 2–5kg", "parts": "肱三頭（長／外側／內側頭）", "sets": "2–3", "reps": "1（每點 10 秒）", "rest": "60–90s", "guide": "pause-curl" },
-      { "name": "雙邊農夫行走", "equipment": "啞鈴 8–10kg×2", "parts": "前臂握力、腹斜肌、臀中肌、上背", "sets": "3", "reps": "30–40 公尺", "rest": "60s", "guide": "farmer" }
+      { "name": "死蟲式＋鳥狗式", "equipment": "自重", "parts": "腹橫肌、腹直肌、臀大肌、豎脊肌", "sets": "2–3", "reps": "8/邊", "rest": "45s" }
     ]
   },
   {
@@ -116,6 +112,21 @@
       { "name": "單手壺鈴肩推", "equipment": "8kg 壺鈴", "parts": "三角肌、肱三頭、核心（抗側屈）", "sets": "3", "reps": "8/邊", "rest": "60s" },
       { "name": "壺鈴行李箱搬運", "equipment": "8kg 壺鈴", "parts": "前臂握力、腹斜肌、臀中肌、上背", "sets": "3", "reps": "40 步/邊", "rest": "45s", "video": "https://www.youtube.com/watch?v=ur4ou6mX7sw" },
       { "name": "死蟲式＋俄羅斯旋轉", "equipment": "自重", "parts": "腹直肌、腹斜肌、腹橫肌", "sets": "2–3", "reps": "各 8–16", "rest": "45s" }
+    ]
+  },
+  {
+    "id": "arm-grip",
+    "name": "手臂＋握力日",
+    "subtitle": "三停彎舉・三停三頭・農夫行走",
+    "note": "專項日：放在推／拉日之後或單獨一天；手臂與握力為主，不做大重量下肢。",
+    "exercises": [
+      { "name": "三停彎舉", "equipment": "啞鈴 2–4kg", "parts": "肱二頭、肱肌、肱橈肌", "sets": "2–3", "reps": "6–10", "rest": "60s", "guide": "pause-curl" },
+      { "name": "三停三頭肌伸展", "equipment": "啞鈴 2–5kg", "parts": "肱三頭（長／外側／內側頭）", "sets": "2–3", "reps": "1（每點 10 秒）", "rest": "60–90s", "guide": "pause-curl" },
+      { "name": "雙邊農夫行走", "equipment": "啞鈴 8–10kg×2", "parts": "前臂握力、腹斜肌、臀中肌、上背", "sets": "3", "reps": "30–40 公尺", "rest": "60s", "video": "https://www.youtube.com/watch?v=lLAw6fUccKA", "guide": "farmer" },
+      { "name": "錘式彎舉", "equipment": "啞鈴 4–6kg", "parts": "肱肌、肱橈肌、肱二頭", "sets": "2", "reps": "10–12", "rest": "45–60s" },
+      { "name": "彈力帶三頭下壓", "equipment": "30kg 帶", "parts": "肱三頭（外側頭）", "sets": "2", "reps": "12–15", "rest": "45s", "video": "https://www.youtube.com/watch?v=Y3CDzx-oj3k" },
+      { "name": "彈力帶反向飛鳥", "equipment": "30kg 帶", "parts": "後三角、菱形肌、中下斜方", "sets": "2", "reps": "12–15", "rest": "45s", "video": "https://www.youtube.com/watch?v=cyihFNmsq-A" },
+      { "name": "壺鈴單手擺盪", "equipment": "8kg 壺鈴", "parts": "臀大肌、腿後腱、核心（抗旋）、握力", "sets": "3", "reps": "10/邊", "rest": "60–90s", "video": "https://www.youtube.com/watch?v=axaCQqM0R1k", "guide": "one-arm-swing" }
     ]
   }
 ]

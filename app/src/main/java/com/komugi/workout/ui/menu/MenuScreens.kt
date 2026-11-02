@@ -257,7 +257,7 @@ fun MenuDetailScreen(
                                     group = group,
                                     modifier = Modifier
                                         .padding(start = 6.dp)
-                                        .size(46.dp, 64.dp)
+                                        .size(54.dp, 76.dp)
                                 )
                             }
                         }
