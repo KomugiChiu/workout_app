@@ -1,20 +1,26 @@
 package com.komugi.workout.ui.components
 
-import androidx.compose.foundation.Canvas
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.komugi.workout.R
 
 /**
  * 只取「最主要的訓練部位」：從部位文字中找出最早出現的關鍵字。
@@ -93,211 +99,57 @@ private fun muscleGroupView(group: MuscleGroup): String? = when (group) {
     else -> null
 }
 
+@DrawableRes
+private fun muscleGroupDrawable(group: MuscleGroup): Int = when (group) {
+    MuscleGroup.CHEST -> R.drawable.muscle_chest
+    MuscleGroup.BACK -> R.drawable.muscle_back
+    MuscleGroup.SHOULDERS -> R.drawable.muscle_shoulders
+    MuscleGroup.BICEPS -> R.drawable.muscle_biceps
+    MuscleGroup.TRICEPS -> R.drawable.muscle_triceps
+    MuscleGroup.FOREARMS -> R.drawable.muscle_forearms
+    MuscleGroup.ARMS -> R.drawable.muscle_arms
+    MuscleGroup.CORE -> R.drawable.muscle_core
+    MuscleGroup.GLUTES -> R.drawable.muscle_glutes
+    MuscleGroup.QUADS -> R.drawable.muscle_quads
+    MuscleGroup.HAMSTRINGS -> R.drawable.muscle_hamstrings
+    MuscleGroup.CALVES -> R.drawable.muscle_calves
+    MuscleGroup.FULL_BODY -> R.drawable.muscle_full_body
+}
+
 /**
- * 局部部位圖：只畫出該肌群所在的部位（例：二頭只畫手臂），
- * 灰色為身體、綠色為目標肌肉。
+ * 解剖局部肌群圖（擷取自開源人體肌群圖並局部裁切著色）。
  */
 @Composable
 fun MuscleMap(
     group: MuscleGroup,
     modifier: Modifier = Modifier
 ) {
-    val base = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.28f)
     val accent = MaterialTheme.colorScheme.primary
-    val badgeColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.55f)
+    val badgeColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.65f)
+    val label = muscleGroupView(group)?.let { view ->
+        "${muscleGroupLabel(group)}（$view）"
+    } ?: muscleGroupLabel(group)
 
     Column(modifier) {
-        Canvas(Modifier.weight(1f).fillMaxWidth()) {
-            val w = size.width
-            val h = size.height
-
-            fun px(v: Float): Float = v / 100f * w
-            fun py(v: Float): Float = v / 140f * h
-            fun sw(v: Float): Float = v / 100f * w
-
-            fun line(x1: Float, y1: Float, x2: Float, y2: Float, width: Float, color: Color) {
-                drawLine(
-                    color = color,
-                    start = Offset(px(x1), py(y1)),
-                    end = Offset(px(x2), py(y2)),
-                    strokeWidth = sw(width),
-                    cap = StrokeCap.Round
-                )
-            }
-
-            fun circle(x: Float, y: Float, r: Float, color: Color) {
-                drawCircle(color = color, radius = sw(r), center = Offset(px(x), py(y)))
-            }
-
-            fun oval(x: Float, y: Float, rx: Float, ry: Float, color: Color) {
-                drawOval(
-                    color = color,
-                    topLeft = Offset(px(x - rx), py(y - ry)),
-                    size = Size(px(rx * 2f), py(ry * 2f))
-                )
-            }
-
-            fun rect(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float, color: Color) {
-                drawRoundRect(
-                    color = color,
-                    topLeft = Offset(px(x1), py(y1)),
-                    size = Size(px(x2 - x1), py(y2 - y1)),
-                    cornerRadius = CornerRadius(sw(radius), sw(radius))
-                )
-            }
-
-            // 背景徽章
-            drawRoundRect(
-                color = badgeColor,
-                topLeft = Offset(w * 0.04f, h * 0.02f),
-                size = Size(w * 0.92f, h * 0.94f),
-                cornerRadius = CornerRadius(w * 0.14f, w * 0.14f)
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 2.dp, vertical = 1.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(badgeColor),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = muscleGroupDrawable(group)),
+                contentDescription = label,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
             )
-
-            // 共用身體部位
-            fun drawTorso() {
-                circle(50f, 12f, 9f, base)
-                line(50f, 20f, 50f, 30f, 8f, base)
-                val torso = Path().apply {
-                    moveTo(px(24f), py(30f))
-                    lineTo(px(76f), py(30f))
-                    lineTo(px(68f), py(82f))
-                    lineTo(px(72f), py(120f))
-                    lineTo(px(28f), py(120f))
-                    lineTo(px(32f), py(82f))
-                    close()
-                }
-                drawPath(torso, base)
-                line(24f, 32f, 14f, 70f, 9f, base)
-                line(76f, 32f, 86f, 70f, 9f, base)
-            }
-
-            fun drawArm() {
-                // 彎曲手臂：肩 → 肘 → 腕
-                circle(28f, 18f, 9f, base)
-                line(28f, 26f, 58f, 70f, 20f, base)
-                circle(58f, 70f, 10f, base)
-                line(58f, 70f, 38f, 108f, 14f, base)
-                circle(34f, 118f, 7f, base)
-            }
-
-            fun drawThigh() {
-                // 彎曲腿：髖 → 膝 → 踝
-                circle(30f, 14f, 10f, base)
-                line(30f, 22f, 62f, 68f, 26f, base)
-                circle(62f, 68f, 11f, base)
-                line(62f, 68f, 40f, 112f, 13f, base)
-                oval(36f, 122f, 9f, 6f, base)
-            }
-
-            fun drawCalf() {
-                // 彎曲小腿：膝 → 踝
-                circle(40f, 16f, 12f, base)
-                line(40f, 24f, 62f, 92f, 15f, base)
-                circle(62f, 96f, 7f, base)
-                oval(64f, 108f, 10f, 6f, base)
-            }
-
-            fun drawHips() {
-                val hips = Path().apply {
-                    moveTo(px(30f), py(18f))
-                    lineTo(px(70f), py(18f))
-                    lineTo(px(74f), py(55f))
-                    lineTo(px(62f), py(78f))
-                    lineTo(px(38f), py(78f))
-                    lineTo(px(26f), py(55f))
-                    close()
-                }
-                drawPath(hips, base)
-                line(40f, 76f, 36f, 120f, 16f, base)
-                line(60f, 76f, 64f, 120f, 16f, base)
-            }
-
-            when (group) {
-                MuscleGroup.CHEST -> {
-                    drawTorso()
-                    oval(40f, 55f, 10f, 12f, accent)
-                    oval(60f, 55f, 10f, 12f, accent)
-                    line(50f, 44f, 50f, 66f, 2f, badgeColor)
-                }
-                MuscleGroup.BACK -> {
-                    drawTorso()
-                    val back = Path().apply {
-                        moveTo(px(28f), py(38f))
-                        lineTo(px(72f), py(38f))
-                        lineTo(px(62f), py(88f))
-                        lineTo(px(50f), py(100f))
-                        lineTo(px(38f), py(88f))
-                        close()
-                    }
-                    drawPath(back, accent)
-                    line(50f, 40f, 50f, 96f, 2f, badgeColor)
-                }
-                MuscleGroup.SHOULDERS -> {
-                    drawTorso()
-                    circle(24f, 33f, 9f, accent)
-                    circle(76f, 33f, 9f, accent)
-                }
-                MuscleGroup.CORE -> {
-                    drawTorso()
-                    rect(38f, 66f, 62f, 108f, 6f, accent)
-                    line(50f, 68f, 50f, 106f, 2f, badgeColor)
-                    line(40f, 80f, 60f, 80f, 2f, badgeColor)
-                    line(40f, 92f, 60f, 92f, 2f, badgeColor)
-                }
-                MuscleGroup.BICEPS -> {
-                    drawArm()
-                    line(30f, 38f, 54f, 64f, 11f, accent)
-                }
-                MuscleGroup.TRICEPS -> {
-                    drawArm()
-                    line(36f, 36f, 62f, 62f, 11f, accent)
-                }
-                MuscleGroup.FOREARMS -> {
-                    drawArm()
-                    line(56f, 76f, 40f, 104f, 9f, accent)
-                }
-                MuscleGroup.ARMS -> {
-                    drawArm()
-                    line(28f, 30f, 56f, 68f, 11f, accent)
-                }
-                MuscleGroup.GLUTES -> {
-                    drawHips()
-                    circle(40f, 58f, 13f, accent)
-                    circle(60f, 58f, 13f, accent)
-                    line(50f, 46f, 50f, 72f, 2f, badgeColor)
-                }
-                MuscleGroup.QUADS -> {
-                    drawThigh()
-                    line(32f, 30f, 58f, 62f, 20f, accent)
-                    // 股內側肌（膝內上方淚滴）
-                    oval(56f, 58f, 4.5f, 8f, accent)
-                }
-                MuscleGroup.HAMSTRINGS -> {
-                    drawThigh()
-                    line(26f, 32f, 54f, 62f, 8f, accent)
-                    line(36f, 30f, 64f, 60f, 8f, accent)
-                }
-                MuscleGroup.CALVES -> {
-                    drawCalf()
-                    line(36f, 38f, 54f, 78f, 7f, accent)
-                    line(46f, 36f, 62f, 76f, 7f, accent)
-                }
-                MuscleGroup.FULL_BODY -> {
-                    circle(50f, 12f, 9f, accent)
-                    line(50f, 20f, 50f, 84f, 20f, accent)
-                    line(50f, 42f, 22f, 66f, 9f, accent)
-                    line(50f, 42f, 78f, 66f, 9f, accent)
-                    line(46f, 82f, 38f, 128f, 12f, accent)
-                    line(54f, 82f, 62f, 128f, 12f, accent)
-                }
-            }
         }
 
         Text(
-            text = muscleGroupView(group)?.let { view ->
-                "${muscleGroupLabel(group)}（$view）"
-            } ?: muscleGroupLabel(group),
+            text = label,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             fontSize = 9.sp,
