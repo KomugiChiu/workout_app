@@ -3,12 +3,15 @@ package com.komugi.workout
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import com.komugi.workout.ui.AppRoot
 import com.komugi.workout.ui.theme.KomugiTheme
+import com.komugi.workout.ui.theme.ThemeMode
+import com.komugi.workout.ui.theme.appColorScheme
 
 class MainActivity : ComponentActivity() {
 
@@ -19,12 +22,24 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val theme by themeManager.theme.collectAsState()
+            val mode by themeManager.mode.collectAsState()
 
-            SideEffect {
-                window.statusBarColor = theme.previewColor.toArgb()
+            val darkTheme = when (mode) {
+                ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                ThemeMode.LIGHT -> false
+                ThemeMode.DARK -> true
             }
 
-            KomugiTheme(appTheme = theme) {
+            SideEffect {
+                val barColor = if (darkTheme) {
+                    appColorScheme(theme, true).background
+                } else {
+                    theme.previewColor
+                }
+                window.statusBarColor = barColor.toArgb()
+            }
+
+            KomugiTheme(appTheme = theme, darkTheme = darkTheme) {
                 AppRoot(
                     repository = app.repository,
                     themeManager = themeManager

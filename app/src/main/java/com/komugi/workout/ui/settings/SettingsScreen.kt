@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,12 +37,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.ui.theme.AppTheme
 import com.komugi.workout.ui.theme.ThemeManager
+import com.komugi.workout.ui.theme.ThemeMode
 import com.komugi.workout.util.openUrl
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(themeManager: ThemeManager) {
     val currentTheme by themeManager.theme.collectAsState()
+    val currentMode by themeManager.mode.collectAsState()
     val context = LocalContext.current
 
     Scaffold(
@@ -95,6 +98,30 @@ fun SettingsScreen(themeManager: ThemeManager) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         }
+                    }
+                }
+            }
+
+            item {
+                Spacer(Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(Modifier.height(8.dp))
+                Text("外觀模式", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    "跟隨系統，或固定淺色／深色",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            item {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ThemeMode.entries.forEach { mode ->
+                        FilterChip(
+                            selected = currentMode == mode,
+                            onClick = { themeManager.setMode(mode) },
+                            label = { Text(mode.label) }
+                        )
                     }
                 }
             }
