@@ -68,6 +68,8 @@ import com.komugi.workout.data.EntryUi
 import com.komugi.workout.data.SessionSummary
 import com.komugi.workout.data.SetEntity
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.ui.components.MuscleMap
+import com.komugi.workout.ui.components.primaryMuscleGroup
 import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.formatEpochDay
 import com.komugi.workout.util.formatWeight
@@ -586,6 +588,16 @@ private fun EntryCard(
                             "部位：$it",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                }
+                entry.targetParts?.let { parts ->
+                    primaryMuscleGroup(parts)?.let { group ->
+                        MuscleMap(
+                            group = group,
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .size(40.dp, 56.dp)
                         )
                     }
                 }

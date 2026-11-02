@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -43,6 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.ui.components.MuscleMap
+import com.komugi.workout.ui.components.primaryMuscleGroup
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
 import kotlinx.coroutines.launch
@@ -248,6 +251,14 @@ fun MenuDetailScreen(
                                         color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
+                            }
+                            primaryMuscleGroup(row.parts)?.let { group ->
+                                MuscleMap(
+                                    group = group,
+                                    modifier = Modifier
+                                        .padding(start = 6.dp)
+                                        .size(46.dp, 64.dp)
+                                )
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
