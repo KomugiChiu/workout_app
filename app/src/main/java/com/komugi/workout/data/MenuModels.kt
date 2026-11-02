@@ -28,7 +28,8 @@ data class GuideRef(
     val id: String,
     val title: String,
     val asset: String,
-    val subtitle: String? = null
+    val subtitle: String? = null,
+    val parts: String? = null
 )
 
 @Serializable

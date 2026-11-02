@@ -4,61 +4,71 @@
       "id": "row",
       "title": "划船完整拆解（啞鈴＋彈力帶）",
       "asset": "exercises/one-arm-dumbbell-row.md",
-      "subtitle": "推拉平衡的補拉主藥"
+      "subtitle": "推拉平衡的補拉主藥",
+      "parts": "背闊肌、菱形肌、中下斜方、肱二頭（輔助）"
     },
     {
       "id": "rdl",
       "title": "RDL（羅馬尼亞硬舉）完整拆解",
       "asset": "exercises/romanian-deadlift-rdl.md",
-      "subtitle": "膝蓋凍結、屁股找牆、重量貼腿"
+      "subtitle": "膝蓋凍結、屁股找牆、重量貼腿",
+      "parts": "腿後腱、臀大肌、豎脊肌"
     },
     {
       "id": "bulgarian",
       "title": "保加利亞分腿蹲完整拆解",
       "asset": "exercises/bulgarian-split-squat.md",
-      "subtitle": "單邊蹲的技術王"
+      "subtitle": "單邊蹲的技術王",
+      "parts": "股四頭、臀大肌、腿後腱、核心（抗旋）"
     },
     {
       "id": "swing",
       "title": "壺鈴擺盪完整拆解",
       "asset": "exercises/kettlebell-swing.md",
-      "subtitle": "髖鉸鏈的彈，不是蹲"
+      "subtitle": "髖鉸鏈的彈，不是蹲",
+      "parts": "臀大肌、腿後腱、豎脊肌、核心"
     },
     {
       "id": "fly",
       "title": "飛鳥完整拆解（全分支）",
       "asset": "exercises/chest-fly.md",
-      "subtitle": "手肘凍結、胸帶手抱、頂端夾扁"
+      "subtitle": "手肘凍結、胸帶手抱、頂端夾扁",
+      "parts": "胸大肌、前三角（輔助）"
     },
     {
       "id": "farmer",
       "title": "農夫行走完整拆解",
       "asset": "exercises/farmer-carry.md",
-      "subtitle": "握力、上背、核心抗側屈"
+      "subtitle": "握力、上背、核心抗側屈",
+      "parts": "前臂握力、腹斜肌、臀中肌、上背"
     },
     {
       "id": "pause-curl",
       "title": "三停系列完整拆解（彎舉＋三頭）",
       "asset": "exercises/pause-curl.md",
-      "subtitle": "同一技巧：二頭 2–3 秒、三頭 10 秒"
+      "subtitle": "同一技巧：二頭 2–3 秒、三頭 10 秒",
+      "parts": "肱二頭、肱三頭（兩種版本）"
     },
     {
       "id": "one-arm-swing",
       "title": "單手壺鈴擺盪完整拆解",
       "asset": "exercises/one-arm-swing.md",
-      "subtitle": "髖爆發＋抗旋核心"
+      "subtitle": "髖爆發＋抗旋核心",
+      "parts": "臀大肌、腿後腱、核心（抗旋）、握力"
     },
     {
       "id": "hammer-curl",
       "title": "錘式彎舉完整拆解",
       "asset": "exercises/hammer-curl.md",
-      "subtitle": "掌心相對，練手臂厚度"
+      "subtitle": "掌心相對，練手臂厚度",
+      "parts": "肱肌、肱橈肌、肱二頭"
     },
     {
       "id": "overhead-triceps",
       "title": "啞鈴過頭三頭伸展完整拆解",
       "asset": "exercises/overhead-triceps-extension.md",
-      "subtitle": "長頭優先，手臂後側體積"
+      "subtitle": "長頭優先，手臂後側體積",
+      "parts": "肱三頭（長頭優先）"
     }
   ]
 }
