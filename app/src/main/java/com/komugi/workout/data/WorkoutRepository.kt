@@ -22,7 +22,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 4
+        private const val SEED_VERSION = 5
     }
 
     private val dao = db.dao()
@@ -82,8 +82,11 @@ class WorkoutRepository(
                             )
                         )
                     } else {
-                        if (existing.parts == null &&
-                            (ex.parts != null || ex.video != null || ex.guide != null)
+                        // 菜單主檔更新時同步部位／影片／說明（自訂動作若不在菜單中不受影響）
+                        if (existing.parts != ex.parts ||
+                            existing.videoUrl != ex.video ||
+                            existing.guideId != ex.guide ||
+                            existing.isCustom
                         ) {
                             dao.updateExercise(
                                 existing.copy(

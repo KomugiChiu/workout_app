@@ -53,6 +53,12 @@
       "title": "錘式彎舉完整拆解",
       "asset": "exercises/hammer-curl.md",
       "subtitle": "掌心相對，練手臂厚度"
+    },
+    {
+      "id": "overhead-triceps",
+      "title": "啞鈴過頭三頭伸展完整拆解",
+      "asset": "exercises/overhead-triceps-extension.md",
+      "subtitle": "長頭優先，手臂後側體積"
     }
   ]
 }
