@@ -1,6 +1,13 @@
 {
   "guides": [
     {
+      "id": "muscles",
+      "title": "肌肉部位說明（全圖鑑）",
+      "asset": "exercises/muscle-groups.md",
+      "subtitle": "前／後、上／下肢各肌群位置、功能與動作對照",
+      "parts": "全身（胸、背、肩、二頭、三頭、前臂、核心、臀、股四、腿後、小腿）"
+    },
+    {
       "id": "row",
       "title": "划船完整拆解（啞鈴＋彈力帶）",
       "asset": "exercises/one-arm-dumbbell-row.md",
