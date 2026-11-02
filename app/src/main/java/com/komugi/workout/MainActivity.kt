@@ -31,12 +31,14 @@ class MainActivity : ComponentActivity() {
             }
 
             SideEffect {
+                val scheme = appColorScheme(theme, darkTheme)
                 val barColor = if (darkTheme) {
-                    appColorScheme(theme, true).background
+                    scheme.primaryContainer
                 } else {
-                    theme.previewColor
+                    scheme.primary
                 }
                 window.statusBarColor = barColor.toArgb()
+                window.navigationBarColor = barColor.toArgb()
             }
 
             KomugiTheme(appTheme = theme, darkTheme = darkTheme) {

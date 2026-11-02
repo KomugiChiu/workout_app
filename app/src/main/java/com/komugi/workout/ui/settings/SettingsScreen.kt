@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.komugi.workout.ui.theme.AppTheme
 import com.komugi.workout.ui.theme.ThemeManager
 import com.komugi.workout.ui.theme.ThemeMode
+import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.openUrl
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +49,7 @@ fun SettingsScreen(themeManager: ThemeManager) {
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("選項") }) }
+        topBar = { TopAppBar(title = { Text("選項") }, colors = komugiTopAppBarColors()) }
     ) { padding ->
         LazyColumn(
             modifier = Modifier

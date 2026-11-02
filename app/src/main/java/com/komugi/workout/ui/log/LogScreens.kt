@@ -74,6 +74,7 @@ import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.MuscleMap
 import com.komugi.workout.ui.components.muscleGroupLabel
 import com.komugi.workout.ui.components.primaryMuscleGroup
+import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.formatEpochDay
 import com.komugi.workout.util.formatWeight
@@ -103,6 +104,7 @@ fun LogListScreen(
         topBar = {
             TopAppBar(
                 title = { Text("紀錄") },
+                colors = komugiTopAppBarColors(),
                 actions = {
                     TextButton(
                         onClick = {
@@ -269,6 +271,7 @@ fun LogDetailScreen(
         topBar = {
             TopAppBar(
                 title = { Text(ui?.session?.menuName ?: "訓練紀錄") },
+                colors = komugiTopAppBarColors(),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")

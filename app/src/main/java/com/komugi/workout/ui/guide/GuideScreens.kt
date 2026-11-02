@@ -40,6 +40,7 @@ import com.komugi.workout.data.GuideRef
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleMap
 import com.komugi.workout.ui.components.primaryMuscleGroup
+import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.MarkdownWebView
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +72,7 @@ fun GuideListScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("動作說明") }) }
+        topBar = { TopAppBar(title = { Text("動作說明") }, colors = komugiTopAppBarColors()) }
     ) { padding ->
         Column(
             Modifier
@@ -172,6 +173,7 @@ fun GuideDetailScreen(
         topBar = {
             TopAppBar(
                 title = { Text(guide?.title ?: "動作說明") },
+                colors = komugiTopAppBarColors(),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")

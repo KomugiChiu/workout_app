@@ -2,12 +2,16 @@ package com.komugi.workout.ui.theme
 
 import android.content.Context
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -178,6 +182,32 @@ fun appColorScheme(appTheme: AppTheme, darkTheme: Boolean): ColorScheme =
         AppTheme.OCEAN -> if (darkTheme) OceanDark else OceanLight
         AppTheme.SUNSET -> if (darkTheme) SunsetDark else SunsetLight
     }
+
+/**
+ * 全域 TopAppBar 配色：淺色用 primary，深色用 primaryContainer，
+ * 讓頂部標題列與主題色一致。
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun komugiTopAppBarColors(): TopAppBarColors {
+    val darkTheme = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    val container = if (darkTheme) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.primary
+    }
+    val content = if (darkTheme) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onPrimary
+    }
+    return TopAppBarDefaults.topAppBarColors(
+        containerColor = container,
+        titleContentColor = content,
+        navigationIconContentColor = content,
+        actionIconContentColor = content
+    )
+}
 
 @Composable
 fun KomugiTheme(

@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleMap
 import com.komugi.workout.ui.components.primaryMuscleGroup
+import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
 import kotlinx.coroutines.launch
@@ -60,7 +61,7 @@ fun MenuListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("菜單") })
+            TopAppBar(title = { Text("菜單") }, colors = komugiTopAppBarColors())
         }
     ) { padding ->
         if (menus.isEmpty()) {
@@ -144,6 +145,7 @@ fun MenuDetailScreen(
         topBar = {
             TopAppBar(
                 title = { Text(menu?.name ?: "菜單") },
+                colors = komugiTopAppBarColors(),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")

@@ -7,13 +7,16 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -56,7 +59,19 @@ fun AppRoot(
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            val darkTheme = MaterialTheme.colorScheme.background.luminance() < 0.5f
+            val barContainer = if (darkTheme) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.primary
+            }
+            val barContent = if (darkTheme) {
+                MaterialTheme.colorScheme.onPrimaryContainer
+            } else {
+                MaterialTheme.colorScheme.onPrimary
+            }
+
+            NavigationBar(containerColor = barContainer) {
                 tabs.forEach { tab ->
                     val selected = when (tab.route) {
                         "menus" -> route == "menus" || route?.startsWith("menu/") == true
@@ -66,6 +81,13 @@ fun AppRoot(
                     }
                     NavigationBarItem(
                         selected = selected,
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = barContent,
+                            selectedTextColor = barContent,
+                            indicatorColor = barContent.copy(alpha = 0.2f),
+                            unselectedIconColor = barContent.copy(alpha = 0.65f),
+                            unselectedTextColor = barContent.copy(alpha = 0.65f)
+                        ),
                         onClick = {
                             navController.navigate(tab.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
