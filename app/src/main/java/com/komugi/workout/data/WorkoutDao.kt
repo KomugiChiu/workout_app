@@ -104,6 +104,18 @@ interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMenu(menu: MenuEntity)
 
+    @Query("DELETE FROM menu_exercises")
+    suspend fun clearMenuExercises()
+
+    @Query("DELETE FROM menus")
+    suspend fun clearMenus()
+
+    @Query("SELECT value FROM app_meta WHERE `key` = :key LIMIT 1")
+    suspend fun metaValue(key: String): String?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertMeta(meta: AppMetaEntity)
+
     @Insert
     suspend fun insertMenuExercise(item: MenuExerciseEntity): Long
 

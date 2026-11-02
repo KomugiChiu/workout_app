@@ -147,3 +147,9 @@ data class MenuSummary(
     @Embedded val menu: MenuEntity,
     val exerciseCount: Int
 )
+
+@Entity(tableName = "app_meta")
+data class AppMetaEntity(
+    @PrimaryKey val key: String,
+    val value: String
+)

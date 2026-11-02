@@ -20,6 +20,11 @@ class WorkoutRepository(
     private val db: AppDatabase,
     private val context: Context
 ) {
+    companion object {
+        /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
+        private const val SEED_VERSION = 2
+    }
+
     private val dao = db.dao()
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -45,8 +50,14 @@ class WorkoutRepository(
         context.assets.open(assetPath).bufferedReader().use { it.readText() }
 
     suspend fun ensureSeeded() {
-        if (dao.menuCount() > 0) return
+        val currentVersion = dao.metaValue("seed_version")?.toIntOrNull() ?: 0
+        if (currentVersion >= SEED_VERSION) return
+
         db.withTransaction {
+            // 保留 exercises（含自訂動作）與訓練紀錄；只重建菜單與關聯
+            dao.clearMenuExercises()
+            dao.clearMenus()
+
             menuSeed.forEachIndexed { menuIndex, menu ->
                 dao.insertMenu(
                     MenuEntity(
@@ -98,6 +109,8 @@ class WorkoutRepository(
                     )
                 }
             }
+
+            dao.upsertMeta(AppMetaEntity("seed_version", SEED_VERSION.toString()))
         }
     }
 
