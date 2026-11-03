@@ -23,4 +23,14 @@ object TargetParser {
 
     fun seconds(text: String?): Int? =
         if (text?.contains("秒") == true) firstNumberAtStart(text)?.toInt() else null
+
+    /**
+     * 從「90s」「60–90s」「休 60」等文字取出休息秒數，預設限制在 10–600 秒。
+     */
+    fun restSeconds(text: String?): Int? =
+        Regex("\\d+")
+            .find(text ?: "")
+            ?.value
+            ?.toIntOrNull()
+            ?.coerceIn(10, 600)
 }

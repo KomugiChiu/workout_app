@@ -5,6 +5,7 @@ import androidx.room.withTransaction
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 data class EntryUi(
@@ -48,6 +49,11 @@ class WorkoutRepository(
 
     private val dao = db.dao()
     private val json = Json { ignoreUnknownKeys = true }
+    private val backupJson = Json {
+        prettyPrint = true
+        encodeDefaults = true
+        ignoreUnknownKeys = true
+    }
 
     /**
      * 首次啟動（或升級後）把 assets/menus.json 的菜單種子資料寫進資料庫。
@@ -198,6 +204,64 @@ class WorkoutRepository(
         }
     }
 
+    // ---------- 備份 / 還原 ----------
+
+    suspend fun exportBackupJson(): String {
+        val backup = BackupFile(
+            exportedAt = System.currentTimeMillis(),
+            exercises = dao.allExercises().map { it.toBackup() },
+            menus = dao.allMenus().map { it.toBackup() },
+            menuExercises = dao.allMenuExercises().map { it.toBackup() },
+            sessions = dao.allSessions().map { it.toBackup() },
+            entries = dao.allEntries().map { it.toBackup() },
+            sets = dao.allSets().map { it.toBackup() }
+        )
+        return backupJson.encodeToString(backup)
+    }
+
+    /**
+     * 以備份內容完整取代目前資料；失敗時交易會 rollback。
+     */
+    suspend fun importBackupJson(text: String) {
+        val backup = backupJson.decodeFromString<BackupFile>(text)
+        require(backup.version in 1..BackupFile.BACKUP_VERSION) {
+            "備份版本 ${backup.version} 不受支援，請更新 App 後再匯入。"
+        }
+        require(backup.exercises.isNotEmpty()) {
+            "備份檔沒有動作資料，已取消匯入。"
+        }
+        db.withTransaction {
+            dao.clearAllSets()
+            dao.clearAllEntries()
+            dao.clearAllSessions()
+            dao.clearAllMenuExercises()
+            dao.clearAllMenus()
+            dao.clearAllExercises()
+
+            if (backup.exercises.isNotEmpty()) {
+                dao.insertExercises(backup.exercises.map { it.toEntity() })
+            }
+            if (backup.menus.isNotEmpty()) {
+                dao.insertMenus(backup.menus.map { it.toEntity() })
+            }
+            if (backup.menuExercises.isNotEmpty()) {
+                dao.insertMenuExercises(backup.menuExercises.map { it.toEntity() })
+            }
+            if (backup.sessions.isNotEmpty()) {
+                dao.insertSessions(backup.sessions.map { it.toEntity() })
+            }
+            if (backup.entries.isNotEmpty()) {
+                dao.insertEntries(backup.entries.map { it.toEntity() })
+            }
+            if (backup.sets.isNotEmpty()) {
+                dao.insertSets(backup.sets.map { it.toEntity() })
+            }
+
+            // 已還原完整資料，避免下次啟動又被內建種子覆蓋
+            dao.upsertMeta(AppMetaEntity("seed_version", SEED_VERSION.toString()))
+        }
+    }
+
     // ---------- 菜單 ----------
 
     fun observeMenuSummaries(): Flow<List<MenuSummary>> = dao.observeMenuSummaries()
@@ -286,7 +350,8 @@ class WorkoutRepository(
             SessionEntity(
                 dateEpochDay = epochDay,
                 menuId = menu.id,
-                menuName = menu.name
+                menuName = menu.name,
+                startedAt = System.currentTimeMillis()
             )
         )
         rows.forEach { row ->
@@ -350,7 +415,28 @@ class WorkoutRepository(
     suspend fun deleteMenu(menu: MenuEntity) = dao.deleteMenu(menu)
 
     suspend fun createEmptySession(epochDay: Long): Long =
-        dao.insertSession(SessionEntity(dateEpochDay = epochDay))
+        dao.insertSession(
+            SessionEntity(
+                dateEpochDay = epochDay,
+                startedAt = System.currentTimeMillis()
+            )
+        )
+
+    suspend fun startSession(session: SessionEntity) =
+        dao.updateSession(
+            session.copy(
+                startedAt = session.startedAt ?: System.currentTimeMillis(),
+                finishedAt = null
+            )
+        )
+
+    suspend fun finishSession(session: SessionEntity) =
+        dao.updateSession(
+            session.copy(
+                startedAt = session.startedAt ?: System.currentTimeMillis(),
+                finishedAt = System.currentTimeMillis()
+            )
+        )
 
     /**
      * 把整筆訓練（動作＋組數）複製到指定日期。
@@ -360,7 +446,12 @@ class WorkoutRepository(
         val sourceEntries = dao.entriesOf(sessionId)
         return db.withTransaction {
             val newSessionId = dao.insertSession(
-                source.copy(id = 0, dateEpochDay = targetEpochDay)
+                source.copy(
+                    id = 0,
+                    dateEpochDay = targetEpochDay,
+                    startedAt = null,
+                    finishedAt = null
+                )
             )
             sourceEntries.forEach { entry ->
                 val newEntryId = dao.insertEntry(entry.copy(id = 0, sessionId = newSessionId))

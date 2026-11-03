@@ -1,5 +1,10 @@
 package com.komugi.workout.ui.log
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,20 +48,24 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -78,7 +87,9 @@ import com.komugi.workout.util.formatEpochDay
 import com.komugi.workout.util.formatWeight
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
+import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -260,6 +271,41 @@ fun LogDetailScreen(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
+    val session = ui?.session
+    val now by produceState(
+        initialValue = System.currentTimeMillis(),
+        key1 = session?.startedAt,
+        key2 = session?.finishedAt
+    ) {
+        while (session?.startedAt != null && session?.finishedAt == null) {
+            value = System.currentTimeMillis()
+            delay(1000)
+        }
+    }
+
+    var restVisible by remember { mutableStateOf(false) }
+    var restTotal by remember { mutableStateOf(60) }
+    var restRemaining by remember { mutableStateOf(0) }
+    var restToken by remember { mutableStateOf(0) }
+
+    fun startRest(entry: EntryEntity) {
+        val seconds = TargetParser.restSeconds(entry.restSec) ?: 60
+        restTotal = seconds
+        restRemaining = seconds
+        restVisible = true
+        restToken += 1
+    }
+
+    LaunchedEffect(restToken) {
+        if (restToken == 0) return@LaunchedEffect
+        while (restVisible && restRemaining > 0) {
+            delay(1000)
+            restRemaining -= 1
+        }
+        if (restVisible && restRemaining == 0) {
+            vibrate(context)
+        }
+    }
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showCopyPicker by remember { mutableStateOf(false) }
@@ -311,6 +357,20 @@ fun LogDetailScreen(
                 icon = { Icon(Icons.Filled.Add, contentDescription = null) },
                 text = { Text("新增動作") }
             )
+        },
+        bottomBar = {
+            if (restVisible) {
+                RestTimerBar(
+                    remaining = restRemaining,
+                    total = restTotal,
+                    onAddTime = {
+                        restRemaining += 15
+                        restTotal += 15
+                        if (restRemaining == 15) restToken += 1
+                    },
+                    onSkip = { restVisible = false }
+                )
+            }
         }
     ) { padding ->
         val data = ui
@@ -332,10 +392,41 @@ fun LogDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 item {
-                    Text(
-                        formatEpochDay(data.session.dateEpochDay),
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                    val startedAt = data.session.startedAt
+                    val finishedAt = data.session.finishedAt
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                formatEpochDay(data.session.dateEpochDay),
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            when {
+                                startedAt == null -> Text(
+                                    "尚未開始計時",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                finishedAt == null -> Text(
+                                    "進行中 · ${formatClock((now - startedAt) / 1000)}",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                else -> Text(
+                                    "訓練時間 ${formatClock((finishedAt - startedAt) / 1000)}",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                        when {
+                            startedAt == null -> TextButton(
+                                onClick = { scope.launch { repository.startSession(data.session) } }
+                            ) { Text("開始") }
+                            finishedAt == null -> TextButton(
+                                onClick = { scope.launch { repository.finishSession(data.session) } }
+                            ) { Text("完成") }
+                        }
+                    }
                     Text(
                         "日期預設當天，可點右上日曆修改；右上垃圾桶可刪除整筆紀錄",
                         style = MaterialTheme.typography.bodySmall,
@@ -354,7 +445,10 @@ fun LogDetailScreen(
                     EntryCard(
                         entryUi = entryUi,
                         onAddRecord = { sheetEntry = entryUi },
-                        onDuplicateSet = { scope.launch { repository.duplicateLastSet(entryUi.entry.id) } },
+                        onDuplicateSet = {
+                            scope.launch { repository.duplicateLastSet(entryUi.entry.id) }
+                            startRest(entryUi.entry)
+                        },
                         onDeleteEntry = { scope.launch { repository.deleteEntry(entryUi.entry) } },
                         onDeleteSet = { set -> scope.launch { repository.deleteSet(set) } },
                         onEditSet = { set -> editingSet = set },
@@ -371,7 +465,6 @@ fun LogDetailScreen(
         }
     }
 
-    val session = ui?.session
     if (showDatePicker && session != null) {
         val state = rememberDatePickerState(
             initialSelectedDateMillis = session.dateEpochDay * 86_400_000L
@@ -471,6 +564,9 @@ fun LogDetailScreen(
                     value2 = value2,
                     bodyweight = bodyweight
                 )
+                if (activeType != RecordType.SETS && activeType != RecordType.EQUIPMENT) {
+                    startRest(activeEntryUi.entry)
+                }
                 dialogEntryUi = null
                 dialogType = null
             }
@@ -1085,3 +1181,78 @@ private fun SessionCopyDatePicker(
     }
 }
 
+
+@Composable
+private fun RestTimerBar(
+    remaining: Int,
+    total: Int,
+    onAddTime: () -> Unit,
+    onSkip: () -> Unit
+) {
+    Surface(tonalElevation = 3.dp) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        if (remaining > 0) "組間休息" else "休息結束",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        formatClock(remaining.toLong()),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                TextButton(onClick = onAddTime) { Text("+15 秒") }
+                TextButton(onClick = onSkip) {
+                    Text(if (remaining > 0) "跳過" else "關閉")
+                }
+            }
+            if (total > 0) {
+                LinearProgressIndicator(
+                    progress = { (remaining.toFloat() / total).coerceIn(0f, 1f) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(4.dp),
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            }
+        }
+    }
+}
+
+private fun formatClock(seconds: Long): String {
+    val value = seconds.coerceAtLeast(0)
+    val hours = value / 3600
+    val minutes = (value % 3600) / 60
+    val secs = value % 60
+    return if (hours > 0) {
+        String.format(Locale.US, "%d:%02d:%02d", hours, minutes, secs)
+    } else {
+        String.format(Locale.US, "%d:%02d", minutes, secs)
+    }
+}
+
+private fun vibrate(context: Context) {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)
+            ?.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+    } ?: return
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(
+            VibrationEffect.createOneShot(400, VibrationEffect.DEFAULT_AMPLITUDE)
+        )
+    } else {
+        @Suppress("DEPRECATION")
+        vibrator.vibrate(400)
+    }
+}

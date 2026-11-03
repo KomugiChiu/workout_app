@@ -166,4 +166,60 @@ interface WorkoutDao {
 
     @Update
     suspend fun updateExercise(exercise: ExerciseEntity)
+
+    // ---------- 備份 / 還原 ----------
+
+    @Query("SELECT * FROM exercises")
+    suspend fun allExercises(): List<ExerciseEntity>
+
+    @Query("SELECT * FROM menus")
+    suspend fun allMenus(): List<MenuEntity>
+
+    @Query("SELECT * FROM menu_exercises")
+    suspend fun allMenuExercises(): List<MenuExerciseEntity>
+
+    @Query("SELECT * FROM sessions")
+    suspend fun allSessions(): List<SessionEntity>
+
+    @Query("SELECT * FROM entries")
+    suspend fun allEntries(): List<EntryEntity>
+
+    @Query("SELECT * FROM sets")
+    suspend fun allSets(): List<SetEntity>
+
+    @Query("DELETE FROM sets")
+    suspend fun clearAllSets()
+
+    @Query("DELETE FROM entries")
+    suspend fun clearAllEntries()
+
+    @Query("DELETE FROM sessions")
+    suspend fun clearAllSessions()
+
+    @Query("DELETE FROM menu_exercises")
+    suspend fun clearAllMenuExercises()
+
+    @Query("DELETE FROM menus")
+    suspend fun clearAllMenus()
+
+    @Query("DELETE FROM exercises")
+    suspend fun clearAllExercises()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExercises(items: List<ExerciseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMenus(items: List<MenuEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMenuExercises(items: List<MenuExerciseEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSessions(items: List<SessionEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEntries(items: List<EntryEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSets(items: List<SetEntity>)
 }

@@ -12,7 +12,9 @@ data class SessionEntity(
     val dateEpochDay: Long,
     val menuId: String? = null,
     val menuName: String? = null,
-    val note: String? = null
+    val note: String? = null,
+    val startedAt: Long? = null,
+    val finishedAt: Long? = null
 )
 
 @Entity(

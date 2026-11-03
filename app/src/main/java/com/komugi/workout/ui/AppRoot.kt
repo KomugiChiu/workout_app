@@ -226,7 +226,10 @@ fun AppRoot(
                 )
             }
             composable("settings") {
-                SettingsScreen(themeManager = themeManager)
+                SettingsScreen(
+                    repository = repository,
+                    themeManager = themeManager
+                )
             }
         }
     }
