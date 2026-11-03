@@ -59,6 +59,7 @@ import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.NewEntryInput
 import com.komugi.workout.data.NewMenuExerciseInput
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.ui.components.ExerciseMeta
 import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.muscleGroupLabel
 import com.komugi.workout.ui.components.muscleGroupsIn
@@ -77,26 +78,6 @@ private data class ExerciseDraft(
     val rest: String = "60",
     val superset: String? = null
 )
-
-private val EquipmentCategories = listOf(
-    "自重", "啞鈴", "壺鈴", "槓鈴", "槓片", "彈力帶", "TRX", "其他"
-)
-
-private fun equipmentCategory(raw: String?): String {
-    val text = raw?.trim().orEmpty()
-    return when {
-        text.isEmpty() -> "其他"
-        text.contains("自重") -> "自重"
-        text.contains("壺鈴") || text.contains("ViPR", ignoreCase = true) -> "壺鈴"
-        text.contains("TRX") || text.contains("懸吊") -> "TRX"
-        text.contains("彈力帶") || text.contains("帶") -> "彈力帶"
-        text.contains("槓片") -> "槓片"
-        text.contains("槓") -> "槓鈴"
-        text.contains("啞鈴") -> "啞鈴"
-        Regex("\\d+\\s*kg", RegexOption.IGNORE_CASE).containsMatchIn(text) -> "啞鈴"
-        else -> "其他"
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -126,7 +107,8 @@ fun AddExercisesScreen(
             (keyword.isBlank() || exercise.name.contains(keyword, ignoreCase = true)) &&
                 (partFilter == null ||
                     muscleGroupsIn(exercise.parts, limit = 10).contains(partFilter)) &&
-                (equipmentFilter == null || equipmentCategory(exercise.equipment) == equipmentFilter)
+                (equipmentFilter == null ||
+                    ExerciseMeta.equipmentCategory(exercise.equipment) == equipmentFilter)
         }
     }
 
@@ -385,7 +367,7 @@ private fun ExercisePicker(
         item {
             FilterChipRow(
                 title = "器材",
-                options = listOf<String?>(null) + EquipmentCategories,
+                options = listOf<String?>(null) + ExerciseMeta.equipmentCategories,
                 selected = equipmentFilter,
                 label = { item -> item ?: "全部" },
                 onSelect = onEquipmentFilterChange
@@ -651,6 +633,11 @@ private fun CustomExerciseDialog(
                     onValueChange = { name = it },
                     label = { Text("動作名稱") },
                     singleLine = true
+                )
+                Text(
+                    "命名建議：姿勢＋器材＋動作（例：上斜啞鈴臥推）",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 OutlinedTextField(
                     value = parts,

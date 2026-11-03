@@ -43,7 +43,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 7
+        private const val SEED_VERSION = 10
     }
 
     private val dao = db.dao()
@@ -56,6 +56,12 @@ class WorkoutRepository(
     private val menuSeed: List<Menu> by lazy {
         context.assets.open("menus.json").bufferedReader().use {
             json.decodeFromString<List<Menu>>(it.readText())
+        }
+    }
+
+    private val extraSeed: List<ExtraExercise> by lazy {
+        context.assets.open("exercises_extra.json").bufferedReader().use {
+            json.decodeFromString<List<ExtraExercise>>(it.readText())
         }
     }
 
@@ -132,6 +138,39 @@ class WorkoutRepository(
                             targetSets = ex.sets,
                             targetReps = ex.reps,
                             restSec = ex.rest
+                        )
+                    )
+                }
+            }
+
+            // 動作庫補充動作（不屬於任何菜單）
+            extraSeed.forEach { extra ->
+                val existing = dao.exerciseByName(extra.name)
+                if (existing == null) {
+                    dao.insertExercise(
+                        ExerciseEntity(
+                            name = extra.name,
+                            parts = extra.parts,
+                            equipment = extra.equipment,
+                            location = extra.location,
+                            movementType = extra.movementType,
+                            difficulty = extra.difficulty,
+                            instructions = extra.instructions,
+                            warning = extra.warning,
+                            isCustom = false,
+                            createdAt = System.currentTimeMillis()
+                        )
+                    )
+                } else {
+                    dao.updateExercise(
+                        existing.copy(
+                            parts = if (existing.isCustom) existing.parts else (extra.parts ?: existing.parts),
+                            equipment = if (existing.isCustom) existing.equipment else (extra.equipment ?: existing.equipment),
+                            location = if (existing.isCustom) existing.location else (extra.location ?: existing.location),
+                            movementType = if (existing.isCustom) existing.movementType else (extra.movementType ?: existing.movementType),
+                            difficulty = if (existing.isCustom) existing.difficulty else (extra.difficulty ?: existing.difficulty),
+                            instructions = if (existing.isCustom) existing.instructions else (extra.instructions ?: existing.instructions),
+                            warning = if (existing.isCustom) existing.warning else (extra.warning ?: existing.warning)
                         )
                     )
                 }

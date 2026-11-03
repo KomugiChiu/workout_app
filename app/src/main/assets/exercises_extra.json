@@ -1,0 +1,342 @@
+[
+  {
+    "name": "槓鈴臥推",
+    "parts": "胸大肌、前三角、肱三頭",
+    "equipment": "槓鈴、臥推椅",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "躺平後肩胛骨後收下沉，雙腳踩穩地面。\n握距略寬於肩，將槓鈴控制下放至胸部中段。\n推起至手臂接近伸直但不鎖死，保持手腕中立。",
+    "warning": "不要彈胸或讓手肘過度外展。"
+  },
+  {
+    "name": "上斜槓鈴臥推",
+    "parts": "胸大肌（上胸）、前三角、肱三頭",
+    "equipment": "槓鈴、斜椅",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "將斜椅調整至約 30–45 度，肩胛後收。\n槓鈴下放至鎖骨下方，手肘略低於肩膀。\n沿著斜向推起，頂點不要過度挺腰。",
+    "warning": "斜椅角度過高會讓前三角代償。"
+  },
+  {
+    "name": "滑輪夾胸",
+    "parts": "胸大肌、前三角",
+    "equipment": "滑輪、龍門架",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "站在龍門架中央，雙腳前後站穩，雙手握把。\n手肘微彎固定，將雙臂由外側往胸前夾。\n在胸前短暫停留，再控制回到起始位置。",
+    "warning": "不要用手肘彎曲來代償夾胸。"
+  },
+  {
+    "name": "引體向上",
+    "parts": "背闊肌、肱二頭、核心",
+    "equipment": "單槓",
+    "location": "GYM",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "ADVANCED",
+    "instructions": "雙手正握單槓，懸垂時先讓肩胛骨下沉。\n拉動身體向上，直到下巴超過槓面。\n控制下降，回到手臂伸直但不完全放鬆的位置。",
+    "warning": "避免擺盪或用下半身踢腿借力。"
+  },
+  {
+    "name": "槓鈴划船",
+    "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "髖部後推、膝蓋微彎，背部保持中立。\n將槓鈴拉向腹部，手肘沿著身體兩側移動。\n控制下放，讓背闊肌充分伸展。",
+    "warning": "不要拱背或利用身體上下彈動。"
+  },
+  {
+    "name": "滑輪下拉",
+    "parts": "背闊肌、肱二頭",
+    "equipment": "滑輪、高位下拉機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "坐穩並固定大腿，胸口微挺。\n將握把拉至鎖骨附近，同時讓肩胛骨下壓。\n控制回升，讓背闊肌充分伸展。",
+    "warning": "不要將橫桿拉到頸後。"
+  },
+  {
+    "name": "坐姿滑輪划船",
+    "parts": "背闊肌、菱形肌、肱二頭",
+    "equipment": "滑輪、划船機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "坐直並將雙腳踩穩，膝蓋保持微彎。\n將把手拉向腹部，肩胛骨向後收攏。\n控制伸展手臂，保持軀幹穩定。",
+    "warning": "不要用身體前後擺動來拉動重量。"
+  },
+  {
+    "name": "槓鈴背蹲舉",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "槓鈴、深蹲架",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "將槓鈴放在上背，雙腳與肩同寬站立。\n髖部與膝蓋同時彎曲，下蹲至大腿接近平行。\n腳掌平均出力站起，膝蓋與腳尖方向一致。",
+    "warning": "全程保持背部中立，不要在底部放鬆。"
+  },
+  {
+    "name": "前蹲舉",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "槓鈴、深蹲架",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "將槓鈴放在前三角，手肘抬高維持架式。\n保持軀幹直立下蹲，膝蓋沿腳尖方向彎曲。\n從腳掌中段發力站起，手肘不要掉落。",
+    "warning": "手肘下沉會讓槓鈴往前滑落。"
+  },
+  {
+    "name": "羅馬尼亞硬舉",
+    "parts": "腿後腱、臀大肌、豎脊肌",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙腳與髖同寬，膝蓋微彎固定。\n髖部向後推，讓槓鈴貼著大腿下放。\n感覺腿後腱拉伸後，收緊臀部站起。",
+    "warning": "不要為了下放更低而拱背。"
+  },
+  {
+    "name": "腿推機",
+    "parts": "股四頭、臀大肌",
+    "equipment": "腿推機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "坐穩並將雙腳與肩同寬踩在踏板上。\n控制下放至膝蓋約呈 90 度，骨盆貼緊椅背。\n推起踏板，膝蓋接近伸直但不鎖死。",
+    "warning": "不要讓膝蓋向內夾或臀部離開椅背。"
+  },
+  {
+    "name": "腿伸展機",
+    "parts": "股四頭",
+    "equipment": "腿伸展機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "調整椅背與滾墊，讓膝關節對準機器軸心。\n收緊股四頭將小腿抬起，頂點短暫停留。\n控制下放，不要讓重量快速落下。",
+    "warning": "避免用甩動的方式完成動作。"
+  },
+  {
+    "name": "腿彎舉機",
+    "parts": "腿後腱",
+    "equipment": "腿彎舉機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "調整滾墊位置，讓膝關節與機器軸心對齊。\n屈膝將滾墊往臀部方向帶，保持骨盆穩定。\n控制伸膝回到起始位置。",
+    "warning": "不要用腰部拱起代償。"
+  },
+  {
+    "name": "站姿提踵",
+    "parts": "小腿",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "前腳掌踩在台階或地面，手持啞鈴保持平衡。\n盡可能抬高腳跟，頂點停頓一秒。\n控制下放，讓小腿充分伸展。",
+    "warning": "動作全程保持腳踝穩定，不要內外翻。"
+  },
+  {
+    "name": "槓鈴臀推",
+    "parts": "臀大肌、腿後腱、核心",
+    "equipment": "槓鈴、健身椅",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "上背靠在健身椅邊緣，槓鈴置於髖部。\n收緊核心，將髖部向上推至軀幹與大腿成一直線。\n頂點夾緊臀部，再控制下放。",
+    "warning": "不要用腰椎過度伸展來換取高度。"
+  },
+  {
+    "name": "髖外展機",
+    "parts": "臀中肌、臀小肌",
+    "equipment": "髖外展機",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "坐穩並將雙腿放在外側護墊內。\n收緊臀部，將膝蓋向外展開。\n控制回到起始位置，不要讓重量碰撞。",
+    "warning": "避免用身體後仰或甩動來借力。"
+  },
+  {
+    "name": "站姿槓鈴肩推",
+    "parts": "三角肌、肱三頭、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "站姿將槓鈴放在鎖骨前方，手腕保持中立。\n收緊核心，將槓鈴垂直推過頭。\n控制下放回鎖骨位置，不要過度挺腰。",
+    "warning": "推舉時不要讓肋骨外翻或腰椎過度前凸。"
+  },
+  {
+    "name": "阿諾德推舉",
+    "parts": "三角肌、肱三頭",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "坐姿將啞鈴舉在胸前，掌心朝向自己。\n推起時手腕旋轉，讓掌心逐漸朝前。\n控制下放並反向旋轉回到起始位置。",
+    "warning": "不要在肩膀不適時勉強加大活動範圍。"
+  },
+  {
+    "name": "啞鈴反向飛鳥",
+    "parts": "三角肌後束、上背",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "髖部後推、背部打直，雙手自然垂放。\n手肘微彎，將啞鈴向身體兩側展開。\n控制下放，讓後三角與上背保持張力。",
+    "warning": "不要用耸肩或甩動來帶起重量。"
+  },
+  {
+    "name": "滑輪三頭下壓",
+    "parts": "肱三頭",
+    "equipment": "滑輪",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "站穩並將手肘固定在身體兩側。\n將握把向下壓至手臂伸直，頂點收緊三頭。\n控制回升，手肘位置保持不變。",
+    "warning": "不要用肩膀前傾或身體重量往下壓。"
+  },
+  {
+    "name": "槓鈴彎舉",
+    "parts": "肱二頭",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "站姿雙手與肩同寬握住槓鈴，手肘靠近身體。\n彎舉槓鈴至胸前，頂點收緊二頭。\n控制下放，直到手臂接近伸直。",
+    "warning": "不要用腰部前後擺動來借力。"
+  },
+  {
+    "name": "平板支撐",
+    "parts": "核心、肩、臀",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "手肘放在肩膀正下方，前臂貼地。\n收緊核心與臀部，讓身體從頭到腳成一直線。\n保持自然呼吸，維持到預定時間。",
+    "warning": "不要塌腰或把臀部抬得過高。"
+  },
+  {
+    "name": "側平板支撐",
+    "parts": "腹斜肌、臀中肌",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "側躺並將手肘放在肩膀正下方。\n抬起髖部，讓身體從頭到腳成一直線。\n保持核心收緊，維持到預定時間後換邊。",
+    "warning": "不要讓髖部下沉或身體前後傾倒。"
+  },
+  {
+    "name": "懸垂舉腿",
+    "parts": "腹直肌、髖屈肌、握力",
+    "equipment": "單槓",
+    "location": "GYM",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "ADVANCED",
+    "instructions": "懸垂在單槓上，先讓肩胛骨下沉穩定。\n收緊核心，將雙腿抬起至髖部彎曲。\n控制下放，避免身體前後擺盪。",
+    "warning": "不要用擺盪的 momentum 甩腿。"
+  },
+  {
+    "name": "登山者",
+    "parts": "核心、肩、心肺",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "從高棒式開始，雙手在肩膀正下方。\n交替將膝蓋往胸口帶，保持髖部穩定。\n維持節奏並持續呼吸。",
+    "warning": "不要讓臀部左右晃動或塌腰。"
+  },
+  {
+    "name": "跳繩",
+    "parts": "心肺、小腿",
+    "equipment": "跳繩",
+    "location": "ANY",
+    "movementType": "CARDIO",
+    "difficulty": "BEGINNER",
+    "instructions": "雙手握把，手肘靠近身體，用手腕轉動繩子。\n以前腳掌輕輕落地，保持膝蓋微彎。\n維持穩定節奏，依時間或次數完成。",
+    "warning": "選擇平坦地面，避免在太硬的地面長時間跳躍。"
+  },
+  {
+    "name": "划船機",
+    "parts": "背闊肌、腿後腱、心肺",
+    "equipment": "划船機",
+    "location": "GYM",
+    "movementType": "CARDIO",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "坐穩並固定腳掌，先蹬腿再後仰。\n將把手拉向腹部，肩胛骨向後收攏。\n回程先伸手、再前傾、最後屈膝。",
+    "warning": "不要只用手臂拉動，順序應為腿、軀幹、手。"
+  },
+  {
+    "name": "室內腳踏車",
+    "parts": "股四頭、小腿、心肺",
+    "equipment": "室內腳踏車",
+    "location": "GYM",
+    "movementType": "CARDIO",
+    "difficulty": "BEGINNER",
+    "instructions": "調整座高，讓踏板最低點時膝蓋保持微彎。\n保持核心穩定，以平順的節奏踩踏。\n依時間或阻力設定完成訓練。",
+    "warning": "座墊過低會增加膝蓋壓力。"
+  },
+  {
+    "name": "滑輪臉拉",
+    "parts": "三角肌後束、上背",
+    "equipment": "滑輪、繩索",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "將滑輪設定在臉部高度，雙手握住繩索。\n將繩索拉向臉部，同時讓手肘向外展開。\n頂點外旋並收緊上背，控制回到起始位置。",
+    "warning": "不要用身體後仰來拉動重量。"
+  },
+  {
+    "name": "早安運動",
+    "parts": "腿後腱、臀大肌、豎脊肌",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "將槓鈴放在上背，雙腳與肩同寬。\n膝蓋微彎固定，髖部向後推讓軀幹前傾。\n感覺腿後腱拉伸後，收緊臀部回到站姿。",
+    "warning": "背部全程保持中立，重量不宜過重。"
+  },
+  {
+    "name": "胸肌拉伸",
+    "parts": "胸大肌、前三角",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "站在牆邊或門框旁，將前臂貼在牆面。\n身體微微向前轉，感受胸口伸展。\n保持自然呼吸，維持 20–30 秒後換邊。",
+    "warning": "不要拉到肩膀前側出現刺痛。"
+  },
+  {
+    "name": "臀肌拉伸",
+    "parts": "臀大肌、臀中肌",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "仰躺並將一腳跨到另一腳膝蓋上。\n雙手抱住下方大腿，將膝蓋往胸口帶。\n感受臀部伸展，維持 20–30 秒後換邊。",
+    "warning": "不要用力壓膝蓋，避免髖部不適。"
+  },
+  {
+    "name": "腿後腱拉伸",
+    "parts": "腿後腱、小腿",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "坐姿將一腿伸直，另一腿彎曲。\n保持背部中立，從髖部向前傾。\n感受大腿後側伸展，維持 20–30 秒後換邊。",
+    "warning": "不要拱背硬壓，伸展感應在大腿後側。"
+  },
+  {
+    "name": "肩關節拉伸",
+    "parts": "三角肌、旋轉肌群",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "將一手臂橫跨胸前，另一手輕輕扶住手肘。\n將手臂往身體方向帶，保持肩膀放鬆。\n維持 20–30 秒後換邊。",
+    "warning": "不要用力拉扯肩關節或出現麻木感。"
+  }
+]

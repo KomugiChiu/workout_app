@@ -36,3 +36,18 @@ data class GuideRef(
 data class GuideIndex(
     val guides: List<GuideRef> = emptyList()
 )
+
+/**
+ * 內建動作庫的補充動作（不屬於任何菜單，僅供動作庫與批次新增使用）。
+ */
+@Serializable
+data class ExtraExercise(
+    val name: String,
+    val parts: String? = null,
+    val equipment: String? = null,
+    val location: String? = null,
+    val movementType: String? = null,
+    val difficulty: String? = null,
+    val instructions: String? = null,
+    val warning: String? = null
+)

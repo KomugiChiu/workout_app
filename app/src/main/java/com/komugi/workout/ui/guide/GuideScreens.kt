@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,9 +49,11 @@ import com.komugi.workout.util.MarkdownWebView
 @Composable
 fun GuideListScreen(
     repository: WorkoutRepository,
-    onOpenGuide: (GuideRef) -> Unit
+    onOpenGuide: (GuideRef) -> Unit,
+    onOpenLibrary: () -> Unit
 ) {
     var query by remember { mutableStateOf("") }
+    val exercises by repository.observeExercises().collectAsState(initial = emptyList())
 
     val guideTexts = remember(repository.guides) {
         repository.guides.associate { guide ->
@@ -125,6 +128,24 @@ fun GuideListScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                    item {
+                        Card(
+                            onClick = onOpenLibrary,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(Modifier.padding(16.dp)) {
+                                Text(
+                                    "動作庫",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    "依分類、器材、型態與替代動作瀏覽 ${exercises.size} 個動作",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
                     items(filtered, key = { it.id }) { guide ->
                         Card(
                             onClick = { onOpenGuide(guide) },

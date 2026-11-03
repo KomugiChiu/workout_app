@@ -28,6 +28,8 @@ import androidx.navigation.navArgument
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
+import com.komugi.workout.ui.library.ExerciseLibraryDetailScreen
+import com.komugi.workout.ui.library.ExerciseLibraryScreen
 import com.komugi.workout.ui.log.AddExercisesScreen
 import com.komugi.workout.ui.log.ExerciseProgressScreen
 import com.komugi.workout.ui.log.LogDetailScreen
@@ -80,7 +82,8 @@ fun AppRoot(
                         "menus" -> route == "menus" || route?.startsWith("menu/") == true
                         "logs" -> route == "logs" || route?.startsWith("log/") == true ||
                             route?.startsWith("exercise/") == true
-                        "guides" -> route == "guides" || route?.startsWith("guide/") == true
+                        "guides" -> route == "guides" || route?.startsWith("guide/") == true ||
+                            route == "library" || route?.startsWith("library/") == true
                         else -> route == "settings"
                     }
                     NavigationBarItem(
@@ -189,7 +192,27 @@ fun AppRoot(
             composable("guides") {
                 GuideListScreen(
                     repository = repository,
-                    onOpenGuide = { navController.navigate("guide/${it.id}") }
+                    onOpenGuide = { navController.navigate("guide/${it.id}") },
+                    onOpenLibrary = { navController.navigate("library") }
+                )
+            }
+            composable("library") {
+                ExerciseLibraryScreen(
+                    repository = repository,
+                    onBack = { navController.popBackStack() },
+                    onOpenExercise = { navController.navigate("library/$it") }
+                )
+            }
+            composable(
+                route = "library/{exerciseId}",
+                arguments = listOf(navArgument("exerciseId") { type = NavType.LongType })
+            ) { entry ->
+                ExerciseLibraryDetailScreen(
+                    repository = repository,
+                    exerciseId = entry.arguments?.getLong("exerciseId") ?: 0L,
+                    onBack = { navController.popBackStack() },
+                    onOpenExercise = { navController.navigate("library/$it") },
+                    onOpenGuide = { navController.navigate("guide/$it") }
                 )
             }
             composable(

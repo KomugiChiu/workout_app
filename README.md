@@ -26,6 +26,11 @@
   - **訓練總結**：紀錄詳細頁右上「總結」→ 完成度圓環、動作／組數（目標）、總次數、訓練量、訓練部位分佈，以及每個動作的完成度與明細；超額組數保留但不計入完成度
   - **動作進度**：每個動作卡「歷史」→ 訓練次數、總組數、總次數、最佳重量／最佳單組、累計訓練量；最高重量／訓練量／總次數／總時間趨勢可切換日／週／月，顯示 PR、最近一次與上次差異，並可展開每次訓練的組數明細
 - **動作說明**：11 份完整拆解（**肌肉部位說明全圖鑑**／划船／RDL／保加利亞／壺鈴擺盪／飛鳥／農夫行走／三停系列／單手擺盪／錘式彎舉／過頭三頭伸展）；支援**名稱／內文搜尋**；詳情顯示訓練部位＋局部圖；Markdown 內文的**背景、標題、連結、表格、引言區塊全部跟隨主題色與深色模式**，影片連結可點開
+- **動作庫**：目前 85 個動作（菜單動作＋34 個內建補充＋自訂動作），把「分類」與「標籤」分開：
+  - **分類**：胸、背、肩、二頭、三頭、前臂、手臂、核心、臀、股四、腿後、小腿、全身（只取主要部位）
+  - **標籤**：型態（負重／徒手／靜態／有氧）、地點（通用／居家／健身房／戶外）、器材（自重／啞鈴／壺鈴／槓鈴／槓片／彈力帶／TRX／有氧／其他）
+  - 每個動作顯示難度、步驟、注意事項，並自動推薦 **替代動作**（同分類優先，其次同型態與同器材）
+  - 自訂動作對話框加入命名提示：**姿勢＋器材＋動作**（例：上斜啞鈴臥推）
 - **選項**：三種主題顏色（森林綠／海洋藍／暖陽橘）× 三種外觀模式（跟隨系統／淺色／深色），每種主題都有專屬深色配色；**頂部標題列、狀態列、底部導覽列、系統導覽列、動作說明內文與肌肉部位圖都使用主題色**；即時切換並持久保存
 - **本機儲存**：Room（SQLite），完全離線
 
@@ -57,7 +62,8 @@ export ANDROID_HOME=/home/user/starboard-toolchains/AndroidSdk
 ```
 app/src/main/
 ├── assets/
-│   ├── menus.json          # 8 份菜單（首次啟動種子資料）
+│   ├── menus.json          # 9 份菜單（首次啟動種子資料）
+│   ├── exercises_extra.json # 34 個內建補充動作（動作庫用）
 │   ├── guides.json         # 動作說明索引（11 份）
 │   └── exercises/*.md      # 11 份動作詳解
 └── java/com/komugi/workout/
@@ -68,16 +74,18 @@ app/src/main/
     │   ├── menu/           # 菜單列表／詳情
     │   ├── log/            # 紀錄月曆／詳情／批次新增／訓練總結／動作進度
     │   ├── guide/          # 動作說明
+    │   ├── library/        # 動作庫／分類＋標籤／替代動作
     │   ├── settings/       # 選項（主題切換）
     │   └── theme/          # 三種主題與 ThemeManager
     └── util/               # 日期格式、Markdown→HTML、WebView
 ```
 
-## 資料模型（v8 正規化）
+## 資料模型（v9 正規化）
 
 ```
 exercises（動作主檔）
-  id / name / parts / equipment / videoUrl / guideId / isCustom
+  id / name / parts / equipment / location / movementType / difficulty
+  instructions / warning / videoUrl / guideId / isCustom
 
 menus ──< menu_exercises >── exercises（多對多）
              └ 器材、建議組數/次數、休息（菜單專屬設定）
@@ -94,6 +102,7 @@ sessions ──< entries ──< sets
 - 舊版 `custom_exercises` 於 migration 4→5 併入 `exercises` 後移除
 - migration 6→7 新增 `entries.supersetKey` 與 `exercises.equipment`
 - migration 7→8 新增 `menus.isCustom` 與 `menu_exercises.supersetKey`；重新種子時只重建內建菜單，保留自訂菜單
+- migration 8→9 新增 `exercises` 的地點、型態、難度、步驟與注意事項欄位；`exercises_extra.json` 於種子版本 9 起匯入（最新種子版本 10）
 
 ## 後續可加
 

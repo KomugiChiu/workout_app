@@ -98,7 +98,12 @@ data class ExerciseEntity(
     val guideId: String? = null,
     val isCustom: Boolean = false,
     val createdAt: Long = 0,
-    val equipment: String? = null
+    val equipment: String? = null,
+    val location: String? = null,
+    val movementType: String? = null,
+    val difficulty: String? = null,
+    val instructions: String? = null,
+    val warning: String? = null
 )
 
 @Entity(tableName = "menus")
