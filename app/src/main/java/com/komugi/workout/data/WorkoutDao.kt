@@ -98,7 +98,8 @@ interface WorkoutDao {
     @Query(
         "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
             "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
-            "me.targetReps AS targetReps, me.restSec AS restSec, e.name AS name, e.parts AS parts, " +
+            "me.targetReps AS targetReps, me.restSec AS restSec, me.supersetKey AS supersetKey, " +
+            "e.name AS name, e.parts AS parts, " +
             "e.videoUrl AS videoUrl, e.guideId AS guideId " +
             "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
             "WHERE me.menuId = :menuId ORDER BY me.orderIndex ASC"
@@ -108,7 +109,8 @@ interface WorkoutDao {
     @Query(
         "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
             "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
-            "me.targetReps AS targetReps, me.restSec AS restSec, e.name AS name, e.parts AS parts, " +
+            "me.targetReps AS targetReps, me.restSec AS restSec, me.supersetKey AS supersetKey, " +
+            "e.name AS name, e.parts AS parts, " +
             "e.videoUrl AS videoUrl, e.guideId AS guideId " +
             "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
             "WHERE me.menuId = :menuId ORDER BY me.orderIndex ASC"
@@ -126,6 +128,18 @@ interface WorkoutDao {
 
     @Query("DELETE FROM menus")
     suspend fun clearMenus()
+
+    @Query("DELETE FROM menu_exercises WHERE menuId NOT IN (SELECT id FROM menus WHERE isCustom = 1)")
+    suspend fun clearSeededMenuExercises()
+
+    @Query("DELETE FROM menus WHERE isCustom = 0")
+    suspend fun clearSeededMenus()
+
+    @Query("SELECT COALESCE(MAX(orderIndex), -1) FROM menus")
+    suspend fun maxMenuOrder(): Int
+
+    @Delete
+    suspend fun deleteMenu(menu: MenuEntity)
 
     @Query("SELECT value FROM app_meta WHERE `key` = :key LIMIT 1")
     suspend fun metaValue(key: String): String?

@@ -2,6 +2,7 @@ package com.komugi.workout.data
 
 import android.content.Context
 import androidx.room.withTransaction
+import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.serialization.json.Json
@@ -21,6 +22,15 @@ data class NewEntryInput(
     val equipment: String? = null,
     val targetParts: String? = null,
     val exerciseId: Long? = null,
+    val targetSets: String? = null,
+    val targetReps: String? = null,
+    val restSec: String? = null,
+    val supersetKey: String? = null
+)
+
+data class NewMenuExerciseInput(
+    val exerciseId: Long,
+    val equipment: String? = null,
     val targetSets: String? = null,
     val targetReps: String? = null,
     val restSec: String? = null,
@@ -65,9 +75,9 @@ class WorkoutRepository(
         if (currentVersion >= SEED_VERSION) return
 
         db.withTransaction {
-            // 保留 exercises（含自訂動作）與訓練紀錄；只重建菜單與關聯
-            dao.clearMenuExercises()
-            dao.clearMenus()
+            // 保留自訂菜單；只重建內建菜單與關聯
+            dao.clearSeededMenuExercises()
+            dao.clearSeededMenus()
 
             menuSeed.forEachIndexed { menuIndex, menu ->
                 dao.insertMenu(
@@ -235,12 +245,52 @@ class WorkoutRepository(
                     targetReps = row.targetReps,
                     restSec = row.restSec,
                     videoUrl = row.videoUrl,
-                    guideAsset = row.guideId
+                    guideAsset = row.guideId,
+                    supersetKey = row.supersetKey
                 )
             )
         }
         return sessionId
     }
+
+    /**
+     * 把目前設定的動作、組次、休息與超級組存成自訂菜單。
+     */
+    suspend fun createCustomMenu(
+        name: String,
+        subtitle: String? = null,
+        items: List<NewMenuExerciseInput>
+    ): String {
+        val menuId = "custom-${UUID.randomUUID()}"
+        db.withTransaction {
+            dao.insertMenu(
+                MenuEntity(
+                    id = menuId,
+                    name = name.trim(),
+                    subtitle = subtitle,
+                    orderIndex = dao.maxMenuOrder() + 1,
+                    isCustom = true
+                )
+            )
+            items.forEachIndexed { index, item ->
+                dao.insertMenuExercise(
+                    MenuExerciseEntity(
+                        menuId = menuId,
+                        exerciseId = item.exerciseId,
+                        orderIndex = index,
+                        equipment = item.equipment,
+                        targetSets = item.targetSets,
+                        targetReps = item.targetReps,
+                        restSec = item.restSec,
+                        supersetKey = item.supersetKey
+                    )
+                )
+            }
+        }
+        return menuId
+    }
+
+    suspend fun deleteMenu(menu: MenuEntity) = dao.deleteMenu(menu)
 
     suspend fun createEmptySession(epochDay: Long): Long =
         dao.insertSession(SessionEntity(dateEpochDay = epochDay))

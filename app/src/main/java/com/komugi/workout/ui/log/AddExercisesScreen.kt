@@ -1,5 +1,6 @@
 package com.komugi.workout.ui.log
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +35,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -50,10 +52,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.NewEntryInput
+import com.komugi.workout.data.NewMenuExerciseInput
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.muscleGroupLabel
@@ -104,12 +108,14 @@ fun AddExercisesScreen(
 ) {
     val exercises by repository.observeExercises().collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     var step by remember { mutableStateOf(AddStep.PICK) }
     var search by remember { mutableStateOf("") }
     var partFilter by remember { mutableStateOf<MuscleGroup?>(null) }
     var equipmentFilter by remember { mutableStateOf<String?>(null) }
     var showCustomDialog by remember { mutableStateOf(false) }
+    var showSaveMenuDialog by remember { mutableStateOf(false) }
 
     val selectedIds = remember { mutableStateListOf<Long>() }
     val drafts = remember { mutableStateListOf<ExerciseDraft>() }
@@ -204,6 +210,15 @@ fun AddExercisesScreen(
                         style = MaterialTheme.typography.labelLarge,
                         modifier = Modifier.weight(1f)
                     )
+                    if (step == AddStep.CONFIGURE) {
+                        OutlinedButton(
+                            onClick = { showSaveMenuDialog = true },
+                            enabled = drafts.isNotEmpty()
+                        ) {
+                            Text("存為菜單")
+                        }
+                        Spacer(Modifier.width(8.dp))
+                    }
                     Button(
                         onClick = {
                             if (step == AddStep.PICK) proceed() else confirm()
@@ -269,6 +284,59 @@ fun AddExercisesScreen(
                         if (!selectedIds.contains(exercise.id)) selectedIds.add(exercise.id)
                     }
                     showCustomDialog = false
+                }
+            }
+        )
+    }
+
+    if (showSaveMenuDialog) {
+        SaveMenuDialog(
+            onDismiss = { showSaveMenuDialog = false },
+            onConfirm = { name, alsoAdd ->
+                val counts = drafts.mapNotNull { it.superset }
+                    .groupingBy { it }
+                    .eachCount()
+                val normalized = drafts.map { draft ->
+                    draft.copy(
+                        superset = draft.superset?.takeIf { (counts[it] ?: 0) >= 2 }
+                    )
+                }
+                val menuItems = normalized.map {
+                    NewMenuExerciseInput(
+                        exerciseId = it.exercise.id,
+                        equipment = it.exercise.equipment,
+                        targetSets = it.sets.trim().ifBlank { null },
+                        targetReps = it.reps.trim().ifBlank { null },
+                        restSec = it.rest.trim().ifBlank { null },
+                        supersetKey = it.superset
+                    )
+                }
+                showSaveMenuDialog = false
+                scope.launch {
+                    repository.createCustomMenu(name, null, menuItems)
+                    if (alsoAdd) {
+                        repository.addEntries(
+                            sessionId,
+                            normalized.map {
+                                NewEntryInput(
+                                    name = it.exercise.name,
+                                    equipment = it.exercise.equipment,
+                                    targetParts = it.exercise.parts,
+                                    exerciseId = it.exercise.id,
+                                    targetSets = it.sets.trim().ifBlank { null },
+                                    targetReps = it.reps.trim().ifBlank { null },
+                                    restSec = it.rest.trim().ifBlank { null },
+                                    supersetKey = it.superset
+                                )
+                            }
+                        )
+                    }
+                    Toast.makeText(
+                        context,
+                        if (alsoAdd) "已存為菜單並加入訓練" else "已存為自訂菜單",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    onDone()
                 }
             }
         )
@@ -609,6 +677,46 @@ private fun CustomExerciseDialog(
                 },
                 enabled = name.isNotBlank()
             ) { Text("建立並選取") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("取消") }
+        }
+    )
+}
+
+@Composable
+private fun SaveMenuDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (String, Boolean) -> Unit
+) {
+    var name by remember { mutableStateOf("我的課表") }
+    var alsoAdd by remember { mutableStateOf(true) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("存為自訂菜單") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("菜單名稱") },
+                    singleLine = true
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable { alsoAdd = !alsoAdd }
+                ) {
+                    Checkbox(checked = alsoAdd, onCheckedChange = { alsoAdd = it })
+                    Text("同時加入本次訓練")
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onConfirm(name.trim(), alsoAdd) },
+                enabled = name.isNotBlank()
+            ) { Text("儲存") }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text("取消") }

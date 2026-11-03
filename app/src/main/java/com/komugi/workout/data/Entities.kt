@@ -107,7 +107,8 @@ data class MenuEntity(
     val name: String,
     val subtitle: String? = null,
     val note: String? = null,
-    val orderIndex: Int = 0
+    val orderIndex: Int = 0,
+    val isCustom: Boolean = false
 )
 
 /**
@@ -140,7 +141,8 @@ data class MenuExerciseEntity(
     val equipment: String? = null,
     val targetSets: String? = null,
     val targetReps: String? = null,
-    val restSec: String? = null
+    val restSec: String? = null,
+    val supersetKey: String? = null
 )
 
 data class MenuExerciseRow(
@@ -155,7 +157,8 @@ data class MenuExerciseRow(
     val name: String,
     val parts: String?,
     val videoUrl: String?,
-    val guideId: String?
+    val guideId: String?,
+    val supersetKey: String?
 )
 
 data class MenuSummary(

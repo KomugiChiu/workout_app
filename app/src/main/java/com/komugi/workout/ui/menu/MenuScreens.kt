@@ -18,7 +18,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -102,7 +104,20 @@ fun MenuListScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(Modifier.padding(16.dp)) {
-                            Text(summary.menu.name, style = MaterialTheme.typography.titleMedium)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    summary.menu.name,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                if (summary.menu.isCustom) {
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(
+                                        "自訂",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
                             summary.menu.subtitle?.let {
                                 Text(
                                     it,
@@ -140,6 +155,7 @@ fun MenuDetailScreen(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val creating = remember { mutableStateOf(false) }
+    var showDeleteMenu by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -149,6 +165,13 @@ fun MenuDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
+                    }
+                },
+                actions = {
+                    if (menu?.isCustom == true) {
+                        IconButton(onClick = { showDeleteMenu = true }) {
+                            Icon(Icons.Filled.Delete, contentDescription = "刪除課表")
+                        }
                     }
                 }
             )
@@ -227,6 +250,13 @@ fun MenuDetailScreen(
                             )
                             Column(Modifier.weight(1f)) {
                                 Text(row.name, style = MaterialTheme.typography.titleMedium)
+                                row.supersetKey?.let {
+                                    Text(
+                                        "超級組 $it",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.tertiary
+                                    )
+                                }
                                 val meta = listOfNotNull(
                                     row.targetSets?.let { "$it 組" },
                                     row.targetReps?.let { "$it 下" },
@@ -286,5 +316,32 @@ fun MenuDetailScreen(
                 }
             }
         }
+    }
+
+    val currentMenu = menu
+    if (showDeleteMenu && currentMenu != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteMenu = false },
+            title = { Text("刪除自訂菜單？") },
+            text = {
+                Text("「${currentMenu.name}」會從菜單列表移除，但不會影響已建立的訓練紀錄。")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteMenu = false
+                        scope.launch {
+                            repository.deleteMenu(currentMenu)
+                            onBack()
+                        }
+                    }
+                ) {
+                    Text("刪除", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteMenu = false }) { Text("取消") }
+            }
+        )
     }
 }
