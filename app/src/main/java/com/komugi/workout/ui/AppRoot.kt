@@ -28,6 +28,7 @@ import androidx.navigation.navArgument
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
+import com.komugi.workout.ui.log.ExerciseProgressScreen
 import com.komugi.workout.ui.log.LogDetailScreen
 import com.komugi.workout.ui.log.LogListScreen
 import com.komugi.workout.ui.log.SessionSummaryScreen
@@ -76,7 +77,8 @@ fun AppRoot(
                 tabs.forEach { tab ->
                     val selected = when (tab.route) {
                         "menus" -> route == "menus" || route?.startsWith("menu/") == true
-                        "logs" -> route == "logs" || route?.startsWith("log/") == true
+                        "logs" -> route == "logs" || route?.startsWith("log/") == true ||
+                            route?.startsWith("exercise/") == true
                         "guides" -> route == "guides" || route?.startsWith("guide/") == true
                         else -> route == "settings"
                     }
@@ -146,7 +148,8 @@ fun AppRoot(
                     sessionId = sessionId,
                     onBack = { navController.popBackStack() },
                     onOpenGuide = { navController.navigate("guide/$it") },
-                    onOpenSummary = { navController.navigate("log/$sessionId/summary") }
+                    onOpenSummary = { navController.navigate("log/$sessionId/summary") },
+                    onOpenExerciseHistory = { navController.navigate("exercise/$it") }
                 )
             }
             composable(
@@ -156,6 +159,17 @@ fun AppRoot(
                 SessionSummaryScreen(
                     repository = repository,
                     sessionId = entry.arguments?.getLong("sessionId") ?: 0L,
+                    onBack = { navController.popBackStack() },
+                    onOpenExerciseHistory = { navController.navigate("exercise/$it") }
+                )
+            }
+            composable(
+                route = "exercise/{entryId}",
+                arguments = listOf(navArgument("entryId") { type = NavType.LongType })
+            ) { entry ->
+                ExerciseProgressScreen(
+                    repository = repository,
+                    entryId = entry.arguments?.getLong("entryId") ?: 0L,
                     onBack = { navController.popBackStack() }
                 )
             }

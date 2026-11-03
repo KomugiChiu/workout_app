@@ -34,6 +34,20 @@ interface WorkoutDao {
     )
     fun observeSets(sessionId: Long): Flow<List<SetEntity>>
 
+    @Query("SELECT * FROM entries WHERE id = :id")
+    suspend fun entryById(id: Long): EntryEntity?
+
+    @Query(
+        "SELECT ss.id AS sessionId, ss.dateEpochDay AS dateEpochDay, ss.menuName AS menuName, " +
+            "e.id AS entryId, e.name AS entryName, st.weightKg AS weightKg, st.reps AS reps, " +
+            "st.durationSec AS durationSec, st.isBodyweight AS isBodyweight " +
+            "FROM sets st INNER JOIN entries e ON st.entryId = e.id " +
+            "INNER JOIN sessions ss ON e.sessionId = ss.id " +
+            "WHERE (e.exerciseId = :exerciseId OR e.name = :name) " +
+            "ORDER BY ss.dateEpochDay ASC, ss.id ASC, st.setIndex ASC"
+    )
+    fun observeExerciseSets(exerciseId: Long, name: String): Flow<List<ExerciseSetRow>>
+
     @Insert
     suspend fun insertSession(session: SessionEntity): Long
 

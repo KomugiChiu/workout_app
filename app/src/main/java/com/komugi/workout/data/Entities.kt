@@ -69,6 +69,19 @@ data class SessionSummary(
     val entryCount: Int
 )
 
+/** 單一動作的歷史組數（跨訓練紀錄），用於動作進度頁。 */
+data class ExerciseSetRow(
+    val sessionId: Long,
+    val dateEpochDay: Long,
+    val menuName: String?,
+    val entryId: Long,
+    val entryName: String,
+    val weightKg: Double?,
+    val reps: Int?,
+    val durationSec: Int?,
+    val isBodyweight: Boolean
+)
+
 /**
  * 動作主檔：所有動作的唯一來源（菜單動作＋自訂動作）。
  */

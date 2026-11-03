@@ -175,6 +175,14 @@ class WorkoutRepository(
             }
         }
 
+    suspend fun entryById(id: Long): EntryEntity? = dao.entryById(id)
+
+    /**
+     * 某個動作的歷史組數：以 exerciseId 為主，並用名稱補齊舊資料（舊版沒有 exerciseId）。
+     */
+    fun observeExerciseSets(exerciseId: Long?, name: String): Flow<List<ExerciseSetRow>> =
+        dao.observeExerciseSets(exerciseId ?: -1L, name)
+
     /**
      * 從菜單建立訓練：把當下的菜單內容「快照」進紀錄，
      * 之後修改菜單不會影響已建立的歷史。

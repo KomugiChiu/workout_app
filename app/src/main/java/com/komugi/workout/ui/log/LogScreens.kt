@@ -258,7 +258,8 @@ fun LogDetailScreen(
     sessionId: Long,
     onBack: () -> Unit,
     onOpenGuide: (String) -> Unit,
-    onOpenSummary: () -> Unit
+    onOpenSummary: () -> Unit,
+    onOpenExerciseHistory: (Long) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -363,6 +364,7 @@ fun LogDetailScreen(
                         onDeleteEntry = { scope.launch { repository.deleteEntry(entryUi.entry) } },
                         onDeleteSet = { set -> scope.launch { repository.deleteSet(set) } },
                         onEditSet = { set -> editingSet = set },
+                        onOpenHistory = { onOpenExerciseHistory(entryUi.entry.id) },
                         onOpenGuide = {
                             entryUi.entry.guideAsset?.let { guideId -> onOpenGuide(guideId) }
                         },
@@ -613,6 +615,7 @@ private fun EntryCard(
     onDeleteEntry: () -> Unit,
     onDeleteSet: (SetEntity) -> Unit,
     onEditSet: (SetEntity) -> Unit,
+    onOpenHistory: () -> Unit,
     onOpenGuide: () -> Unit,
     onOpenVideo: () -> Unit
 ) {
@@ -734,6 +737,7 @@ private fun EntryCard(
                     Text("新增紀錄")
                 }
                 TextButton(onClick = onDuplicateSet) { Text("＋組") }
+                TextButton(onClick = onOpenHistory) { Text("歷史") }
                 if (entry.guideAsset != null) {
                     TextButton(onClick = onOpenGuide) { Text("說明") }
                 }

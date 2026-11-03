@@ -128,7 +128,8 @@ private fun computeStats(ui: SessionUi): SessionStats {
 fun SessionSummaryScreen(
     repository: WorkoutRepository,
     sessionId: Long,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onOpenExerciseHistory: (Long) -> Unit
 ) {
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
 
@@ -195,7 +196,10 @@ fun SessionSummaryScreen(
                 }
             } else {
                 items(stats.entries, key = { it.entry.id }) { entry ->
-                    EntryProgressCard(entry = entry)
+                    EntryProgressCard(
+                        entry = entry,
+                        onClick = { onOpenExerciseHistory(entry.entry.id) }
+                    )
                 }
             }
             item {
@@ -388,8 +392,11 @@ private fun MuscleBalanceCard(stats: SessionStats) {
 }
 
 @Composable
-private fun EntryProgressCard(entry: EntryProgress) {
-    Card(Modifier.fillMaxWidth()) {
+private fun EntryProgressCard(entry: EntryProgress, onClick: () -> Unit) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.Top) {
                 Column(Modifier.weight(1f)) {
@@ -446,6 +453,14 @@ private fun EntryProgressCard(entry: EntryProgress) {
                 detail.joinToString(" · "),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.secondary
+            )
+            Text(
+                "查看歷史 ›",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(top = 4.dp)
             )
         }
     }
