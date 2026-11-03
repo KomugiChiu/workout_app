@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -43,6 +44,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.ModalBottomSheet
@@ -113,7 +115,10 @@ fun LogListScreen(
                                 val id = repository.createEmptySession(selectedEpochDay)
                                 onOpenSession(id)
                             }
-                        }
+                        },
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = LocalContentColor.current
+                        )
                     ) {
                         Icon(Icons.Filled.Add, contentDescription = null)
                         Text("新紀錄")
@@ -252,7 +257,8 @@ fun LogDetailScreen(
     repository: WorkoutRepository,
     sessionId: Long,
     onBack: () -> Unit,
-    onOpenGuide: (String) -> Unit
+    onOpenGuide: (String) -> Unit,
+    onOpenSummary: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -279,7 +285,20 @@ fun LogDetailScreen(
                     }
                 },
                 actions = {
-                    TextButton(onClick = { showCopyPicker = true }) {
+                    TextButton(
+                        onClick = onOpenSummary,
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = LocalContentColor.current
+                        )
+                    ) {
+                        Text("總結")
+                    }
+                    TextButton(
+                        onClick = { showCopyPicker = true },
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = LocalContentColor.current
+                        )
+                    ) {
                         Text("複製")
                     }
                     IconButton(onClick = { showDatePicker = true }) {

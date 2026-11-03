@@ -30,6 +30,7 @@ import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
 import com.komugi.workout.ui.log.LogDetailScreen
 import com.komugi.workout.ui.log.LogListScreen
+import com.komugi.workout.ui.log.SessionSummaryScreen
 import com.komugi.workout.ui.menu.MenuDetailScreen
 import com.komugi.workout.ui.menu.MenuListScreen
 import com.komugi.workout.ui.settings.SettingsScreen
@@ -139,11 +140,23 @@ fun AppRoot(
                 route = "log/{sessionId}",
                 arguments = listOf(navArgument("sessionId") { type = NavType.LongType })
             ) { entry ->
+                val sessionId = entry.arguments?.getLong("sessionId") ?: 0L
                 LogDetailScreen(
                     repository = repository,
-                    sessionId = entry.arguments?.getLong("sessionId") ?: 0L,
+                    sessionId = sessionId,
                     onBack = { navController.popBackStack() },
-                    onOpenGuide = { navController.navigate("guide/$it") }
+                    onOpenGuide = { navController.navigate("guide/$it") },
+                    onOpenSummary = { navController.navigate("log/$sessionId/summary") }
+                )
+            }
+            composable(
+                route = "log/{sessionId}/summary",
+                arguments = listOf(navArgument("sessionId") { type = NavType.LongType })
+            ) { entry ->
+                SessionSummaryScreen(
+                    repository = repository,
+                    sessionId = entry.arguments?.getLong("sessionId") ?: 0L,
+                    onBack = { navController.popBackStack() }
                 )
             }
             composable("guides") {
