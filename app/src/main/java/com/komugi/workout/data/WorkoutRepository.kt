@@ -16,13 +16,24 @@ data class SessionUi(
     val entries: List<EntryUi>
 )
 
+data class NewEntryInput(
+    val name: String,
+    val equipment: String? = null,
+    val targetParts: String? = null,
+    val exerciseId: Long? = null,
+    val targetSets: String? = null,
+    val targetReps: String? = null,
+    val restSec: String? = null,
+    val supersetKey: String? = null
+)
+
 class WorkoutRepository(
     private val db: AppDatabase,
     private val context: Context
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 6
+        private const val SEED_VERSION = 7
     }
 
     private val dao = db.dao()
@@ -75,6 +86,7 @@ class WorkoutRepository(
                             ExerciseEntity(
                                 name = ex.name,
                                 parts = ex.parts,
+                                equipment = ex.equipment,
                                 videoUrl = ex.video,
                                 guideId = ex.guide,
                                 isCustom = false,
@@ -82,8 +94,9 @@ class WorkoutRepository(
                             )
                         )
                     } else {
-                        // 菜單主檔更新時同步部位／影片／說明（自訂動作若不在菜單中不受影響）
+                        // 菜單主檔更新時同步部位／器材／影片／說明（自訂動作若不在菜單中不受影響）
                         if (existing.parts != ex.parts ||
+                            existing.equipment != ex.equipment ||
                             existing.videoUrl != ex.video ||
                             existing.guideId != ex.guide ||
                             existing.isCustom
@@ -91,6 +104,7 @@ class WorkoutRepository(
                             dao.updateExercise(
                                 existing.copy(
                                     parts = ex.parts ?: existing.parts,
+                                    equipment = ex.equipment ?: existing.equipment,
                                     videoUrl = ex.video ?: existing.videoUrl,
                                     guideId = ex.guide ?: existing.guideId,
                                     isCustom = false
@@ -133,7 +147,11 @@ class WorkoutRepository(
     suspend fun exerciseByName(name: String): ExerciseEntity? =
         dao.exerciseByName(name.trim())
 
-    suspend fun rememberExercise(name: String, parts: String? = null) {
+    suspend fun rememberExercise(
+        name: String,
+        parts: String? = null,
+        equipment: String? = null
+    ) {
         val clean = name.trim()
         if (clean.isEmpty()) return
         val existing = dao.exerciseByName(clean)
@@ -142,12 +160,19 @@ class WorkoutRepository(
                 ExerciseEntity(
                     name = clean,
                     parts = parts,
+                    equipment = equipment,
                     isCustom = true,
                     createdAt = System.currentTimeMillis()
                 )
             )
-        } else if (existing.parts == null && parts != null) {
-            dao.updateExercise(existing.copy(parts = parts))
+        } else {
+            val newParts = existing.parts ?: parts
+            val newEquipment = existing.equipment ?: equipment
+            if (newParts != existing.parts || newEquipment != existing.equipment) {
+                dao.updateExercise(
+                    existing.copy(parts = newParts, equipment = newEquipment)
+                )
+            }
         }
     }
 
@@ -248,7 +273,11 @@ class WorkoutRepository(
         name: String,
         equipment: String? = null,
         targetParts: String? = null,
-        exerciseId: Long? = null
+        exerciseId: Long? = null,
+        targetSets: String? = null,
+        targetReps: String? = null,
+        restSec: String? = null,
+        supersetKey: String? = null
     ) {
         val count = dao.entriesOf(sessionId).size
         dao.insertEntry(
@@ -258,9 +287,39 @@ class WorkoutRepository(
                 equipment = equipment,
                 targetParts = targetParts,
                 exerciseId = exerciseId,
-                orderIndex = count
+                orderIndex = count,
+                targetSets = targetSets,
+                targetReps = targetReps,
+                restSec = restSec,
+                supersetKey = supersetKey
             )
         )
+    }
+
+    /**
+     * 批次加入動作（多選後一次寫入），保留選擇順序。
+     */
+    suspend fun addEntries(sessionId: Long, items: List<NewEntryInput>) {
+        if (items.isEmpty()) return
+        db.withTransaction {
+            var order = dao.entriesOf(sessionId).size
+            items.forEach { item ->
+                dao.insertEntry(
+                    EntryEntity(
+                        sessionId = sessionId,
+                        name = item.name,
+                        equipment = item.equipment,
+                        targetParts = item.targetParts,
+                        exerciseId = item.exerciseId,
+                        orderIndex = order++,
+                        targetSets = item.targetSets,
+                        targetReps = item.targetReps,
+                        restSec = item.restSec,
+                        supersetKey = item.supersetKey
+                    )
+                )
+            }
+        }
     }
 
     suspend fun updateEntry(entry: EntryEntity) = dao.updateEntry(entry)

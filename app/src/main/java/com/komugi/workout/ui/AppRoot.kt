@@ -28,6 +28,7 @@ import androidx.navigation.navArgument
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
+import com.komugi.workout.ui.log.AddExercisesScreen
 import com.komugi.workout.ui.log.ExerciseProgressScreen
 import com.komugi.workout.ui.log.LogDetailScreen
 import com.komugi.workout.ui.log.LogListScreen
@@ -149,7 +150,19 @@ fun AppRoot(
                     onBack = { navController.popBackStack() },
                     onOpenGuide = { navController.navigate("guide/$it") },
                     onOpenSummary = { navController.navigate("log/$sessionId/summary") },
-                    onOpenExerciseHistory = { navController.navigate("exercise/$it") }
+                    onOpenExerciseHistory = { navController.navigate("exercise/$it") },
+                    onOpenAddExercises = { navController.navigate("log/$sessionId/add") }
+                )
+            }
+            composable(
+                route = "log/{sessionId}/add",
+                arguments = listOf(navArgument("sessionId") { type = NavType.LongType })
+            ) { entry ->
+                AddExercisesScreen(
+                    repository = repository,
+                    sessionId = entry.arguments?.getLong("sessionId") ?: 0L,
+                    onBack = { navController.popBackStack() },
+                    onDone = { navController.popBackStack() }
                 )
             }
             composable(

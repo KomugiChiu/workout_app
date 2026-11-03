@@ -1,14 +1,17 @@
 package com.komugi.workout.ui.log
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,10 +38,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -46,7 +46,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -68,15 +67,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.EntryEntity
 import com.komugi.workout.data.EntryUi
-import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.SessionSummary
 import com.komugi.workout.data.SetEntity
 import com.komugi.workout.data.WorkoutRepository
-import com.komugi.workout.ui.components.MuscleGroup
 import com.komugi.workout.ui.components.MuscleMap
-import com.komugi.workout.ui.components.muscleGroupLabel
 import com.komugi.workout.ui.components.muscleGroupsIn
-import com.komugi.workout.ui.components.primaryMuscleGroup
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.formatEpochDay
@@ -259,16 +254,15 @@ fun LogDetailScreen(
     onBack: () -> Unit,
     onOpenGuide: (String) -> Unit,
     onOpenSummary: () -> Unit,
-    onOpenExerciseHistory: (Long) -> Unit
+    onOpenExerciseHistory: (Long) -> Unit,
+    onOpenAddExercises: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
-    val exercises by remember { repository.observeExercises() }.collectAsState(initial = emptyList())
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showCopyPicker by remember { mutableStateOf(false) }
-    var showAddExercise by remember { mutableStateOf(false) }
     var showDeleteSession by remember { mutableStateOf(false) }
     var sheetEntry by remember { mutableStateOf<EntryUi?>(null) }
     var dialogEntryUi by remember { mutableStateOf<EntryUi?>(null) }
@@ -313,7 +307,7 @@ fun LogDetailScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { showAddExercise = true },
+                onClick = onOpenAddExercises,
                 icon = { Icon(Icons.Filled.Add, contentDescription = null) },
                 text = { Text("新增動作") }
             )
@@ -501,27 +495,6 @@ fun LogDetailScreen(
             }
         )
     }
-
-    if (showAddExercise) {
-        AddExerciseDialog(
-            exercises = exercises,
-            onDismiss = { showAddExercise = false },
-            onConfirm = { name, equipment, targetParts ->
-                scope.launch {
-                    repository.rememberExercise(name, targetParts)
-                    val exercise = repository.exerciseByName(name)
-                    repository.addEntry(
-                        sessionId = sessionId,
-                        name = name,
-                        equipment = equipment,
-                        targetParts = targetParts,
-                        exerciseId = exercise?.id
-                    )
-                }
-                showAddExercise = false
-            }
-        )
-    }
 }
 
 private data class RecordPrefill(
@@ -625,11 +598,32 @@ private fun EntryCard(
     val maxWeight = sets.mapNotNull { it.weightKg }.maxOrNull()
     val totalTime = sets.sumOf { it.durationSec ?: 0 }
 
-    Card(Modifier.fillMaxWidth()) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)
+    ) {
+        if (entry.supersetKey != null) {
+            Box(
+                Modifier
+                    .width(4.dp)
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.tertiary)
+            )
+            Spacer(Modifier.width(6.dp))
+        }
+        Card(Modifier.weight(1f)) {
         Column(Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(entry.name, style = MaterialTheme.typography.titleMedium)
+                    entry.supersetKey?.let {
+                        Text(
+                            "超級組 $it",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.tertiary
+                        )
+                    }
                     val target = buildString {
                         entry.targetSets?.let { append("$it 組") }
                         entry.targetReps?.let {
@@ -747,6 +741,7 @@ private fun EntryCard(
                     }
                 }
             }
+        }
         }
     }
 }
@@ -1090,160 +1085,3 @@ private fun SessionCopyDatePicker(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AddExerciseDialog(
-    exercises: List<ExerciseEntity>,
-    onDismiss: () -> Unit,
-    onConfirm: (String, String?, String?) -> Unit
-) {
-    var name by remember { mutableStateOf("") }
-    var equipment by remember { mutableStateOf("") }
-    var parts by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
-    var partFilter by remember { mutableStateOf<MuscleGroup?>(null) }
-    var partExpanded by remember { mutableStateOf(false) }
-
-    val names = remember(exercises) { exercises.map { it.name }.distinct() }
-    val partsMap = remember(exercises) {
-        exercises.mapNotNull { exercise -> exercise.parts?.let { exercise.name to it } }.toMap()
-    }
-    val filteredNames = remember(name, partFilter, exercises) {
-        exercises.filter { exercise ->
-            (name.isBlank() || exercise.name.contains(name.trim(), ignoreCase = true)) &&
-                (partFilter == null || primaryMuscleGroup(exercise.parts) == partFilter)
-        }.map { it.name }.distinct()
-    }
-    val isNew = name.isNotBlank() && names.none { it.equals(name.trim(), ignoreCase = true) }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("新增動作") },
-        text = {
-            Column {
-                ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it }
-                ) {
-                    OutlinedTextField(
-                        value = name,
-                        onValueChange = {
-                            name = it
-                            if (parts.isBlank()) {
-                                partsMap[it.trim()]?.let { value -> parts = value }
-                            }
-                            expanded = true
-                        },
-                        label = { Text("搜尋或輸入動作名稱") },
-                        singleLine = true,
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                        },
-                        modifier = Modifier
-                            .menuAnchor(MenuAnchorType.PrimaryEditable)
-                            .fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
-                        expanded = expanded && filteredNames.isNotEmpty(),
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        filteredNames.take(20).forEach { item ->
-                            DropdownMenuItem(
-                                text = { Text(item) },
-                                onClick = {
-                                    name = item
-                                    partsMap[item]?.let { parts = it }
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-
-                Spacer(Modifier.height(8.dp))
-                ExposedDropdownMenuBox(
-                    expanded = partExpanded,
-                    onExpandedChange = { partExpanded = it }
-                ) {
-                    OutlinedTextField(
-                        value = partFilter?.let { muscleGroupLabel(it) } ?: "全部部位",
-                        onValueChange = {},
-                        readOnly = true,
-                        label = { Text("依部位篩選") },
-                        singleLine = true,
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = partExpanded)
-                        },
-                        modifier = Modifier
-                            .menuAnchor(MenuAnchorType.PrimaryNotEditable)
-                            .fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
-                        expanded = partExpanded,
-                        onDismissRequest = { partExpanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("全部部位") },
-                            onClick = {
-                                partFilter = null
-                                partExpanded = false
-                            }
-                        )
-                        MuscleGroup.entries.forEach { group ->
-                            DropdownMenuItem(
-                                text = { Text(muscleGroupLabel(group)) },
-                                onClick = {
-                                    partFilter = group
-                                    partExpanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-
-                if (partFilter != null && filteredNames.isEmpty() && name.isBlank()) {
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        "此部位目前沒有符合的動作，可直接輸入名稱",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                if (isNew) {
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        "「${name.trim()}」是新動作，儲存後會加入動作庫",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-                Spacer(Modifier.height(10.dp))
-                OutlinedTextField(
-                    value = equipment,
-                    onValueChange = { equipment = it },
-                    label = { Text("器材（選填）") },
-                    singleLine = true
-                )
-                Spacer(Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = parts,
-                    onValueChange = { parts = it },
-                    label = { Text("訓練部位（選填，例：胸大肌、前三角）") },
-                    singleLine = true
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirm(name.trim(), equipment.ifBlank { null }, parts.ifBlank { null })
-                },
-                enabled = name.isNotBlank()
-            ) { Text("新增") }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text("取消") }
-        }
-    )
-}

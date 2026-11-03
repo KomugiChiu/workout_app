@@ -39,7 +39,8 @@ data class EntryEntity(
     val targetReps: String? = null,
     val restSec: String? = null,
     val videoUrl: String? = null,
-    val guideAsset: String? = null
+    val guideAsset: String? = null,
+    val supersetKey: String? = null
 )
 
 @Entity(
@@ -96,7 +97,8 @@ data class ExerciseEntity(
     val videoUrl: String? = null,
     val guideId: String? = null,
     val isCustom: Boolean = false,
-    val createdAt: Long = 0
+    val createdAt: Long = 0,
+    val equipment: String? = null
 )
 
 @Entity(tableName = "menus")

@@ -417,6 +417,13 @@ private fun EntryProgressCard(entry: EntryProgress, onClick: () -> Unit) {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    entry.entry.supersetKey?.let {
+                        Text(
+                            "超級組 $it",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.tertiary
+                        )
+                    }
                 }
                 Text(
                     "${(entry.completion * 100).roundToInt()}%",
