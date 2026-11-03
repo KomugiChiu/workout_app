@@ -43,7 +43,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 10
+        private const val SEED_VERSION = 11
     }
 
     private val dao = db.dao()
@@ -62,6 +62,12 @@ class WorkoutRepository(
     private val extraSeed: List<ExtraExercise> by lazy {
         context.assets.open("exercises_extra.json").bufferedReader().use {
             json.decodeFromString<List<ExtraExercise>>(it.readText())
+        }
+    }
+
+    private val guideSeed: List<ExerciseGuideSeed> by lazy {
+        context.assets.open("exercise_guides.json").bufferedReader().use {
+            json.decodeFromString<List<ExerciseGuideSeed>>(it.readText())
         }
     }
 
@@ -174,6 +180,18 @@ class WorkoutRepository(
                         )
                     )
                 }
+            }
+
+            // 既有動作的步驟與注意事項（只更新，不新增）
+            guideSeed.forEach { guide ->
+                val existing = dao.exerciseByName(guide.name) ?: return@forEach
+                if (existing.isCustom) return@forEach
+                dao.updateExercise(
+                    existing.copy(
+                        instructions = guide.instructions ?: existing.instructions,
+                        warning = guide.warning ?: existing.warning
+                    )
+                )
             }
 
             dao.upsertMeta(AppMetaEntity("seed_version", SEED_VERSION.toString()))

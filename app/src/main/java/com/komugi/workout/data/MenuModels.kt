@@ -51,3 +51,13 @@ data class ExtraExercise(
     val instructions: String? = null,
     val warning: String? = null
 )
+
+/**
+ * 既有動作的補充說明（只更新動作主檔，不會新增動作）。
+ */
+@Serializable
+data class ExerciseGuideSeed(
+    val name: String,
+    val instructions: String? = null,
+    val warning: String? = null
+)
