@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -41,6 +42,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -78,6 +80,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komugi.workout.data.EntryEntity
@@ -320,10 +323,6 @@ fun LogDetailScreen(
         restToken += 1
     }
 
-    fun startRest(entry: EntryEntity) {
-        beginRest(TargetParser.restSeconds(entry.restSec) ?: 60)
-    }
-
     LaunchedEffect(restToken) {
         if (restToken == 0) return@LaunchedEffect
         while (restVisible && restRemaining > 0) {
@@ -458,7 +457,6 @@ fun LogDetailScreen(
                             onAddRecord = { sheetEntry = entryUi },
                             onDuplicateSet = {
                                 scope.launch { repository.duplicateLastSet(entryUi.entry.id) }
-                                startRest(entryUi.entry)
                             },
                             onDeleteEntry = { scope.launch { repository.deleteEntry(entryUi.entry) } },
                             onDeleteSet = { set -> scope.launch { repository.deleteSet(set) } },
@@ -595,9 +593,6 @@ fun LogDetailScreen(
                     value2 = value2,
                     bodyweight = bodyweight
                 )
-                if (activeType != RecordType.SETS && activeType != RecordType.EQUIPMENT) {
-                    startRest(activeEntryUi.entry)
-                }
                 dialogEntryUi = null
                 dialogType = null
             }
@@ -1219,45 +1214,78 @@ private fun LogFixedHeader(
                 .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
             Text(dateText, style = MaterialTheme.typography.titleLarge)
-            Spacer(Modifier.height(4.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        "組間休息",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    if (restVisible) {
-                        Text(
-                            formatClock(remaining.toLong()),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Text(
-                            "新增一組後自動開始",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                if (restVisible) {
-                    TextButton(onClick = onAddTime) { Text("+15 秒") }
-                    TextButton(onClick = onSkip) {
-                        Text(if (remaining > 0) "跳過" else "關閉")
-                    }
+            Spacer(Modifier.height(8.dp))
+            Surface(
+                color = if (restVisible) {
+                    MaterialTheme.colorScheme.primary
                 } else {
-                    TextButton(onClick = onStart) { Text("開始 60 秒") }
+                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+                },
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(Modifier.padding(14.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                when {
+                                    !restVisible -> "組間休息"
+                                    remaining > 0 -> "休息中"
+                                    else -> "休息結束"
+                                },
+                                style = MaterialTheme.typography.labelMedium,
+                                color = if (restVisible) {
+                                    MaterialTheme.colorScheme.onPrimary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                }
+                            )
+                            Text(
+                                formatClock(remaining.toLong()),
+                                style = if (restVisible) {
+                                    MaterialTheme.typography.displaySmall
+                                } else {
+                                    MaterialTheme.typography.headlineSmall
+                                },
+                                fontWeight = FontWeight.Bold,
+                                color = if (restVisible) {
+                                    MaterialTheme.colorScheme.onPrimary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                }
+                            )
+                        }
+                        if (restVisible) {
+                            TextButton(
+                                onClick = onAddTime,
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            ) { Text("+15 秒") }
+                            TextButton(
+                                onClick = onSkip,
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            ) {
+                                Text(if (remaining > 0) "跳過" else "關閉")
+                            }
+                        } else {
+                            Button(onClick = onStart) { Text("開始 60 秒") }
+                        }
+                    }
+                    if (restVisible && total > 0) {
+                        Spacer(Modifier.height(6.dp))
+                        LinearProgressIndicator(
+                            progress = { (remaining.toFloat() / total).coerceIn(0f, 1f) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            trackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.25f)
+                        )
+                    }
                 }
-            }
-            if (restVisible && total > 0) {
-                LinearProgressIndicator(
-                    progress = { (remaining.toFloat() / total).coerceIn(0f, 1f) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(4.dp),
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant
-                )
             }
         }
     }
