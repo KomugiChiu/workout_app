@@ -240,6 +240,7 @@ fun MenuDetailScreen(
     var showMore by remember { mutableStateOf(false) }
     var swapTarget by remember { mutableStateOf<MenuExerciseRow?>(null) }
     var equipmentFilter by remember(id) { mutableStateOf<Set<String>>(emptySet()) }
+    var equipmentLoaded by remember(id) { mutableStateOf(false) }
     var draftTouched by remember(id) { mutableStateOf(false) }
     var loaded by remember(id) { mutableStateOf(false) }
     var autoPreview by remember { mutableStateOf<List<MenuExerciseRow>?>(null) }
@@ -272,6 +273,19 @@ fun MenuDetailScreen(
         }
     }
 
+    LaunchedEffect(id) {
+        if (!equipmentLoaded) {
+            equipmentFilter = repository.equipmentProfile()
+            equipmentLoaded = true
+        }
+    }
+
+    LaunchedEffect(equipmentFilter, equipmentLoaded) {
+        if (equipmentLoaded) {
+            repository.saveEquipmentProfile(equipmentFilter)
+        }
+    }
+
     val isAdjustable = rows.any { it.slotKey != null }
     val hasChanges = isAdjustable && loaded && rowList.toList() != rows
 
@@ -292,6 +306,9 @@ fun MenuDetailScreen(
         if (creating) return
         creating = true
         scope.launch {
+            if (equipmentFilter.isNotEmpty()) {
+                repository.saveEquipmentProfile(equipmentFilter)
+            }
             val sessionId = repository.createSessionFromAdjustedMenu(
                 menuId = id,
                 epochDay = LocalDate.now().toEpochDay(),

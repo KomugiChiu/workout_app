@@ -335,6 +335,26 @@ class WorkoutRepository(
     fun observeMenuExercises(id: String): Flow<List<MenuExerciseRow>> =
         dao.observeMenuExerciseRows(id)
 
+    /**
+     * 記住上次使用的器材分類，讓下次進訓練計畫時自動帶入。
+     */
+    suspend fun equipmentProfile(): Set<String> =
+        dao.metaValue("equipment_profile")
+            ?.split(',')
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.toSet()
+            ?: emptySet()
+
+    suspend fun saveEquipmentProfile(categories: Set<String>) {
+        dao.upsertMeta(
+            AppMetaEntity(
+                key = "equipment_profile",
+                value = categories.sorted().joinToString(",")
+            )
+        )
+    }
+
     // ---------- 動作主檔 ----------
 
     fun observeExercises(): Flow<List<ExerciseEntity>> = dao.observeExercises()
