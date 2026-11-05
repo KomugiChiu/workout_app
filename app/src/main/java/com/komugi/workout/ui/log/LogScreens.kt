@@ -362,14 +362,6 @@ fun LogDetailScreen(
                     ) {
                         Text("總結")
                     }
-                    TextButton(
-                        onClick = { showCopyPicker = true },
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = LocalContentColor.current
-                        )
-                    ) {
-                        Text("複製")
-                    }
                     IconButton(onClick = { showDatePicker = true }) {
                         Icon(Icons.Filled.DateRange, contentDescription = "修改日期")
                     }
@@ -384,6 +376,13 @@ fun LogDetailScreen(
                             expanded = showOverflow,
                             onDismissRequest = { showOverflow = false }
                         ) {
+                            DropdownMenuItem(
+                                text = { Text("複製到別天") },
+                                onClick = {
+                                    showOverflow = false
+                                    showCopyPicker = true
+                                }
+                            )
                             DropdownMenuItem(
                                 text = { Text("存為自訂菜單") },
                                 onClick = {
