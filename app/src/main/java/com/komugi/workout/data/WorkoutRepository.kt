@@ -224,12 +224,7 @@ class WorkoutRepository(
      */
     suspend fun importBackupJson(text: String) {
         val backup = backupJson.decodeFromString<BackupFile>(text)
-        require(backup.version in 1..BackupFile.BACKUP_VERSION) {
-            "備份版本 ${backup.version} 不受支援，請更新 App 後再匯入。"
-        }
-        require(backup.exercises.isNotEmpty()) {
-            "備份檔沒有動作資料，已取消匯入。"
-        }
+        backup.requireImportable()
         db.withTransaction {
             dao.clearAllSets()
             dao.clearAllEntries()

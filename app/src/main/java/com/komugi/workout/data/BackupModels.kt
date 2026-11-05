@@ -18,6 +18,15 @@ data class BackupFile(
     }
 }
 
+fun BackupFile.requireImportable() {
+    require(version in 1..BackupFile.BACKUP_VERSION) {
+        "備份版本 $version 不受支援，請更新 App 後再匯入。"
+    }
+    require(exercises.isNotEmpty()) {
+        "備份檔沒有動作資料，已取消匯入。"
+    }
+}
+
 @Serializable
 data class BackupExercise(
     val id: Long,

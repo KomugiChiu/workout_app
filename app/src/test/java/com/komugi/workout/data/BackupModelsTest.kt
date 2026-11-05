@@ -5,6 +5,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class BackupModelsTest {
@@ -132,5 +133,24 @@ class BackupModelsTest {
         assertEquals(20760L, decoded.sessions.first().dateEpochDay)
         assertNull(decoded.sessions.first().startedAt)
         assertNull(decoded.sessions.first().finishedAt)
+    }
+
+    @Test
+    fun emptyBackupIsRejected() {
+        assertThrows(IllegalArgumentException::class.java) {
+            BackupFile().requireImportable()
+        }
+    }
+
+    @Test
+    fun newerBackupVersionIsRejected() {
+        assertThrows(IllegalArgumentException::class.java) {
+            BackupFile(
+                version = 99,
+                exercises = listOf(
+                    BackupExercise(id = 1, name = "測試")
+                )
+            ).requireImportable()
+        }
     }
 }
