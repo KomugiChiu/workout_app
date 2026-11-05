@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -41,6 +42,12 @@ data class NewMenuExerciseInput(
     val role: String? = null,
     val laterality: String? = null,
     val pattern: String? = null
+)
+
+@Serializable
+data class MenuExerciseLastUsed(
+    val menuExerciseId: Long,
+    val exerciseId: Long
 )
 
 class WorkoutRepository(
@@ -351,6 +358,43 @@ class WorkoutRepository(
             AppMetaEntity(
                 key = "equipment_profile",
                 value = categories.sorted().joinToString(",")
+            )
+        )
+    }
+
+    /**
+     * 每個訓練計畫記住上次使用的動作（以 menuExerciseId 對應 exerciseId）。
+     * 只儲存差異；回到原模板時會寫入空清單。
+     */
+    suspend fun lastUsedMenuExercises(menuId: String): Map<Long, Long> {
+        val raw = dao.metaValue("menu_last_used_$menuId") ?: return emptyMap()
+        return runCatching {
+            json.decodeFromString<List<MenuExerciseLastUsed>>(raw)
+        }.getOrNull()
+            ?.associate { it.menuExerciseId to it.exerciseId }
+            ?: emptyMap()
+    }
+
+    suspend fun saveLastUsedMenuExercises(
+        menuId: String,
+        rows: List<MenuExerciseRow>,
+        templateRows: List<MenuExerciseRow>
+    ) {
+        val templateExerciseIds = templateRows.associate {
+            it.menuExerciseId to it.exerciseId
+        }
+        val overrides = rows
+            .filter { templateExerciseIds[it.menuExerciseId] != it.exerciseId }
+            .map {
+                MenuExerciseLastUsed(
+                    menuExerciseId = it.menuExerciseId,
+                    exerciseId = it.exerciseId
+                )
+            }
+        dao.upsertMeta(
+            AppMetaEntity(
+                key = "menu_last_used_$menuId",
+                value = json.encodeToString(overrides)
             )
         )
     }

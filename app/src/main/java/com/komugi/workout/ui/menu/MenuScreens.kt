@@ -1,7 +1,6 @@
 package com.komugi.workout.ui.menu
 
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -235,7 +234,6 @@ fun MenuDetailScreen(
     var showDeleteMenu by remember { mutableStateOf(false) }
     var showSaveMenu by remember { mutableStateOf(false) }
     var showReset by remember { mutableStateOf(false) }
-    var showDiscard by remember { mutableStateOf(false) }
     var showStartConfirm by remember { mutableStateOf(false) }
     var showMore by remember { mutableStateOf(false) }
     var swapTarget by remember { mutableStateOf<MenuExerciseRow?>(null) }
@@ -243,6 +241,9 @@ fun MenuDetailScreen(
     var equipmentLoaded by remember(id) { mutableStateOf(false) }
     var draftTouched by remember(id) { mutableStateOf(false) }
     var loaded by remember(id) { mutableStateOf(false) }
+    var baselineRows by remember(id) {
+        mutableStateOf<List<MenuExerciseRow>>(emptyList())
+    }
     var autoPreview by remember { mutableStateOf<List<MenuExerciseRow>?>(null) }
     var autoChanges by remember {
         mutableStateOf<List<Triple<String, String, String>>>(emptyList())
@@ -251,12 +252,26 @@ fun MenuDetailScreen(
     val rowList = remember(id) { mutableStateListOf<MenuExerciseRow>() }
     val lazyListState = rememberLazyListState()
 
-    LaunchedEffect(rows) {
-        if (!loaded) {
+    val isAdjustable = rows.any { it.slotKey != null }
+
+    LaunchedEffect(rows, exercises) {
+        if (!loaded && rows.isNotEmpty() && exercises.isNotEmpty()) {
+            val overrides = if (isAdjustable) {
+                repository.lastUsedMenuExercises(id)
+            } else {
+                emptyMap()
+            }
+            val applied = rows.map { row ->
+                val exercise = overrides[row.menuExerciseId]?.let { exerciseId ->
+                    exercises.firstOrNull { it.id == exerciseId }
+                }
+                row.withExercise(exercise)
+            }
             rowList.clear()
-            rowList.addAll(rows)
+            rowList.addAll(applied)
+            baselineRows = applied
             loaded = true
-        } else if (!draftTouched) {
+        } else if (loaded && !draftTouched && !isAdjustable) {
             val currentIds = rowList.map { it.menuExerciseId }.toSet()
             val newIds = rows.map { it.menuExerciseId }.toSet()
             if (currentIds != newIds) {
@@ -286,8 +301,21 @@ fun MenuDetailScreen(
         }
     }
 
-    val isAdjustable = rows.any { it.slotKey != null }
-    val hasChanges = isAdjustable && loaded && rowList.toList() != rows
+    LaunchedEffect(rowList.toList(), rows, loaded, isAdjustable) {
+        if (loaded && isAdjustable) {
+            val current = rowList.toList()
+            repository.saveLastUsedMenuExercises(
+                id,
+                if (current == rows) emptyList() else current,
+                rows
+            )
+        }
+    }
+
+    val hasEdits = isAdjustable && loaded && rowList.toList() != baselineRows
+    val hasOverrides = isAdjustable && loaded && baselineRows != rows
+    val canReset = hasEdits || hasOverrides
+    val differsFromTemplate = loaded && rowList.toList() != rows
 
     val reorderState = rememberReorderableLazyListState(lazyListState) { from, to ->
         if (!isAdjustable && from.index in rowList.indices && to.index in rowList.indices) {
@@ -314,7 +342,7 @@ fun MenuDetailScreen(
                 epochDay = LocalDate.now().toEpochDay(),
                 rows = rowList.toList(),
                 equipmentNote = equipmentFilter.joinToString("、"),
-                adjusted = hasChanges
+                adjusted = hasEdits
             )
             if (sessionId > 0) {
                 onSessionCreated(sessionId)
@@ -323,10 +351,6 @@ fun MenuDetailScreen(
                 Toast.makeText(context, "建立紀錄失敗", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    fun requestBack() {
-        if (hasChanges) showDiscard = true else onBack()
     }
 
     fun buildAutoAdjustment() {
@@ -390,15 +414,13 @@ fun MenuDetailScreen(
         autoWarnings = warnings
     }
 
-    BackHandler(enabled = hasChanges) { showDiscard = true }
-
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(menu?.name ?: "菜單") },
                 colors = komugiTopAppBarColors(),
                 navigationIcon = {
-                    IconButton(onClick = { requestBack() }) {
+                    IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
                     }
                 },
@@ -422,7 +444,7 @@ fun MenuDetailScreen(
                                     )
                                     DropdownMenuItem(
                                         text = { Text("恢復預設動作") },
-                                        enabled = hasChanges,
+                                        enabled = canReset,
                                         onClick = {
                                             showMore = false
                                             showReset = true
@@ -454,7 +476,7 @@ fun MenuDetailScreen(
                 Surface(tonalElevation = 3.dp) {
                     Button(
                         onClick = {
-                            if (hasChanges) showStartConfirm = true else startSession()
+                            if (hasEdits) showStartConfirm = true else startSession()
                         },
                         enabled = !creating,
                         modifier = Modifier
@@ -465,7 +487,7 @@ fun MenuDetailScreen(
                         Icon(Icons.Filled.Add, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
                         Text(
-                            if (hasChanges) "開始紀錄（已調整）"
+                            if (hasEdits) "開始紀錄（已調整）"
                             else "開始紀錄（今天）"
                         )
                     }
@@ -524,7 +546,7 @@ fun MenuDetailScreen(
                             },
                             onAutoAdjust = { buildAutoAdjustment() },
                             onReset = { showReset = true },
-                            hasChanges = hasChanges
+                            canReset = canReset
                         )
                     }
                     itemsIndexed(
@@ -614,7 +636,7 @@ fun MenuDetailScreen(
                 scope.launch {
                     repository.createCustomMenu(
                         name = name,
-                        subtitle = if (hasChanges) {
+                        subtitle = if (differsFromTemplate) {
                             "由「${menu?.name}」調整"
                         } else {
                             "複製自「${menu?.name}」"
@@ -644,13 +666,14 @@ fun MenuDetailScreen(
         AlertDialog(
             onDismissRequest = { showReset = false },
             title = { Text("恢復預設動作？") },
-            text = { Text("今天的動作調整會還原成課表預設；器材選擇會保留。") },
+            text = { Text("會還原成課表預設，並清除記住的上次動作；器材選擇會保留。") },
             confirmButton = {
                 TextButton(
                     onClick = {
                         showReset = false
                         rowList.clear()
                         rowList.addAll(rows)
+                        baselineRows = rows
                         draftTouched = false
                     }
                 ) { Text("恢復") }
@@ -661,28 +684,8 @@ fun MenuDetailScreen(
         )
     }
 
-    if (showDiscard) {
-        AlertDialog(
-            onDismissRequest = { showDiscard = false },
-            title = { Text("放棄這次調整？") },
-            text = { Text("尚未開始紀錄，離開後今天的動作調整不會保留。") },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showDiscard = false
-                        draftTouched = false
-                        onBack()
-                    }
-                ) { Text("離開") }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDiscard = false }) { Text("繼續調整") }
-            }
-        )
-    }
-
     if (showStartConfirm) {
-        val originalById = rows.associateBy { it.menuExerciseId }
+        val originalById = baselineRows.associateBy { it.menuExerciseId }
         val changes = rowList.mapNotNull { current ->
             val original = originalById[current.menuExerciseId] ?: return@mapNotNull null
             if (original.exerciseId != current.exerciseId) {
@@ -751,7 +754,7 @@ private fun TemplateAdjustCard(
     onToggle: (String) -> Unit,
     onAutoAdjust: () -> Unit,
     onReset: () -> Unit,
-    hasChanges: Boolean
+    canReset: Boolean
 ) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
@@ -785,7 +788,7 @@ private fun TemplateAdjustCard(
                 Button(onClick = onAutoAdjust, enabled = selected.isNotEmpty()) {
                     Text("一鍵依器材調整")
                 }
-                if (hasChanges) {
+                if (canReset) {
                     TextButton(onClick = onReset) { Text("恢復預設") }
                 }
             }
@@ -1222,6 +1225,20 @@ private fun AutoAdjustDialog(
         }
     )
 }
+
+private fun MenuExerciseRow.withExercise(exercise: ExerciseEntity?): MenuExerciseRow =
+    if (exercise == null) {
+        this
+    } else {
+        copy(
+            exerciseId = exercise.id,
+            name = exercise.name,
+            equipment = exercise.equipment,
+            parts = exercise.parts,
+            videoUrl = exercise.videoUrl,
+            guideId = exercise.guideId
+        )
+    }
 
 private fun equipmentLabel(category: String): String =
     if (category == "其他") "器械／其他" else category
