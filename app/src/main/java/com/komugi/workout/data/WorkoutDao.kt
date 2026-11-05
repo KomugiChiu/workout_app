@@ -173,6 +173,29 @@ interface WorkoutDao {
     @Update
     suspend fun updateExercise(exercise: ExerciseEntity)
 
+    // ---------- 身體數據 ----------
+
+    @Query("SELECT * FROM body_metrics ORDER BY dateEpochDay ASC")
+    fun observeBodyMetrics(): Flow<List<BodyMetricEntity>>
+
+    @Query("SELECT * FROM body_metrics WHERE dateEpochDay = :epochDay LIMIT 1")
+    suspend fun bodyMetricByDate(epochDay: Long): BodyMetricEntity?
+
+    @Query("SELECT * FROM body_metrics WHERE id = :id LIMIT 1")
+    suspend fun bodyMetricById(id: Long): BodyMetricEntity?
+
+    @Query("SELECT COUNT(*) FROM body_metrics")
+    suspend fun bodyMetricCount(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBodyMetric(metric: BodyMetricEntity): Long
+
+    @Update
+    suspend fun updateBodyMetric(metric: BodyMetricEntity)
+
+    @Delete
+    suspend fun deleteBodyMetric(metric: BodyMetricEntity)
+
     // ---------- 備份 / 還原 ----------
 
     @Query("SELECT * FROM exercises")
@@ -192,6 +215,12 @@ interface WorkoutDao {
 
     @Query("SELECT * FROM sets")
     suspend fun allSets(): List<SetEntity>
+
+    @Query("SELECT * FROM body_metrics")
+    suspend fun allBodyMetrics(): List<BodyMetricEntity>
+
+    @Query("DELETE FROM body_metrics")
+    suspend fun clearAllBodyMetrics()
 
     @Query("DELETE FROM sets")
     suspend fun clearAllSets()
@@ -228,4 +257,7 @@ interface WorkoutDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSets(items: List<SetEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBodyMetrics(items: List<BodyMetricEntity>)
 }

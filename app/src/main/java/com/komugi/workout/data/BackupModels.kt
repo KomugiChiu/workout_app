@@ -11,7 +11,8 @@ data class BackupFile(
     val menuExercises: List<BackupMenuExercise> = emptyList(),
     val sessions: List<BackupSession> = emptyList(),
     val entries: List<BackupEntry> = emptyList(),
-    val sets: List<BackupSet> = emptyList()
+    val sets: List<BackupSet> = emptyList(),
+    val bodyMetrics: List<BackupBodyMetric> = emptyList()
 ) {
     companion object {
         const val BACKUP_VERSION = 1
@@ -104,6 +105,16 @@ data class BackupSet(
     val reps: Int? = null,
     val durationSec: Int? = null,
     val isBodyweight: Boolean = false
+)
+
+@Serializable
+data class BackupBodyMetric(
+    val id: Long,
+    val dateEpochDay: Long,
+    val weightKg: Double? = null,
+    val bodyFatPercent: Double? = null,
+    val note: String? = null,
+    val createdAt: Long = 0L
 )
 
 fun ExerciseEntity.toBackup(): BackupExercise = BackupExercise(
@@ -250,4 +261,22 @@ fun BackupSet.toEntity(): SetEntity = SetEntity(
     reps = reps,
     durationSec = durationSec,
     isBodyweight = isBodyweight
+)
+
+fun BodyMetricEntity.toBackup(): BackupBodyMetric = BackupBodyMetric(
+    id = id,
+    dateEpochDay = dateEpochDay,
+    weightKg = weightKg,
+    bodyFatPercent = bodyFatPercent,
+    note = note,
+    createdAt = createdAt
+)
+
+fun BackupBodyMetric.toEntity(): BodyMetricEntity = BodyMetricEntity(
+    id = id,
+    dateEpochDay = dateEpochDay,
+    weightKg = weightKg,
+    bodyFatPercent = bodyFatPercent,
+    note = note,
+    createdAt = createdAt
 )

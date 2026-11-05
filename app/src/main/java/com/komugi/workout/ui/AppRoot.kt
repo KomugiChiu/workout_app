@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.ui.body.BodyMetricsScreen
 import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
 import com.komugi.workout.ui.library.ExerciseLibraryDetailScreen
@@ -58,6 +60,7 @@ fun AppRoot(
     val tabs = listOf(
         Tab("menus", "菜單", Icons.AutoMirrored.Filled.List),
         Tab("logs", "紀錄", Icons.Filled.DateRange),
+        Tab("body", "身體", Icons.Filled.Person),
         Tab("guides", "動作說明", Icons.Filled.Info),
         Tab("settings", "選項", Icons.Filled.Settings)
     )
@@ -82,6 +85,7 @@ fun AppRoot(
                         "menus" -> route == "menus" || route?.startsWith("menu/") == true
                         "logs" -> route == "logs" || route?.startsWith("log/") == true ||
                             route?.startsWith("exercise/") == true
+                        "body" -> route == "body"
                         "guides" -> route == "guides" || route?.startsWith("guide/") == true ||
                             route == "library" || route?.startsWith("library/") == true
                         else -> route == "settings"
@@ -141,6 +145,9 @@ fun AppRoot(
                     repository = repository,
                     onOpenSession = { navController.navigate("log/$it") }
                 )
+            }
+            composable("body") {
+                BodyMetricsScreen(repository = repository)
             }
             composable(
                 route = "log/{sessionId}",

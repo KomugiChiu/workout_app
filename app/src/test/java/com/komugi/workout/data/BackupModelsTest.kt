@@ -93,6 +93,14 @@ class BackupModelsTest {
                     durationSec = 45,
                     isBodyweight = false
                 )
+            ),
+            bodyMetrics = listOf(
+                BackupBodyMetric(
+                    id = 41,
+                    dateEpochDay = 20_760,
+                    weightKg = 70.1,
+                    bodyFatPercent = 21.3
+                )
             )
         )
 

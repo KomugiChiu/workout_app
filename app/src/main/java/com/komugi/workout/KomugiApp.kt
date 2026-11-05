@@ -21,6 +21,7 @@ class KomugiApp : Application() {
         super.onCreate()
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             repository.ensureSeeded()
+            repository.ensureBodyMetricSeed()
         }
     }
 }

@@ -2,6 +2,7 @@ package com.komugi.workout.data
 
 import android.content.Context
 import androidx.room.withTransaction
+import java.time.LocalDate
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -214,7 +215,8 @@ class WorkoutRepository(
             menuExercises = dao.allMenuExercises().map { it.toBackup() },
             sessions = dao.allSessions().map { it.toBackup() },
             entries = dao.allEntries().map { it.toBackup() },
-            sets = dao.allSets().map { it.toBackup() }
+            sets = dao.allSets().map { it.toBackup() },
+            bodyMetrics = dao.allBodyMetrics().map { it.toBackup() }
         )
         return backupJson.encodeToString(backup)
     }
@@ -232,6 +234,7 @@ class WorkoutRepository(
             dao.clearAllMenuExercises()
             dao.clearAllMenus()
             dao.clearAllExercises()
+            dao.clearAllBodyMetrics()
 
             if (backup.exercises.isNotEmpty()) {
                 dao.insertExercises(backup.exercises.map { it.toEntity() })
@@ -251,10 +254,66 @@ class WorkoutRepository(
             if (backup.sets.isNotEmpty()) {
                 dao.insertSets(backup.sets.map { it.toEntity() })
             }
+            if (backup.bodyMetrics.isNotEmpty()) {
+                dao.insertBodyMetrics(backup.bodyMetrics.map { it.toEntity() })
+            }
 
             // 已還原完整資料，避免下次啟動又被內建種子覆蓋
             dao.upsertMeta(AppMetaEntity("seed_version", SEED_VERSION.toString()))
+            dao.upsertMeta(AppMetaEntity("body_seed_v1", "1"))
         }
+    }
+
+    // ---------- 身體數據 ----------
+
+    fun observeBodyMetrics(): Flow<List<BodyMetricEntity>> = dao.observeBodyMetrics()
+
+    suspend fun saveBodyMetric(
+        id: Long,
+        dateEpochDay: Long,
+        weightKg: Double?,
+        bodyFatPercent: Double?
+    ) {
+        val existing = dao.bodyMetricByDate(dateEpochDay)
+        if (existing != null && existing.id != id) {
+            dao.updateBodyMetric(
+                existing.copy(
+                    weightKg = weightKg,
+                    bodyFatPercent = bodyFatPercent
+                )
+            )
+            if (id != 0L) {
+                dao.bodyMetricById(id)?.let { dao.deleteBodyMetric(it) }
+            }
+        } else {
+            dao.insertBodyMetric(
+                BodyMetricEntity(
+                    id = id,
+                    dateEpochDay = dateEpochDay,
+                    weightKg = weightKg,
+                    bodyFatPercent = bodyFatPercent
+                )
+            )
+        }
+    }
+
+    suspend fun deleteBodyMetric(metric: BodyMetricEntity) = dao.deleteBodyMetric(metric)
+
+    /**
+     * 第一次加入身體數據功能時，建立使用者的第一筆資料。
+     */
+    suspend fun ensureBodyMetricSeed() {
+        if (dao.metaValue("body_seed_v1") == "1") return
+        if (dao.bodyMetricCount() == 0) {
+            dao.insertBodyMetric(
+                BodyMetricEntity(
+                    dateEpochDay = LocalDate.now().toEpochDay(),
+                    weightKg = 70.1,
+                    bodyFatPercent = 21.3
+                )
+            )
+        }
+        dao.upsertMeta(AppMetaEntity("body_seed_v1", "1"))
     }
 
     // ---------- 菜單 ----------

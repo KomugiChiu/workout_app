@@ -313,13 +313,20 @@ fun LogDetailScreen(
 
     var restVisible by remember { mutableStateOf(false) }
     var restTotal by remember { mutableStateOf(60) }
-    var restRemaining by remember { mutableStateOf(0) }
+    var restRemaining by remember { mutableStateOf(60) }
     var restToken by remember { mutableStateOf(0) }
 
     fun beginRest(seconds: Int) {
         restTotal = seconds
         restRemaining = seconds
         restVisible = true
+        restToken += 1
+    }
+
+    fun resetRest() {
+        restVisible = false
+        restTotal = 60
+        restRemaining = 60
         restToken += 1
     }
 
@@ -428,7 +435,7 @@ fun LogDetailScreen(
                         restTotal += 15
                         if (restRemaining == 15) restToken += 1
                     },
-                    onSkip = { restVisible = false },
+                    onSkip = { resetRest() },
                     onStart = { beginRest(60) }
                 )
                 HorizontalDivider()

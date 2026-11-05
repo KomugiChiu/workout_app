@@ -85,6 +85,19 @@ data class ExerciseSetRow(
     val isBodyweight: Boolean
 )
 
+@Entity(
+    tableName = "body_metrics",
+    indices = [Index(value = ["dateEpochDay"], unique = true)]
+)
+data class BodyMetricEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val dateEpochDay: Long,
+    val weightKg: Double? = null,
+    val bodyFatPercent: Double? = null,
+    val note: String? = null,
+    val createdAt: Long = System.currentTimeMillis()
+)
+
 /**
  * 動作主檔：所有動作的唯一來源（菜單動作＋自訂動作）。
  */
