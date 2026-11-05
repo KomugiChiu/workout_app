@@ -128,7 +128,8 @@ data class MenuEntity(
     val subtitle: String? = null,
     val note: String? = null,
     val orderIndex: Int = 0,
-    val isCustom: Boolean = false
+    val isCustom: Boolean = false,
+    val isTemplate: Boolean = false
 )
 
 /**
@@ -162,7 +163,11 @@ data class MenuExerciseEntity(
     val targetSets: String? = null,
     val targetReps: String? = null,
     val restSec: String? = null,
-    val supersetKey: String? = null
+    val supersetKey: String? = null,
+    val slotKey: String? = null,
+    val role: String? = null,
+    val laterality: String? = null,
+    val pattern: String? = null
 )
 
 data class MenuExerciseRow(
@@ -178,7 +183,11 @@ data class MenuExerciseRow(
     val parts: String?,
     val videoUrl: String?,
     val guideId: String?,
-    val supersetKey: String?
+    val supersetKey: String?,
+    val slotKey: String? = null,
+    val role: String? = null,
+    val laterality: String? = null,
+    val pattern: String? = null
 )
 
 data class MenuSummary(

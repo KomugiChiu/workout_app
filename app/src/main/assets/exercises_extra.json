@@ -338,5 +338,45 @@
     "difficulty": "BEGINNER",
     "instructions": "將一手臂橫跨胸前，另一手輕輕扶住手肘。\n將手臂往身體方向帶，保持肩膀放鬆。\n維持 20–30 秒後換邊。",
     "warning": "不要用力拉扯肩關節或出現麻木感。"
+  },
+  {
+    "name": "單腳啞鈴 RDL",
+    "parts": "腿後腱、臀大肌、核心（抗側屈）",
+    "equipment": "8–10kg×2",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手各持一個啞鈴，一腳站立，另一腳微微離地。\n髖部向後推，讓啞鈴沿著腿前側下降，背部保持中立。\n感受站立腿後側拉伸後，用臀腿發力站起。\n完成指定次數後換邊。",
+    "warning": "保持骨盆水平，不要為了降低重量而拱背或旋轉軀幹。"
+  },
+  {
+    "name": "啞鈴深蹲",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "8–12kg×2",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙腳與肩同寬，啞鈴自然垂在身體兩側或抱在胸前。\n臀部向後向下蹲，膝蓋朝腳尖方向，保持背部中立。\n蹲到大腿約與地面平行，再用腳掌推地站起。",
+    "warning": "膝蓋不要內夾；若腳跟離地，可先降低重量或墊高腳跟。"
+  },
+  {
+    "name": "直臂下拉",
+    "parts": "背闊肌、肱三頭長頭、核心",
+    "equipment": "滑輪、繩索",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "站在滑輪前，雙手握住橫桿或繩索，手臂伸直。\n保持手肘微彎固定，用背闊肌把把手往下拉到大腿前。\n慢慢回到起始位置，感受背闊肌伸展。",
+    "warning": "不要用身體前後擺動代償；肩膀保持穩定。"
+  },
+  {
+    "name": "啞鈴肩推",
+    "parts": "三角肌、肱三頭、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "坐姿或站姿，雙手各持啞鈴放在肩膀兩側。\n核心收緊，將啞鈴往頭上推，直到手臂接近伸直。\n慢慢降回肩膀高度，保持手肘在身體前方。",
+    "warning": "不要聳肩或拱腰；若肩部不適，降低重量或改為阿諾德推舉。"
   }
 ]

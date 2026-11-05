@@ -41,7 +41,8 @@ class BackupModelsTest {
                     name = "測試菜單",
                     subtitle = "副標",
                     orderIndex = 9,
-                    isCustom = true
+                    isCustom = true,
+                    isTemplate = true
                 )
             ),
             menuExercises = listOf(
@@ -54,7 +55,11 @@ class BackupModelsTest {
                     targetSets = "4",
                     targetReps = "8–10",
                     restSec = "90",
-                    supersetKey = "A"
+                    supersetKey = "A",
+                    slotKey = "2A",
+                    role = "腿後肌與臀肌",
+                    laterality = "單邊",
+                    pattern = "髖主導"
                 )
             ),
             sessions = listOf(

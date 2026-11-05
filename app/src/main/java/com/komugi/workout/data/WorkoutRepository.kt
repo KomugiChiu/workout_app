@@ -36,7 +36,11 @@ data class NewMenuExerciseInput(
     val targetSets: String? = null,
     val targetReps: String? = null,
     val restSec: String? = null,
-    val supersetKey: String? = null
+    val supersetKey: String? = null,
+    val slotKey: String? = null,
+    val role: String? = null,
+    val laterality: String? = null,
+    val pattern: String? = null
 )
 
 class WorkoutRepository(
@@ -45,7 +49,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 11
+        private const val SEED_VERSION = 12
     }
 
     private val dao = db.dao()
@@ -105,7 +109,8 @@ class WorkoutRepository(
                         name = menu.name,
                         subtitle = menu.subtitle,
                         note = menu.note,
-                        orderIndex = menuIndex
+                        orderIndex = menuIndex,
+                        isTemplate = menu.template
                     )
                 )
                 menu.exercises.forEachIndexed { exIndex, ex ->
@@ -150,7 +155,12 @@ class WorkoutRepository(
                             equipment = ex.equipment,
                             targetSets = ex.sets,
                             targetReps = ex.reps,
-                            restSec = ex.rest
+                            restSec = ex.rest,
+                            supersetKey = ex.superset,
+                            slotKey = ex.slot,
+                            role = ex.role,
+                            laterality = ex.laterality,
+                            pattern = ex.pattern
                         )
                     )
                 }
@@ -429,6 +439,50 @@ class WorkoutRepository(
     }
 
     /**
+     * 從「已調整的課表草稿」建立訓練：不讀取原始菜單，
+     * 直接把畫面上的動作、組次、休息與配對快照進紀錄。
+     */
+    suspend fun createSessionFromAdjustedMenu(
+        menuId: String,
+        epochDay: Long,
+        rows: List<MenuExerciseRow>,
+        equipmentNote: String? = null,
+        adjusted: Boolean = false
+    ): Long {
+        val menu = dao.menuById(menuId) ?: return -1L
+        val sessionId = dao.insertSession(
+            SessionEntity(
+                dateEpochDay = epochDay,
+                menuId = menu.id,
+                menuName = if (adjusted) "${menu.name}（調整）" else menu.name,
+                note = equipmentNote
+                    ?.trim()
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { "今日器材：$it" }
+            )
+        )
+        rows.forEachIndexed { index, row ->
+            dao.insertEntry(
+                EntryEntity(
+                    sessionId = sessionId,
+                    name = row.name,
+                    equipment = row.equipment,
+                    targetParts = row.parts,
+                    exerciseId = row.exerciseId,
+                    orderIndex = index,
+                    targetSets = row.targetSets,
+                    targetReps = row.targetReps,
+                    restSec = row.restSec,
+                    videoUrl = row.videoUrl,
+                    guideAsset = row.guideId,
+                    supersetKey = row.supersetKey
+                )
+            )
+        }
+        return sessionId
+    }
+
+    /**
      * 把目前設定的動作、組次、休息與超級組存成自訂菜單。
      */
     suspend fun createCustomMenu(
@@ -457,7 +511,11 @@ class WorkoutRepository(
                         targetSets = item.targetSets,
                         targetReps = item.targetReps,
                         restSec = item.restSec,
-                        supersetKey = item.supersetKey
+                        supersetKey = item.supersetKey,
+                        slotKey = item.slotKey,
+                        role = item.role,
+                        laterality = item.laterality,
+                        pattern = item.pattern
                     )
                 )
             }

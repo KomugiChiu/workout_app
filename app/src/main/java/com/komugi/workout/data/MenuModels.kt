@@ -11,7 +11,12 @@ data class MenuExercise(
     val reps: String? = null,
     val rest: String? = null,
     val video: String? = null,
-    val guide: String? = null
+    val guide: String? = null,
+    val superset: String? = null,
+    val slot: String? = null,
+    val role: String? = null,
+    val laterality: String? = null,
+    val pattern: String? = null
 )
 
 @Serializable
@@ -20,7 +25,8 @@ data class Menu(
     val name: String,
     val subtitle: String? = null,
     val note: String? = null,
-    val exercises: List<MenuExercise> = emptyList()
+    val exercises: List<MenuExercise> = emptyList(),
+    val template: Boolean = false
 )
 
 @Serializable

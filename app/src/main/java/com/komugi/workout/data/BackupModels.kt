@@ -52,7 +52,8 @@ data class BackupMenu(
     val subtitle: String? = null,
     val note: String? = null,
     val orderIndex: Int = 0,
-    val isCustom: Boolean = false
+    val isCustom: Boolean = false,
+    val isTemplate: Boolean = false
 )
 
 @Serializable
@@ -65,7 +66,11 @@ data class BackupMenuExercise(
     val targetSets: String? = null,
     val targetReps: String? = null,
     val restSec: String? = null,
-    val supersetKey: String? = null
+    val supersetKey: String? = null,
+    val slotKey: String? = null,
+    val role: String? = null,
+    val laterality: String? = null,
+    val pattern: String? = null
 )
 
 @Serializable
@@ -155,7 +160,8 @@ fun MenuEntity.toBackup(): BackupMenu = BackupMenu(
     subtitle = subtitle,
     note = note,
     orderIndex = orderIndex,
-    isCustom = isCustom
+    isCustom = isCustom,
+    isTemplate = isTemplate
 )
 
 fun BackupMenu.toEntity(): MenuEntity = MenuEntity(
@@ -164,7 +170,8 @@ fun BackupMenu.toEntity(): MenuEntity = MenuEntity(
     subtitle = subtitle,
     note = note,
     orderIndex = orderIndex,
-    isCustom = isCustom
+    isCustom = isCustom,
+    isTemplate = isTemplate
 )
 
 fun MenuExerciseEntity.toBackup(): BackupMenuExercise = BackupMenuExercise(
@@ -176,7 +183,11 @@ fun MenuExerciseEntity.toBackup(): BackupMenuExercise = BackupMenuExercise(
     targetSets = targetSets,
     targetReps = targetReps,
     restSec = restSec,
-    supersetKey = supersetKey
+    supersetKey = supersetKey,
+    slotKey = slotKey,
+    role = role,
+    laterality = laterality,
+    pattern = pattern
 )
 
 fun BackupMenuExercise.toEntity(): MenuExerciseEntity = MenuExerciseEntity(
@@ -188,7 +199,11 @@ fun BackupMenuExercise.toEntity(): MenuExerciseEntity = MenuExerciseEntity(
     targetSets = targetSets,
     targetReps = targetReps,
     restSec = restSec,
-    supersetKey = supersetKey
+    supersetKey = supersetKey,
+    slotKey = slotKey,
+    role = role,
+    laterality = laterality,
+    pattern = pattern
 )
 
 fun SessionEntity.toBackup(): BackupSession = BackupSession(

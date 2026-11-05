@@ -105,6 +105,7 @@ interface WorkoutDao {
         "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
             "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
             "me.targetReps AS targetReps, me.restSec AS restSec, me.supersetKey AS supersetKey, " +
+            "me.slotKey AS slotKey, me.role AS role, me.laterality AS laterality, me.pattern AS pattern, " +
             "e.name AS name, e.parts AS parts, " +
             "e.videoUrl AS videoUrl, e.guideId AS guideId " +
             "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
@@ -116,6 +117,7 @@ interface WorkoutDao {
         "SELECT me.id AS menuExerciseId, me.menuId AS menuId, me.exerciseId AS exerciseId, " +
             "me.orderIndex AS orderIndex, me.equipment AS equipment, me.targetSets AS targetSets, " +
             "me.targetReps AS targetReps, me.restSec AS restSec, me.supersetKey AS supersetKey, " +
+            "me.slotKey AS slotKey, me.role AS role, me.laterality AS laterality, me.pattern AS pattern, " +
             "e.name AS name, e.parts AS parts, " +
             "e.videoUrl AS videoUrl, e.guideId AS guideId " +
             "FROM menu_exercises me INNER JOIN exercises e ON e.id = me.exerciseId " +
