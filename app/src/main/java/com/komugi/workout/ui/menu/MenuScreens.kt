@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
@@ -35,8 +37,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,13 +49,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.komugi.workout.data.MenuExerciseRow
 import com.komugi.workout.data.WorkoutRepository
-import com.komugi.workout.ui.components.MuscleMap
-import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
 import kotlinx.coroutines.launch
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,6 +161,33 @@ fun MenuDetailScreen(
     val context = LocalContext.current
     val creating = remember { mutableStateOf(false) }
     var showDeleteMenu by remember { mutableStateOf(false) }
+    val lazyListState = rememberLazyListState()
+    val rowList = remember(id) { mutableStateListOf<MenuExerciseRow>() }
+    LaunchedEffect(rows) {
+        val currentIds = rowList.map { it.menuExerciseId }.toSet()
+        val newIds = rows.map { it.menuExerciseId }.toSet()
+        if (currentIds != newIds) {
+            rowList.clear()
+            rowList.addAll(rows)
+        } else {
+            rows.forEach { updated ->
+                val index = rowList.indexOfFirst { it.menuExerciseId == updated.menuExerciseId }
+                if (index >= 0) rowList[index] = updated
+            }
+        }
+    }
+    val reorderState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        if (from.index in rowList.indices && to.index in rowList.indices) {
+            val moved = rowList.removeAt(from.index)
+            rowList.add(to.index, moved)
+            scope.launch {
+                repository.reorderMenuExercises(
+                    id,
+                    rowList.map { it.menuExerciseId }
+                )
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -221,24 +253,40 @@ fun MenuDetailScreen(
             return@Scaffold
         }
 
-        LazyColumn(
-            modifier = Modifier
+        Column(
+            Modifier
                 .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 96.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(padding)
         ) {
-            item {
-                menu?.subtitle?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
-                menu?.note?.let {
-                    Text(
-                        it,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+            menu?.subtitle?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
             }
-            itemsIndexed(rows) { index, row ->
+            menu?.note?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                )
+            }
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                state = lazyListState,
+                contentPadding = PaddingValues(16.dp, 12.dp, 16.dp, 96.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+            itemsIndexed(
+                rowList,
+                key = { _, row -> row.menuExerciseId }
+            ) { index, row ->
+                ReorderableItem(
+                    state = reorderState,
+                    key = row.menuExerciseId
+                ) { _ ->
                 Card(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.Top) {
@@ -284,19 +332,14 @@ fun MenuDetailScreen(
                                     )
                                 }
                             }
-                        }
-                        val groups = muscleGroupsIn(row.parts, limit = 3)
-                        if (groups.isNotEmpty()) {
-                            Row(
-                                Modifier.padding(start = 28.dp, top = 8.dp),
-                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            IconButton(
+                                onClick = {},
+                                modifier = Modifier.draggableHandle()
                             ) {
-                                groups.forEach { group ->
-                                    MuscleMap(
-                                        group = group,
-                                        modifier = Modifier.size(46.dp, 62.dp)
-                                    )
-                                }
+                                Icon(
+                                    Icons.Filled.Menu,
+                                    contentDescription = "拖曳排序"
+                                )
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -316,6 +359,8 @@ fun MenuDetailScreen(
                 }
             }
         }
+    }
+    }
     }
 
     val currentMenu = menu

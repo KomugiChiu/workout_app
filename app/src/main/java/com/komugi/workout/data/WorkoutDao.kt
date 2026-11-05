@@ -37,6 +37,12 @@ interface WorkoutDao {
     @Query("SELECT * FROM entries WHERE id = :id")
     suspend fun entryById(id: Long): EntryEntity?
 
+    @Query("UPDATE entries SET orderIndex = :orderIndex WHERE id = :id")
+    suspend fun updateEntryOrder(id: Long, orderIndex: Int)
+
+    @Query("UPDATE menu_exercises SET orderIndex = :orderIndex WHERE id = :id")
+    suspend fun updateMenuExerciseOrder(id: Long, orderIndex: Int)
+
     @Query(
         "SELECT ss.id AS sessionId, ss.dateEpochDay AS dateEpochDay, ss.menuName AS menuName, " +
             "e.id AS entryId, e.name AS entryName, st.weightKg AS weightKg, st.reps AS reps, " +

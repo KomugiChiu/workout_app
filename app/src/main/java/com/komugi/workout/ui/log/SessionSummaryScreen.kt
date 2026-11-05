@@ -160,9 +160,6 @@ fun SessionSummaryScreen(
         }
 
         val stats = remember(data) { computeStats(data) }
-        val sessionDurationSec = data.session.startedAt?.let { started ->
-            (((data.session.finishedAt ?: System.currentTimeMillis()) - started) / 1000L).toInt()
-        }
 
         LazyColumn(
             modifier = Modifier
@@ -172,12 +169,7 @@ fun SessionSummaryScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item { SummaryHero(data = data, stats = stats) }
-            item {
-                SummaryStatsCard(
-                    stats = stats,
-                    sessionDurationSec = sessionDurationSec
-                )
-            }
+            item { SummaryStatsCard(stats = stats) }
             if (stats.muscleSets.isNotEmpty()) {
                 item { MuscleBalanceCard(stats = stats) }
             }
@@ -278,10 +270,7 @@ private fun SummaryHero(data: SessionUi, stats: SessionStats) {
 }
 
 @Composable
-private fun SummaryStatsCard(
-    stats: SessionStats,
-    sessionDurationSec: Int?
-) {
+private fun SummaryStatsCard(stats: SessionStats) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
             Row {
@@ -327,14 +316,6 @@ private fun SummaryStatsCard(
                     "累計時間 ${formatDuration(stats.totalDuration)}",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            sessionDurationSec?.let { duration ->
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    "訓練時間 ${formatDuration(duration)}",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }

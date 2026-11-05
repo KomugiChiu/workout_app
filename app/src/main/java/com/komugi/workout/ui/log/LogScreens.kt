@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -34,6 +36,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
@@ -43,6 +47,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -64,8 +70,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -79,8 +85,6 @@ import com.komugi.workout.data.EntryUi
 import com.komugi.workout.data.SessionSummary
 import com.komugi.workout.data.SetEntity
 import com.komugi.workout.data.WorkoutRepository
-import com.komugi.workout.ui.components.MuscleMap
-import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
 import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.formatEpochDay
@@ -91,6 +95,8 @@ import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -272,28 +278,50 @@ fun LogDetailScreen(
     val context = LocalContext.current
     val ui by repository.observeSessionUi(sessionId).collectAsState(initial = null)
     val session = ui?.session
-    val now by produceState(
-        initialValue = System.currentTimeMillis(),
-        key1 = session?.startedAt,
-        key2 = session?.finishedAt
-    ) {
-        while (session?.startedAt != null && session?.finishedAt == null) {
-            value = System.currentTimeMillis()
-            delay(1000)
+
+    val lazyListState = rememberLazyListState()
+    val entryList = remember { mutableStateListOf<EntryUi>() }
+    LaunchedEffect(ui?.entries) {
+        val newEntries = ui?.entries.orEmpty()
+        val currentIds = entryList.map { it.entry.id }.toSet()
+        val newIds = newEntries.map { it.entry.id }.toSet()
+        if (currentIds != newIds) {
+            entryList.clear()
+            entryList.addAll(newEntries)
+        } else {
+            newEntries.forEach { updated ->
+                val index = entryList.indexOfFirst { it.entry.id == updated.entry.id }
+                if (index >= 0) entryList[index] = updated
+            }
         }
     }
+    val reorderState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        if (from.index in entryList.indices && to.index in entryList.indices) {
+            val moved = entryList.removeAt(from.index)
+            entryList.add(to.index, moved)
+            scope.launch {
+                repository.reorderEntries(sessionId, entryList.map { it.entry.id })
+            }
+        }
+    }
+
+    var showOverflow by remember { mutableStateOf(false) }
+    var showSaveAsMenu by remember { mutableStateOf(false) }
 
     var restVisible by remember { mutableStateOf(false) }
     var restTotal by remember { mutableStateOf(60) }
     var restRemaining by remember { mutableStateOf(0) }
     var restToken by remember { mutableStateOf(0) }
 
-    fun startRest(entry: EntryEntity) {
-        val seconds = TargetParser.restSeconds(entry.restSec) ?: 60
+    fun beginRest(seconds: Int) {
         restTotal = seconds
         restRemaining = seconds
         restVisible = true
         restToken += 1
+    }
+
+    fun startRest(entry: EntryEntity) {
+        beginRest(TargetParser.restSeconds(entry.restSec) ?: 60)
     }
 
     LaunchedEffect(restToken) {
@@ -348,6 +376,23 @@ fun LogDetailScreen(
                     IconButton(onClick = { showDeleteSession = true }) {
                         Icon(Icons.Filled.Delete, contentDescription = "刪除整筆紀錄")
                     }
+                    Box {
+                        IconButton(onClick = { showOverflow = true }) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = "更多")
+                        }
+                        DropdownMenu(
+                            expanded = showOverflow,
+                            onDismissRequest = { showOverflow = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("存為自訂菜單") },
+                                onClick = {
+                                    showOverflow = false
+                                    showSaveAsMenu = true
+                                }
+                            )
+                        }
+                    }
                 }
             )
         },
@@ -357,20 +402,6 @@ fun LogDetailScreen(
                 icon = { Icon(Icons.Filled.Add, contentDescription = null) },
                 text = { Text("新增動作") }
             )
-        },
-        bottomBar = {
-            if (restVisible) {
-                RestTimerBar(
-                    remaining = restRemaining,
-                    total = restTotal,
-                    onAddTime = {
-                        restRemaining += 15
-                        restTotal += 15
-                        if (restRemaining == 15) restToken += 1
-                    },
-                    onSkip = { restVisible = false }
-                )
-            }
         }
     ) { padding ->
         val data = ui
@@ -384,56 +415,32 @@ fun LogDetailScreen(
                 CircularProgressIndicator()
             }
         } else {
-            LazyColumn(
-                modifier = Modifier
+            Column(
+                Modifier
                     .fillMaxSize()
-                    .padding(padding),
-                contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 96.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(padding)
             ) {
-                item {
-                    val startedAt = data.session.startedAt
-                    val finishedAt = data.session.finishedAt
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Column(Modifier.weight(1f)) {
-                            Text(
-                                formatEpochDay(data.session.dateEpochDay),
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            when {
-                                startedAt == null -> Text(
-                                    "尚未開始計時",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                finishedAt == null -> Text(
-                                    "進行中 · ${formatClock((now - startedAt) / 1000)}",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                                else -> Text(
-                                    "訓練時間 ${formatClock((finishedAt - startedAt) / 1000)}",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                        when {
-                            startedAt == null -> TextButton(
-                                onClick = { scope.launch { repository.startSession(data.session) } }
-                            ) { Text("開始") }
-                            finishedAt == null -> TextButton(
-                                onClick = { scope.launch { repository.finishSession(data.session) } }
-                            ) { Text("完成") }
-                        }
-                    }
-                    Text(
-                        "日期預設當天，可點右上日曆修改；右上垃圾桶可刪除整筆紀錄",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                if (data.entries.isEmpty()) {
+                LogFixedHeader(
+                    dateText = formatEpochDay(data.session.dateEpochDay),
+                    restVisible = restVisible,
+                    remaining = restRemaining,
+                    total = restTotal,
+                    onAddTime = {
+                        restRemaining += 15
+                        restTotal += 15
+                        if (restRemaining == 15) restToken += 1
+                    },
+                    onSkip = { restVisible = false },
+                    onStart = { beginRest(60) }
+                )
+                HorizontalDivider()
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    state = lazyListState,
+                    contentPadding = PaddingValues(16.dp, 12.dp, 16.dp, 96.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                if (entryList.isEmpty()) {
                     item {
                         Text(
                             "尚無動作，點右下「新增動作」開始。",
@@ -441,28 +448,53 @@ fun LogDetailScreen(
                         )
                     }
                 }
-                items(data.entries, key = { it.entry.id }) { entryUi ->
-                    EntryCard(
-                        entryUi = entryUi,
-                        onAddRecord = { sheetEntry = entryUi },
-                        onDuplicateSet = {
-                            scope.launch { repository.duplicateLastSet(entryUi.entry.id) }
-                            startRest(entryUi.entry)
-                        },
-                        onDeleteEntry = { scope.launch { repository.deleteEntry(entryUi.entry) } },
-                        onDeleteSet = { set -> scope.launch { repository.deleteSet(set) } },
-                        onEditSet = { set -> editingSet = set },
-                        onOpenHistory = { onOpenExerciseHistory(entryUi.entry.id) },
-                        onOpenGuide = {
-                            entryUi.entry.guideAsset?.let { guideId -> onOpenGuide(guideId) }
-                        },
-                        onOpenVideo = {
-                            entryUi.entry.videoUrl?.let { url -> openUrl(context, url) }
-                        }
-                    )
+                itemsIndexed(entryList, key = { _, entryUi -> entryUi.entry.id }) { _, entryUi ->
+                    ReorderableItem(
+                        state = reorderState,
+                        key = entryUi.entry.id
+                    ) { _ ->
+                        EntryCard(
+                            entryUi = entryUi,
+                            dragHandleModifier = Modifier.draggableHandle(),
+                            onAddRecord = { sheetEntry = entryUi },
+                            onDuplicateSet = {
+                                scope.launch { repository.duplicateLastSet(entryUi.entry.id) }
+                                startRest(entryUi.entry)
+                            },
+                            onDeleteEntry = { scope.launch { repository.deleteEntry(entryUi.entry) } },
+                            onDeleteSet = { set -> scope.launch { repository.deleteSet(set) } },
+                            onEditSet = { set -> editingSet = set },
+                            onOpenHistory = { onOpenExerciseHistory(entryUi.entry.id) },
+                            onOpenGuide = {
+                                entryUi.entry.guideAsset?.let { guideId -> onOpenGuide(guideId) }
+                            },
+                            onOpenVideo = {
+                                entryUi.entry.videoUrl?.let { url -> openUrl(context, url) }
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
+    }
+
+    if (showSaveAsMenu && session != null) {
+        SaveSessionAsMenuDialog(
+            defaultName = session.menuName ?: "自訂課表",
+            onDismiss = { showSaveAsMenu = false },
+            onConfirm = { name ->
+                showSaveAsMenu = false
+                scope.launch {
+                    val menuId = repository.createMenuFromSession(sessionId, name)
+                    Toast.makeText(
+                        context,
+                        if (menuId != null) "已存為自訂菜單" else "沒有動作可儲存",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
     }
 
     if (showDatePicker && session != null) {
@@ -679,6 +711,7 @@ private fun applyRecord(
 @Composable
 private fun EntryCard(
     entryUi: EntryUi,
+    dragHandleModifier: Modifier = Modifier,
     onAddRecord: () -> Unit,
     onDuplicateSet: () -> Unit,
     onDeleteEntry: () -> Unit,
@@ -753,23 +786,11 @@ private fun EntryCard(
                         )
                     }
                 }
+                IconButton(onClick = {}, modifier = dragHandleModifier) {
+                    Icon(Icons.Filled.Menu, contentDescription = "拖曳排序")
+                }
                 IconButton(onClick = onDeleteEntry) {
                     Icon(Icons.Filled.Delete, contentDescription = "刪除動作")
-                }
-            }
-
-            val groups = muscleGroupsIn(entry.targetParts, limit = 3)
-            if (groups.isNotEmpty()) {
-                Row(
-                    Modifier.padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    groups.forEach { group ->
-                        MuscleMap(
-                            group = group,
-                            modifier = Modifier.size(42.dp, 56.dp)
-                        )
-                    }
                 }
             }
 
@@ -1183,37 +1204,54 @@ private fun SessionCopyDatePicker(
 
 
 @Composable
-private fun RestTimerBar(
+private fun LogFixedHeader(
+    dateText: String,
+    restVisible: Boolean,
     remaining: Int,
     total: Int,
     onAddTime: () -> Unit,
-    onSkip: () -> Unit
+    onSkip: () -> Unit,
+    onStart: () -> Unit
 ) {
-    Surface(tonalElevation = 3.dp) {
+    Surface(tonalElevation = 2.dp) {
         Column(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
+            Text(dateText, style = MaterialTheme.typography.titleLarge)
+            Spacer(Modifier.height(4.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        if (remaining > 0) "組間休息" else "休息結束",
+                        "組間休息",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Text(
-                        formatClock(remaining.toLong()),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    if (restVisible) {
+                        Text(
+                            formatClock(remaining.toLong()),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    } else {
+                        Text(
+                            "新增一組後自動開始",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-                TextButton(onClick = onAddTime) { Text("+15 秒") }
-                TextButton(onClick = onSkip) {
-                    Text(if (remaining > 0) "跳過" else "關閉")
+                if (restVisible) {
+                    TextButton(onClick = onAddTime) { Text("+15 秒") }
+                    TextButton(onClick = onSkip) {
+                        Text(if (remaining > 0) "跳過" else "關閉")
+                    }
+                } else {
+                    TextButton(onClick = onStart) { Text("開始 60 秒") }
                 }
             }
-            if (total > 0) {
+            if (restVisible && total > 0) {
                 LinearProgressIndicator(
                     progress = { (remaining.toFloat() / total).coerceIn(0f, 1f) },
                     modifier = Modifier
@@ -1255,4 +1293,42 @@ private fun vibrate(context: Context) {
         @Suppress("DEPRECATION")
         vibrator.vibrate(400)
     }
+}
+
+@Composable
+private fun SaveSessionAsMenuDialog(
+    defaultName: String,
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit
+) {
+    var name by remember { mutableStateOf(defaultName) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("存為自訂菜單") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "會把目前紀錄中的所有動作、組次、休息與超級組存成一份菜單。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("菜單名稱") },
+                    singleLine = true
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onConfirm(name.trim()) },
+                enabled = name.isNotBlank()
+            ) { Text("儲存") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("取消") }
+        }
+    )
 }

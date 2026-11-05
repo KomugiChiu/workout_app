@@ -345,8 +345,7 @@ class WorkoutRepository(
             SessionEntity(
                 dateEpochDay = epochDay,
                 menuId = menu.id,
-                menuName = menu.name,
-                startedAt = System.currentTimeMillis()
+                menuName = menu.name
             )
         )
         rows.forEach { row ->
@@ -409,29 +408,36 @@ class WorkoutRepository(
 
     suspend fun deleteMenu(menu: MenuEntity) = dao.deleteMenu(menu)
 
+    /**
+     * 把整筆訓練紀錄（動作、組次、休息、超級組）存成自訂菜單。
+     */
+    suspend fun createMenuFromSession(sessionId: Long, name: String): String? {
+        val session = dao.sessionById(sessionId) ?: return null
+        val entries = dao.entriesOf(sessionId)
+        if (entries.isEmpty()) return null
+        val items = mutableListOf<NewMenuExerciseInput>()
+        for (entry in entries) {
+            val exerciseId = entry.exerciseId ?: run {
+                rememberExercise(entry.name, entry.targetParts, entry.equipment)
+                dao.exerciseByName(entry.name)?.id
+            } ?: continue
+            items.add(
+                NewMenuExerciseInput(
+                    exerciseId = exerciseId,
+                    equipment = entry.equipment,
+                    targetSets = entry.targetSets,
+                    targetReps = entry.targetReps,
+                    restSec = entry.restSec,
+                    supersetKey = entry.supersetKey
+                )
+            )
+        }
+        if (items.isEmpty()) return null
+        return createCustomMenu(name, session.note, items)
+    }
+
     suspend fun createEmptySession(epochDay: Long): Long =
-        dao.insertSession(
-            SessionEntity(
-                dateEpochDay = epochDay,
-                startedAt = System.currentTimeMillis()
-            )
-        )
-
-    suspend fun startSession(session: SessionEntity) =
-        dao.updateSession(
-            session.copy(
-                startedAt = session.startedAt ?: System.currentTimeMillis(),
-                finishedAt = null
-            )
-        )
-
-    suspend fun finishSession(session: SessionEntity) =
-        dao.updateSession(
-            session.copy(
-                startedAt = session.startedAt ?: System.currentTimeMillis(),
-                finishedAt = System.currentTimeMillis()
-            )
-        )
+        dao.insertSession(SessionEntity(dateEpochDay = epochDay))
 
     /**
      * 把整筆訓練（動作＋組數）複製到指定日期。
@@ -511,6 +517,22 @@ class WorkoutRepository(
                         supersetKey = item.supersetKey
                     )
                 )
+            }
+        }
+    }
+
+    suspend fun reorderEntries(sessionId: Long, orderedEntryIds: List<Long>) {
+        db.withTransaction {
+            orderedEntryIds.forEachIndexed { index, id ->
+                dao.updateEntryOrder(id, index)
+            }
+        }
+    }
+
+    suspend fun reorderMenuExercises(menuId: String, orderedRowIds: List<Long>) {
+        db.withTransaction {
+            orderedRowIds.forEachIndexed { index, id ->
+                dao.updateMenuExerciseOrder(id, index)
             }
         }
     }
