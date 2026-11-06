@@ -278,7 +278,7 @@ fun DataHubScreen(
             }
             item {
                 DataHubEntry(
-                    title = "Menu of <<Men's Health Big Book of Exercises>>",
+                    title = "菜單列表",
                     onClick = onOpenBookPlans
                 )
             }
