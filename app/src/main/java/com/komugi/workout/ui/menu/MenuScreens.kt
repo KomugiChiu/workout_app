@@ -243,6 +243,8 @@ fun MenuDetailScreen(
     var showStartConfirm by remember { mutableStateOf(false) }
     var showMore by remember { mutableStateOf(false) }
     var swapTarget by remember { mutableStateOf<MenuExerciseRow?>(null) }
+    var cycleDay by remember(id) { mutableStateOf(CycleFlexDay.A) }
+    var cycleDayLoaded by remember(id) { mutableStateOf(false) }
     var equipmentFilter by remember(id) { mutableStateOf<Set<String>>(emptySet()) }
     var equipmentLoaded by remember(id) { mutableStateOf(false) }
     var draftTouched by remember(id) { mutableStateOf(false) }
@@ -259,6 +261,18 @@ fun MenuDetailScreen(
     val lazyListState = rememberLazyListState()
 
     val isAdjustable = rows.any { it.slotKey != null }
+
+    // 可調三天循環：全草稿固定 7 列，畫面只顯示當天組合（A/B 切換不丟已換動作）。
+    val fullDraft = rowList.toList()
+    val dayRows = remember(fullDraft, rows, cycleDay) {
+        CycleFlex.applyDay(fullDraft, cycleDay, rows)
+    }
+    val dayBaseline = remember(baselineRows, rows, cycleDay) {
+        CycleFlex.applyDay(baselineRows, cycleDay, rows)
+    }
+    val dayTemplate = remember(rows, cycleDay) {
+        CycleFlex.applyDay(rows, cycleDay, rows)
+    }
 
     LaunchedEffect(rows, exercises) {
         if (!loaded && rows.isNotEmpty() && exercises.isNotEmpty()) {
@@ -296,6 +310,10 @@ fun MenuDetailScreen(
             equipmentFilter = repository.equipmentProfile()
             equipmentLoaded = true
         }
+        if (!cycleDayLoaded) {
+            cycleDay = CycleFlex.dayFromStored(repository.cycleFlexDay())
+            cycleDayLoaded = true
+        }
     }
 
     LaunchedEffect(equipmentFilter, equipmentLoaded) {
@@ -315,10 +333,10 @@ fun MenuDetailScreen(
         }
     }
 
-    val hasEdits = isAdjustable && loaded && rowList.toList() != baselineRows
+    val hasEdits = isAdjustable && loaded && dayRows != dayBaseline
     val hasOverrides = isAdjustable && loaded && baselineRows != rows
     val canReset = hasEdits || hasOverrides
-    val differsFromTemplate = loaded && rowList.toList() != rows
+    val differsFromTemplate = loaded && dayRows != dayTemplate
 
     val reorderState = rememberReorderableLazyListState(lazyListState) { from, to ->
         if (!isAdjustable && from.index in rowList.indices && to.index in rowList.indices) {
@@ -343,7 +361,7 @@ fun MenuDetailScreen(
             val sessionId = repository.createSessionFromAdjustedMenu(
                 menuId = id,
                 epochDay = LocalDate.now().toEpochDay(),
-                rows = rowList.toList(),
+                rows = dayRows,
                 equipmentNote = equipmentFilter.joinToString("、"),
                 adjusted = hasEdits
             )
@@ -361,10 +379,18 @@ fun MenuDetailScreen(
             Toast.makeText(context, "請先選擇今天可用的器材", Toast.LENGTH_SHORT).show()
             return
         }
-        val used = mutableSetOf<Long>()
+        val used = rowList
+            .filter {
+                CycleFlex.isCycleSlot(it.slotKey) && !CycleFlex.isActive(it.slotKey, cycleDay)
+            }
+            .mapTo(mutableSetOf()) { it.exerciseId }
         val changes = mutableListOf<Triple<String, String, String>>()
         val warnings = mutableListOf<String>()
         val newRows = rowList.map { row ->
+            // 三天循環非當天槽位：保留在草稿但不參與一鍵調整
+            if (CycleFlex.isCycleSlot(row.slotKey) && !CycleFlex.isActive(row.slotKey, cycleDay)) {
+                return@map row
+            }
             val current = exercises.firstOrNull { it.id == row.exerciseId }
             val currentCategory = ExerciseMeta.equipmentCategory(current?.equipment)
             if (currentCategory in equipmentFilter) {
@@ -373,9 +399,13 @@ fun MenuDetailScreen(
             }
             val requirement = ExerciseRole.requirementOf(row, current)
             val recommendedNames = SlotRecommendations.namesFor(requirement)
+            val cardioSlot = requirement.role == ExerciseRole.ROLE_CARDIO
             val candidate = exercises.asSequence()
                 .filter { it.id != row.exerciseId && it.id !in used }
-                .filter { ExerciseRole.isStrengthCandidate(it) }
+                .filter {
+                    if (cardioSlot) ExerciseRole.isCardioCandidate(it)
+                    else ExerciseRole.isStrengthCandidate(it)
+                }
                 .filter { ExerciseRole.matchesRole(it, requirement.role) }
                 .filter { ExerciseRole.lateralityMatches(it, requirement.laterality) }
                 .filter { ExerciseMeta.equipmentCategory(it.equipment) in equipmentFilter }
@@ -537,6 +567,19 @@ fun MenuDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 if (isAdjustable && !readOnly) {
+                    if (id == CycleFlex.MENU_ID) {
+                        item {
+                            CycleDaySwitcher(
+                                selected = cycleDay,
+                                onSelect = { day ->
+                                    cycleDay = day
+                                    scope.launch {
+                                        repository.saveCycleFlexDay(CycleFlex.dayToStored(day))
+                                    }
+                                }
+                            )
+                        }
+                    }
                     item {
                         TemplateAdjustCard(
                             selected = equipmentFilter,
@@ -553,7 +596,7 @@ fun MenuDetailScreen(
                         )
                     }
                     itemsIndexed(
-                        rowList,
+                        dayRows,
                         key = { _, row -> row.menuExerciseId }
                     ) { index, row ->
                         MenuExerciseCard(
@@ -659,7 +702,7 @@ fun MenuDetailScreen(
                         } else {
                             "複製自「${menu?.name}」"
                         },
-                        items = rowList.map { row ->
+                        items = dayRows.map { row ->
                             NewMenuExerciseInput(
                                 exerciseId = row.exerciseId,
                                 equipment = row.equipment,
@@ -703,8 +746,8 @@ fun MenuDetailScreen(
     }
 
     if (showStartConfirm) {
-        val originalById = baselineRows.associateBy { it.menuExerciseId }
-        val changes = rowList.mapNotNull { current ->
+        val originalById = dayBaseline.associateBy { it.menuExerciseId }
+        val changes = dayRows.mapNotNull { current ->
             val original = originalById[current.menuExerciseId] ?: return@mapNotNull null
             if (original.exerciseId != current.exerciseId) {
                 Triple(current.slotKey ?: current.name, original.name, current.name)
@@ -762,6 +805,34 @@ fun MenuDetailScreen(
                 TextButton(onClick = { showDeleteMenu = false }) { Text("取消") }
             }
         )
+    }
+}
+
+@Composable
+private fun CycleDaySwitcher(
+    selected: CycleFlexDay,
+    onSelect: (CycleFlexDay) -> Unit
+) {
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp)) {
+            Text("今天練哪一天？", style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "主幹相同，只換啟動器／收尾與分腿蹲組數；已換的動作會保留。",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                CycleFlexDay.entries.forEach { day ->
+                    FilterChip(
+                        selected = day == selected,
+                        onClick = { if (day != selected) onSelect(day) },
+                        label = { Text(CycleFlex.dayLabel(day)) }
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -931,13 +1002,17 @@ private fun ExerciseSwapSheet(
     val recommended = remember(requirement) {
         SlotRecommendations.namesFor(requirement)
     }
+    val cardioSlot = requirement.role == ExerciseRole.ROLE_CARDIO
     val candidates = remember(
         exercises, row.exerciseId, requirement, search,
-        selectedEquipment, showAll, usedExerciseIds
+        selectedEquipment, showAll, usedExerciseIds, cardioSlot
     ) {
         exercises.asSequence()
             .filter { it.id != row.exerciseId }
-            .filter { ExerciseRole.isStrengthCandidate(it) }
+            .filter {
+                if (cardioSlot) ExerciseRole.isCardioCandidate(it)
+                else ExerciseRole.isStrengthCandidate(it)
+            }
             .filter { it.id !in usedExerciseIds }
             .filter {
                 search.isBlank() || it.name.contains(search.trim(), ignoreCase = true)

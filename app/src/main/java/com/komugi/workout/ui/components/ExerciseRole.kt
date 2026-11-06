@@ -32,6 +32,8 @@ object ExerciseRole {
     const val ROLE_LOWER = "下肢"
     const val ROLE_PULL = "上肢拉"
     const val ROLE_PUSH = "上肢推"
+    const val ROLE_COMPOUND = "全身複合"
+    const val ROLE_CARDIO = "心肺"
 
     private val singleKeywords = listOf(
         "單腳", "單手", "單臂", "單邊", "分腿", "弓步", "登階", "跨步", "交替", "左右"
@@ -110,6 +112,8 @@ object ExerciseRole {
     }
 
     fun roleParts(role: String): List<String> = when {
+        role == ROLE_COMPOUND -> listOf("股四頭", "臀大肌")
+        role == ROLE_CARDIO -> listOf("心肺")
         role.contains("核心") -> listOf("腹直肌", "腹斜肌", "腹橫肌", "核心", "豎脊肌", "髖屈肌")
         role.contains("腿後") || role.contains("臀") ->
             listOf("腿後腱", "臀大肌", "臀中肌", "臀小肌")
@@ -126,6 +130,7 @@ object ExerciseRole {
     }
 
     private fun roleGroups(role: String): Set<MuscleGroup> = when {
+        role == ROLE_COMPOUND || role == ROLE_CARDIO -> emptySet()
         role.contains("核心") -> setOf(MuscleGroup.CORE)
         role.contains("腿後") || role.contains("臀") ->
             setOf(MuscleGroup.GLUTES, MuscleGroup.HAMSTRINGS, MuscleGroup.QUADS)
@@ -164,6 +169,10 @@ object ExerciseRole {
         if (exercise.name.contains("拉伸")) return false
         return ExerciseMeta.movementTypeOf(exercise) != ExerciseMeta.TYPE_CARDIO
     }
+
+    /** 心肺收尾槽位的候選池：部位標註含心肺的動作（徒手或器械皆可）。 */
+    fun isCardioCandidate(exercise: ExerciseEntity): Boolean =
+        exercise.parts?.contains("心肺") == true
 
     fun matchScore(exercise: ExerciseEntity, requirement: SlotRequirement): Int {
         if (!matchesRole(exercise, requirement.role)) return -100

@@ -204,4 +204,63 @@ class ExerciseRoleTest {
         assertTrue(push.contains("中性握地板臥推"))
         assertTrue(push.contains("啞鈴肩推"))
     }
+
+    @Test
+    fun compoundSlotAcceptsLegDrivenFullBodyMoves() {
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("胸前蹲推 Thruster", "股四頭、臀大肌、三角肌、肱三頭、核心"),
+                ExerciseRole.ROLE_COMPOUND
+            )
+        )
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("啞鈴借力推舉", "三角肌、肱三頭、股四頭、核心"),
+                ExerciseRole.ROLE_COMPOUND
+            )
+        )
+        assertFalse(
+            ExerciseRole.matchesRole(
+                exercise("側平舉", "三角肌中束"),
+                ExerciseRole.ROLE_COMPOUND
+            )
+        )
+        val names = SlotRecommendations.namesFor(
+            ExerciseRole.ROLE_COMPOUND, ExerciseRole.LATERALITY_BILATERAL, ExerciseRole.PATTERN_SQUAT
+        )
+        assertTrue(names.contains("胸前蹲推 Thruster"))
+        assertTrue(names.contains("啞鈴借力推舉"))
+    }
+
+    @Test
+    fun cardioSlotAcceptsHeartRateMoves() {
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("平板開合跳", "核心、肩胛穩定、髖屈肌、心肺", "自重", null),
+                ExerciseRole.ROLE_CARDIO
+            )
+        )
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("划船機", "背闊肌、腿後腱、心肺", "划船機", "CARDIO"),
+                ExerciseRole.ROLE_CARDIO
+            )
+        )
+        assertTrue(
+            ExerciseRole.isCardioCandidate(
+                exercise("平板開合跳", "核心、肩胛穩定、髖屈肌、心肺", "自重", null)
+            )
+        )
+        assertFalse(
+            ExerciseRole.isCardioCandidate(
+                exercise("六角槓硬舉", "臀大肌、腿後腱、股四頭、豎脊肌、握力、核心")
+            )
+        )
+        val names = SlotRecommendations.namesFor(
+            ExerciseRole.ROLE_CARDIO, ExerciseRole.LATERALITY_ANY, ExerciseRole.PATTERN_CORE
+        )
+        assertTrue(names.contains("平板開合跳"))
+        assertTrue(names.contains("無跳波比"))
+        assertTrue(names.contains("划船機"))
+    }
 }

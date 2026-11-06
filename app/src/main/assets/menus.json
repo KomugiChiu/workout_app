@@ -5100,5 +5100,104 @@
       }
     ],
     "reference": true
+  },
+  {
+    "id": "cycle-flex",
+    "name": "三天循環（可調）",
+    "subtitle": "一週 3 天・A/B 輪替｜主幹相同，頭尾不同",
+    "note": "A：肌力＋心肺（平板開合跳收尾）；B：純下肢肌力（高腳杯深蹲啟動，分腿蹲 2–3 組）。切換只換當天組合；換動作不動組數、休息與順序。",
+    "template": true,
+    "exercises": [
+      {
+        "name": "高腳杯深蹲",
+        "equipment": "壺鈴",
+        "parts": "股四頭、臀大肌、核心（前側負重）",
+        "sets": "3–4",
+        "reps": "10–12",
+        "rest": "90s",
+        "video": "https://www.youtube.com/watch?v=HPshy4NiKgs",
+        "slot": "H",
+        "role": "股四頭肌",
+        "laterality": "雙邊",
+        "pattern": "蹲"
+      },
+      {
+        "name": "六角槓硬舉",
+        "equipment": "六角槓",
+        "parts": "臀大肌、腿後腱、股四頭、豎脊肌、握力、核心",
+        "sets": "4",
+        "reps": "8–10",
+        "rest": "90–120s",
+        "video": "https://www.youtube.com/watch?v=PWJU5grrh4Y",
+        "slot": "T1",
+        "role": "腿後肌與臀肌",
+        "laterality": "雙邊",
+        "pattern": "髖主導"
+      },
+      {
+        "name": "胸前蹲推 Thruster",
+        "equipment": "壺鈴／ViPR",
+        "parts": "股四頭、臀大肌、三角肌、肱三頭、核心",
+        "sets": "4",
+        "reps": "8–12",
+        "rest": "90s",
+        "video": "https://www.youtube.com/watch?v=0RJXwEZmcCg",
+        "slot": "T2",
+        "role": "全身複合",
+        "laterality": "雙邊",
+        "pattern": "蹲"
+      },
+      {
+        "name": "單腳登階",
+        "equipment": "啞鈴／自重",
+        "parts": "股四頭、臀大肌、腿後腱、小腿、核心",
+        "sets": "4",
+        "reps": "10–12/邊",
+        "rest": "60–90s",
+        "video": "https://www.youtube.com/watch?v=9ZknEYboBOQ",
+        "slot": "T3",
+        "role": "股四頭肌",
+        "laterality": "單邊",
+        "pattern": "蹲"
+      },
+      {
+        "name": "持槓片分腿蹲",
+        "equipment": "槓片",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "10–12/邊",
+        "rest": "60–90s",
+        "video": "https://www.youtube.com/watch?v=YXZbptZtKCE",
+        "slot": "T4",
+        "role": "股四頭肌",
+        "laterality": "單邊",
+        "pattern": "蹲"
+      },
+      {
+        "name": "上斜伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "10–15",
+        "rest": "60s",
+        "video": "https://www.youtube.com/watch?v=-9S9gdRwwak",
+        "slot": "T5",
+        "role": "胸肌",
+        "laterality": "通用",
+        "pattern": "水平推"
+      },
+      {
+        "name": "平板開合跳",
+        "equipment": "自重",
+        "parts": "核心、肩胛穩定、髖屈肌、心肺",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "45–60s",
+        "video": "https://www.youtube.com/watch?v=PR9nHQXCZMo",
+        "slot": "F",
+        "role": "心肺",
+        "laterality": "通用"
+      }
+    ]
   }
 ]

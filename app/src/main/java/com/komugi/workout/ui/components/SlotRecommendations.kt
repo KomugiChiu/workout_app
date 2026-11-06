@@ -55,6 +55,12 @@ object SlotRecommendations {
         key(ExerciseRole.ROLE_PUSH, ExerciseRole.LATERALITY_ANY, null) to listOf(
             "中性握地板臥推", "槓鈴臥推", "伏地挺身", "上斜伏地挺身", "啞鈴肩推",
             "阿諾德推舉", "站姿槓鈴肩推", "滑輪夾胸", "帶子臥推模擬"
+        ),
+        key(ExerciseRole.ROLE_COMPOUND, ExerciseRole.LATERALITY_BILATERAL, ExerciseRole.PATTERN_SQUAT) to listOf(
+            "胸前蹲推 Thruster", "啞鈴借力推舉", "槓鈴借力推舉", "壺鈴擺盪", "六角槓硬舉"
+        ),
+        key(ExerciseRole.ROLE_CARDIO, ExerciseRole.LATERALITY_ANY, ExerciseRole.PATTERN_CORE) to listOf(
+            "平板開合跳", "無跳波比", "划船機"
         )
     )
 

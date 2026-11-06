@@ -16,7 +16,7 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(89, menus.size)
+        assertEquals(90, menus.size)
 
         val planA = menus.first { it.id == "plan-a" }
         val planB = menus.first { it.id == "plan-b" }
@@ -38,6 +38,29 @@ class MenuSeedTest {
                 assertNotNull(exercise.pattern)
             }
         }
+    }
+
+    @Test
+    fun cycleFlexTemplateIsWellFormed() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val cycle = menus.first { it.id == "cycle-flex" }
+        assertTrue(cycle.template)
+        assertEquals(
+            listOf("H", "T1", "T2", "T3", "T4", "T5", "F"),
+            cycle.exercises.map { it.slot }
+        )
+        // 無配對組：頭尾＋主幹依序執行
+        assertTrue(cycle.exercises.all { it.superset == null })
+        // T4 種子值為 A 天預設；B 天 2–3 組由 CycleFlex.applyDay 動態套用
+        assertEquals("3", cycle.exercises.first { it.slot == "T4" }.sets)
+        cycle.exercises.forEach { exercise ->
+            assertNotNull(exercise.role)
+            assertNotNull(exercise.laterality)
+        }
+        // 心肺收尾槽走有氧候選池
+        assertEquals("心肺", cycle.exercises.first { it.slot == "F" }.role)
     }
 
     @Test
@@ -167,11 +190,13 @@ class MenuSeedTest {
         val reference = menus.filter { it.reference }
         val trainable = menus.filterNot { it.reference }
         assertEquals(77, reference.size)
-        assertEquals(12, trainable.size)
+        assertEquals(13, trainable.size)
         // 可調模板留在菜單頁（資料頁只做入口）
         assertTrue(menus.first { it.id == "plan-a" }.template)
         assertTrue(!menus.first { it.id == "plan-a" }.reference)
         assertTrue(menus.first { it.id == "three-exercise" }.template)
+        assertTrue(menus.first { it.id == "cycle-flex" }.template)
+        assertTrue(!menus.first { it.id == "cycle-flex" }.reference)
         // 書本課表標記參考用
         assertTrue(menus.first { it.id == "crowded-a" }.reference)
         assertTrue(menus.first { it.id == "spartacus" }.reference)

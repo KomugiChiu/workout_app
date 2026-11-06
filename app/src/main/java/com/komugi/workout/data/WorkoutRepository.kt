@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 18
+        private const val SEED_VERSION = 19
     }
 
     private val dao = db.dao()
@@ -459,6 +459,21 @@ class WorkoutRepository(
             AppMetaEntity(
                 key = "menu_last_used_$menuId",
                 value = json.encodeToString(diffExerciseOverrides(rows, templateRows))
+            )
+        )
+    }
+
+    /**
+     * 可調三天循環上次選的 A/B 天（全域記住，重開維持）。
+     */
+    suspend fun cycleFlexDay(): String =
+        dao.metaValue("cycle_flex_day") ?: "A"
+
+    suspend fun saveCycleFlexDay(day: String) {
+        dao.upsertMeta(
+            AppMetaEntity(
+                key = "cycle_flex_day",
+                value = day
             )
         )
     }
