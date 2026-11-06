@@ -273,28 +273,24 @@ fun DataHubScreen(
             item {
                 DataHubEntry(
                     title = "動作庫",
-                    subtitle = "依分類、器材、型態與替代動作瀏覽 ${exercises.size} 個動作",
                     onClick = onOpenLibrary
                 )
             }
             item {
                 DataHubEntry(
-                    title = "書本課表",
-                    subtitle = "出自《Men's Health Big Book of Exercises》，${BOOK_PLAN_GROUPS.size} 群・$planCount 份課表，純參考",
+                    title = "Menu of <<Men's Health Big Book of Exercises>>",
                     onClick = onOpenBookPlans
                 )
             }
             item {
                 DataHubEntry(
                     title = "肌肉部位",
-                    subtitle = "依胸背肩腿等部位瀏覽動作，另有全圖鑑",
                     onClick = onOpenMuscles
                 )
             }
             item {
                 DataHubEntry(
                     title = "動作說明",
-                    subtitle = "${repository.guides.size} 份完整拆解，支援內文搜尋",
                     onClick = onOpenGuides
                 )
             }
@@ -305,7 +301,6 @@ fun DataHubScreen(
 @Composable
 private fun DataHubEntry(
     title: String,
-    subtitle: String,
     onClick: () -> Unit
 ) {
     Card(
@@ -314,11 +309,6 @@ private fun DataHubEntry(
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
-            Text(
-                subtitle,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
     }
 }
