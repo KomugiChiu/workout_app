@@ -47,8 +47,76 @@ data class NewMenuExerciseInput(
 @Serializable
 data class MenuExerciseLastUsed(
     val menuExerciseId: Long,
-    val exerciseId: Long
+    val exerciseId: Long,
+    val slotKey: String? = null
 )
+
+/**
+ * 把記住的上次動作套用到目前的課表列。
+ *
+ * 優先以 slotKey 配對（種子重建後 menuExerciseId 會變，slotKey 不變）；
+ * 沒有 slotKey 的舊資料才用 menuExerciseId 配對，對不上的直接忽略。
+ */
+fun resolveExerciseOverrides(
+    rows: List<MenuExerciseRow>,
+    overrides: List<MenuExerciseLastUsed>,
+    exerciseById: (Long) -> ExerciseEntity?
+): List<MenuExerciseRow> {
+    if (overrides.isEmpty()) return rows
+    val bySlot = overrides
+        .filter { !it.slotKey.isNullOrBlank() }
+        .associate { it.slotKey as String to it.exerciseId }
+    val byRowId = overrides
+        .filter { it.slotKey.isNullOrBlank() }
+        .associate { it.menuExerciseId to it.exerciseId }
+    return rows.map { row ->
+        val exerciseId = if (row.slotKey != null) {
+            bySlot[row.slotKey] ?: byRowId[row.menuExerciseId]
+        } else {
+            byRowId[row.menuExerciseId]
+        } ?: return@map row
+        if (exerciseId == row.exerciseId) return@map row
+        val exercise = exerciseById(exerciseId) ?: return@map row
+        row.copy(
+            exerciseId = exercise.id,
+            name = exercise.name,
+            equipment = exercise.equipment,
+            parts = exercise.parts,
+            videoUrl = exercise.videoUrl,
+            guideId = exercise.guideId
+        )
+    }
+}
+
+/**
+ * 計算目前列與模板的差異，只記住有更換的槽位。
+ * 配對以 slotKey 為主，避免種子重建後記憶失效。
+ */
+fun diffExerciseOverrides(
+    rows: List<MenuExerciseRow>,
+    templateRows: List<MenuExerciseRow>
+): List<MenuExerciseLastUsed> {
+    val templateBySlot = templateRows
+        .filter { it.slotKey != null }
+        .associate { (it.slotKey as String) to it.exerciseId }
+    val templateByRowId = templateRows.associate { it.menuExerciseId to it.exerciseId }
+    return rows.mapNotNull { row ->
+        val templateExerciseId = if (row.slotKey != null) {
+            templateBySlot[row.slotKey] ?: templateByRowId[row.menuExerciseId]
+        } else {
+            templateByRowId[row.menuExerciseId]
+        }
+        if (templateExerciseId == null || templateExerciseId == row.exerciseId) {
+            null
+        } else {
+            MenuExerciseLastUsed(
+                menuExerciseId = row.menuExerciseId,
+                exerciseId = row.exerciseId,
+                slotKey = row.slotKey
+            )
+        }
+    }
+}
 
 class WorkoutRepository(
     private val db: AppDatabase,
@@ -56,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 13
+        private const val SEED_VERSION = 14
     }
 
     private val dao = db.dao()
@@ -363,16 +431,14 @@ class WorkoutRepository(
     }
 
     /**
-     * 每個訓練計畫記住上次使用的動作（以 menuExerciseId 對應 exerciseId）。
+     * 每個訓練計畫記住上次使用的動作（以 slotKey 配對，種子重建也不會失效）。
      * 只儲存差異；回到原模板時會寫入空清單。
      */
-    suspend fun lastUsedMenuExercises(menuId: String): Map<Long, Long> {
-        val raw = dao.metaValue("menu_last_used_$menuId") ?: return emptyMap()
+    suspend fun lastUsedMenuExercises(menuId: String): List<MenuExerciseLastUsed> {
+        val raw = dao.metaValue("menu_last_used_$menuId") ?: return emptyList()
         return runCatching {
             json.decodeFromString<List<MenuExerciseLastUsed>>(raw)
-        }.getOrNull()
-            ?.associate { it.menuExerciseId to it.exerciseId }
-            ?: emptyMap()
+        }.getOrNull() ?: emptyList()
     }
 
     suspend fun saveLastUsedMenuExercises(
@@ -380,21 +446,10 @@ class WorkoutRepository(
         rows: List<MenuExerciseRow>,
         templateRows: List<MenuExerciseRow>
     ) {
-        val templateExerciseIds = templateRows.associate {
-            it.menuExerciseId to it.exerciseId
-        }
-        val overrides = rows
-            .filter { templateExerciseIds[it.menuExerciseId] != it.exerciseId }
-            .map {
-                MenuExerciseLastUsed(
-                    menuExerciseId = it.menuExerciseId,
-                    exerciseId = it.exerciseId
-                )
-            }
         dao.upsertMeta(
             AppMetaEntity(
                 key = "menu_last_used_$menuId",
-                value = json.encodeToString(overrides)
+                value = json.encodeToString(diffExerciseOverrides(rows, templateRows))
             )
         )
     }

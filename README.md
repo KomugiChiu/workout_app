@@ -117,12 +117,13 @@ body_metrics（身體數據）
 - 舊版 `custom_exercises` 於 migration 4→5 併入 `exercises` 後移除
 - migration 6→7 新增 `entries.supersetKey` 與 `exercises.equipment`
 - migration 7→8 新增 `menus.isCustom` 與 `menu_exercises.supersetKey`；重新種子時只重建內建菜單，保留自訂菜單
-- migration 8→9 新增 `exercises` 的地點、型態、難度、步驟與注意事項欄位；`exercises_extra.json` 於種子版本 9 起匯入（最新種子版本 13）
+- migration 8→9 新增 `exercises` 的地點、型態、難度、步驟與注意事項欄位；`exercises_extra.json` 於種子版本 9 起匯入（最新種子版本 14）
 - `exercise_guides.json` 於種子版本 11 補上原 48 個菜單動作的步驟與注意事項；目前 86 個內建動作都有完整步驟
 - migration 9→10 新增 `sessions.startedAt` 與 `sessions.finishedAt`（目前保留相容，不在 UI 顯示訓練時長）
 - migration 10→11 新增 `body_metrics`（體重、體脂肪、日期）與唯一日期索引；第一次啟動會建立 70.1 kg / 21.3% 起始紀錄
 - migration 11→12 新增 `menus.isTemplate` 與 `menu_exercises` 的 `slotKey` / `role` / `laterality` / `pattern`；種子版本 12 新增「重訓計畫 A/B」與 4 個替代動作（單腳啞鈴 RDL、啞鈴深蹲、直臂下拉、啞鈴肩推）
 - 種子版本 13 新增「三動作全身」模板（下肢／上肢拉／上肢推三個通用槽位，無需資料庫遷移）
+- 種子版本 14 將「重訓計畫 A/B」改回書名（肌群描述移至副標題）；上次動作記憶改以 `slotKey` 儲存，種子重建後不再失效
 
 ## 後續可加
 

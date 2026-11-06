@@ -64,6 +64,7 @@ import com.komugi.workout.data.MenuExerciseRow
 import com.komugi.workout.data.MenuSummary
 import com.komugi.workout.data.NewMenuExerciseInput
 import com.komugi.workout.data.WorkoutRepository
+import com.komugi.workout.data.resolveExerciseOverrides
 import com.komugi.workout.ui.components.ExerciseMeta
 import com.komugi.workout.ui.components.ExerciseRole
 import com.komugi.workout.ui.components.SlotRecommendations
@@ -259,13 +260,10 @@ fun MenuDetailScreen(
             val overrides = if (isAdjustable) {
                 repository.lastUsedMenuExercises(id)
             } else {
-                emptyMap()
+                emptyList()
             }
-            val applied = rows.map { row ->
-                val exercise = overrides[row.menuExerciseId]?.let { exerciseId ->
-                    exercises.firstOrNull { it.id == exerciseId }
-                }
-                row.withExercise(exercise)
+            val applied = resolveExerciseOverrides(rows, overrides) { exerciseId ->
+                exercises.firstOrNull { it.id == exerciseId }
             }
             rowList.clear()
             rowList.addAll(applied)
@@ -1225,20 +1223,6 @@ private fun AutoAdjustDialog(
         }
     )
 }
-
-private fun MenuExerciseRow.withExercise(exercise: ExerciseEntity?): MenuExerciseRow =
-    if (exercise == null) {
-        this
-    } else {
-        copy(
-            exerciseId = exercise.id,
-            name = exercise.name,
-            equipment = exercise.equipment,
-            parts = exercise.parts,
-            videoUrl = exercise.videoUrl,
-            guideId = exercise.guideId
-        )
-    }
 
 private fun equipmentLabel(category: String): String =
     if (category == "其他") "器械／其他" else category
