@@ -82,8 +82,8 @@ object PlanFlex {
 
     fun dayToStored(day: PlanFlexDay): String = day.name
 
-    /** 上次動作記憶的命名空間（A/B 天分開記）。 */
-    fun memoryNamespace(day: PlanFlexDay): String = "plan-flex-${day.name}"
+    /** 上次動作記憶的命名空間（A/B 天分開記；讀寫共用同一後綴）。 */
+    fun memoryNamespace(day: PlanFlexDay): String = day.name
 
     /**
      * 取當天模板列：A 天直接用模板本體；

@@ -303,10 +303,10 @@ fun MenuDetailScreen(
                 val byName = { n: String -> exercises.firstOrNull { it.name == n } }
                 val tA = PlanFlex.templateFor(rows, PlanFlexDay.A, byName)
                 val tB = PlanFlex.templateFor(rows, PlanFlexDay.B, byName)
-                val bA = resolveExerciseOverrides(tA, repository.lastUsedMenuExercises(id, "A")) { exerciseId ->
+                val bA = resolveExerciseOverrides(tA, repository.lastUsedMenuExercises(id, PlanFlex.memoryNamespace(PlanFlexDay.A))) { exerciseId ->
                     exercises.firstOrNull { it.id == exerciseId }
                 }
-                val bB = resolveExerciseOverrides(tB, repository.lastUsedMenuExercises(id, "B")) { exerciseId ->
+                val bB = resolveExerciseOverrides(tB, repository.lastUsedMenuExercises(id, PlanFlex.memoryNamespace(PlanFlexDay.B))) { exerciseId ->
                     exercises.firstOrNull { it.id == exerciseId }
                 }
                 planBaselineA = bA

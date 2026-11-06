@@ -86,12 +86,10 @@ class PlanFlexTest {
     }
 
     @Test
-    fun memoryNamespacesDifferByDay() {
-        assertNotEquals(
-            PlanFlex.memoryNamespace(PlanFlexDay.A),
-            PlanFlex.memoryNamespace(PlanFlexDay.B)
-        )
-        assertTrue(PlanFlex.memoryNamespace(PlanFlexDay.A).contains("A"))
+    fun memoryNamespacesMatchLoadAndSave() {
+        // MenuScreens 讀寫皆以此後綴組 key：menu_last_used_<menuId>-<namespace>
+        assertEquals("A", PlanFlex.memoryNamespace(PlanFlexDay.A))
+        assertEquals("B", PlanFlex.memoryNamespace(PlanFlexDay.B))
     }
 
     @Test
