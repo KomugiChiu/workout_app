@@ -191,6 +191,322 @@
     ]
   },
   {
+    "id": "crowded-a",
+    "name": "人多健身房 A",
+    "subtitle": "單一重量啞鈴｜胸＋背",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。同一重量從頭做到尾，中途不換重量；A/B/C 每週各練一次，每次至少休一天。",
+    "exercises": [
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "4",
+        "reps": "8",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "跪姿支撐啞鈴划船",
+        "equipment": "啞鈴、凳子",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "4",
+        "reps": "8–12",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "5",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴深蹲",
+        "equipment": "8–12kg×2",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "crowded-b",
+    "name": "人多健身房 B",
+    "subtitle": "單一重量啞鈴｜腿＋肩",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。同一重量從頭做到尾，中途不換重量；A/B/C 每週各練一次，每次至少休一天。",
+    "exercises": [
+      {
+        "name": "啞鈴分腿蹲",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "4",
+        "reps": "8",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "4",
+        "reps": "12",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴直腿硬舉",
+        "equipment": "啞鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "3",
+        "reps": "10",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "3",
+        "reps": "15–20",
+        "rest": "60",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "crowded-c",
+    "name": "人多健身房 C",
+    "subtitle": "單一重量啞鈴｜登階＋手臂",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。同一重量從頭做到尾，中途不換重量；A/B/C 每週各練一次，每次至少休一天。",
+    "exercises": [
+      {
+        "name": "啞鈴登階",
+        "equipment": "啞鈴、階梯或穩固凳子",
+        "parts": "股四頭、臀大肌、小腿",
+        "sets": "4",
+        "reps": "8",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "俯臥支撐啞鈴划船",
+        "equipment": "啞鈴、上斜凳",
+        "parts": "背闊肌、菱形肌、中下斜方",
+        "sets": "4",
+        "reps": "12",
+        "rest": "60",
+        "superset": "1"
+      },
+      {
+        "name": "站姿啞鈴彎舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭",
+        "sets": "4",
+        "reps": "10",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "4",
+        "reps": "12",
+        "rest": "60",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "bw-1",
+    "name": "徒手全身 1",
+    "subtitle": "肌力型｜分腿蹲＋推＋髖",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。太難或太簡單可自行換同動作的難易版本。",
+    "exercises": [
+      {
+        "name": "自重保加利亞分腿蹲",
+        "equipment": "自重、凳子",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "12–15",
+        "rest": "60",
+        "superset": "2"
+      },
+      {
+        "name": "臀橋",
+        "equipment": "自重",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "12–15",
+        "rest": "60",
+        "superset": "2"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "30",
+        "superset": "3"
+      },
+      {
+        "name": "地面Y-T-I抬升",
+        "equipment": "自重",
+        "parts": "中下斜方、旋轉肌群、後三角",
+        "sets": "3",
+        "reps": "10",
+        "rest": "30",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "bw-2",
+    "name": "徒手全身 2",
+    "subtitle": "爆發力型｜跳蹲＋推＋肩",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。等長動作需在底部停住 5 秒；太難或太簡單可自行換同動作的難易版本。",
+    "exercises": [
+      {
+        "name": "等長爆發跳蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、心肺",
+        "sets": "4",
+        "reps": "6–8",
+        "rest": "60"
+      },
+      {
+        "name": "等長爆發伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、肱三頭、核心",
+        "sets": "3",
+        "reps": "6–8",
+        "rest": "60",
+        "superset": "2"
+      },
+      {
+        "name": "單腳臀橋",
+        "equipment": "自重",
+        "parts": "臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "12–15",
+        "rest": "60",
+        "superset": "2"
+      },
+      {
+        "name": "反向肩推",
+        "equipment": "自重",
+        "parts": "三角肌、肱三頭、上胸",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "60",
+        "superset": "3"
+      },
+      {
+        "name": "俯臥眼鏡蛇伸展",
+        "equipment": "自重",
+        "parts": "豎脊肌、臀大肌、中下斜方",
+        "sets": "2",
+        "reps": "60 秒",
+        "rest": "60",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "bw-3",
+    "name": "徒手全身 3",
+    "subtitle": "8 動作循環｜2–5 輪",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。8 個動作連做不停；首次做 2 輪，漸增至 5 輪。",
+    "exercises": [
+      {
+        "name": "開合跳",
+        "equipment": "自重",
+        "parts": "心肺、小腿、肩",
+        "sets": "2–5",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "囚犯深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2–5",
+        "reps": "20",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "窄距伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、肱三頭",
+        "sets": "2–5",
+        "reps": "20",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "行走弓步",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2–5",
+        "reps": "12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "2–5",
+        "reps": "10",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "徒手單腿硬舉",
+        "equipment": "自重",
+        "parts": "腿後腱、臀大肌、核心",
+        "sets": "2–5",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "T伏地挺身",
+        "equipment": "自重",
+        "parts": "胸、核心、肩",
+        "sets": "2–5",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "原地跑",
+        "equipment": "自重",
+        "parts": "心肺、小腿",
+        "sets": "2–5",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "1"
+      }
+    ]
+  },
+  {
     "id": "upper-recovery",
     "name": "上半身恢復日",
     "subtitle": "TRX 隔天｜低握力、手腕中立",

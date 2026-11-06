@@ -135,6 +135,7 @@ fun AppRoot(
                     menuId = entry.arguments?.getString("menuId"),
                     onBack = { navController.popBackStack() },
                     onOpenGuide = { navController.navigate("guide/$it") },
+                    onOpenExercise = { navController.navigate("library/$it") },
                     onSessionCreated = { sessionId ->
                         navController.navigate("log/$sessionId")
                     }

@@ -378,5 +378,265 @@
     "difficulty": "INTERMEDIATE",
     "instructions": "坐姿或站姿，雙手各持啞鈴放在肩膀兩側。\n核心收緊，將啞鈴往頭上推，直到手臂接近伸直。\n慢慢降回肩膀高度，保持手肘在身體前方。",
     "warning": "不要聳肩或拱腰；若肩部不適，降低重量或改為阿諾德推舉。"
+  },
+  {
+    "name": "啞鈴臥推",
+    "parts": "胸大肌、前三角、肱三頭",
+    "equipment": "啞鈴、臥推椅",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手各持啞鈴仰臥於平凳，啞鈴置於胸上幾乎相觸。\n掌心朝外微內扣，肩胛下沉夾緊並全程保持。\n保持手腕角度，將啞鈴下放至胸部兩側，上臂與身體約呈 45 度。\n稍停後快速推回頂點，手臂完全伸直。",
+    "warning": "不要聳肩或塌腰；重量以能標準完成動作為準。"
+  },
+  {
+    "name": "上斜啞鈴臥推",
+    "parts": "胸大肌（上胸）、前三角、肱三頭",
+    "equipment": "啞鈴、上斜椅",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "椅背調到最低斜度，約 15–30 度。\n仰臥，雙手持鈴置於肩膀上方、手臂伸直後開始。\n將啞鈴下放至上胸兩側。\n稍停後推回起始位置。",
+    "warning": "斜度不要調太高，避免變成肩推；保持肩胛穩定。"
+  },
+  {
+    "name": "啞鈴分腿蹲",
+    "parts": "股四頭、臀大肌、腿後腱、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手持鈴自然垂於體側，掌心相對。\n前後分腿站，前腳在前、後腳在後。\n身體打直慢慢下蹲，直到後膝幾乎觸地。\n稍停後快速推起；一邊做完換邊。",
+    "warning": "前膝對齊腳尖不要內夾；軀幹保持直立。"
+  },
+  {
+    "name": "單手啞鈴肩推",
+    "parts": "三角肌、肱三頭、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "單手持鈴置於肩膀外側。\n核心收緊，將啞鈴往頭上推至手臂接近伸直。\n慢慢降回肩膀高度。\n一邊做完換邊，兩邊次數相同。",
+    "warning": "不要聳肩或拱腰；身體不要側彎借力。"
+  },
+  {
+    "name": "啞鈴直腿硬舉",
+    "parts": "腿後腱、臀大肌、豎脊肌",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "正握啞鈴置於大腿前方，雙腳與髖同寬、膝蓋微彎。\n保持膝彎角度不變，髖部向後推、俯身至軀幹接近與地面平行。\n背部全程自然平直，啞鈴貼近身體下降。\n稍停後用臀腿發力站回。",
+    "warning": "不要拱背或用腰拉起；感受腿後側拉伸。"
+  },
+  {
+    "name": "單手啞鈴擺盪",
+    "parts": "臀大肌、腿後腱、核心、握力",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "單手正握啞鈴垂於腰前。\n屈髖屈膝、俯身約 45 度，下背微弓、臀部後推，把鈴盪到雙腿之間。\n手臂打直，臀部用力前推、膝蓋蹬直，把鈴盪到胸口高度。\n順勢再盪回腿間，連續有節奏發力。",
+    "warning": "力量來自髖部前推，不是手臂上舉；背部保持中立。"
+  },
+  {
+    "name": "啞鈴登階",
+    "parts": "股四頭、臀大肌、小腿",
+    "equipment": "啞鈴、階梯或穩固凳子",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手持鈴垂於體側，站在階梯前。\n一腳踩穩階上，階高以踏上時膝彎約 90 度為準。\n踏階腳後跟用力推起至單腿站直，另一腳懸空。\n慢放回地面；一邊做完換邊。",
+    "warning": "膝蓋對齊腳尖；凳子必須穩固不滑動。"
+  },
+  {
+    "name": "跪姿支撐啞鈴划船",
+    "parts": "背闊肌、菱形肌、肱二頭",
+    "equipment": "啞鈴、凳子",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "單膝跪凳、同側手撐住凳面，背部打平。\n對側手掌心向內正握啞鈴，自然下垂。\n先收肩胛，再屈肘把鈴拉向腰側。\n稍停後慢放；一邊做完換邊。",
+    "warning": "軀幹不要旋轉借力；拉起時不要聳肩。"
+  },
+  {
+    "name": "俯臥支撐啞鈴划船",
+    "parts": "背闊肌、菱形肌、中下斜方",
+    "equipment": "啞鈴、上斜凳",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "俯臥於低斜度凳面，啞鈴自然下垂於肩膀下方。\n掌心相對。\n屈肘把鈴拉向胸部兩側。\n稍停後慢放回起始位置。",
+    "warning": "胸口貼緊凳面，不要用腰代償。"
+  },
+  {
+    "name": "站姿啞鈴彎舉",
+    "parts": "肱二頭",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "自然站立，啞鈴垂於體側、掌心朝前。\n上臂固定，屈肘把鈴彎向肩膀。\n頂峰稍停，慢慢放回到底、手臂完全伸直。",
+    "warning": "上臂不要前後擺動；身體不要後仰借力。"
+  },
+  {
+    "name": "啞鈴仰臥三頭伸展",
+    "parts": "肱三頭",
+    "equipment": "啞鈴、平凳",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "仰臥，雙手持鈴、手臂伸直置於額頭上方。\n上臂完全固定，只彎曲手肘把鈴慢放到頭部兩側。\n前臂剛過水平即停，再伸直推回。",
+    "warning": "上臂不要晃動；重量先輕，護好手肘。"
+  },
+  {
+    "name": "自重保加利亞分腿蹲",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "自重、凳子",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "後腳背放凳面，前腳站穩。\n身體打直下蹲，直到後膝接近地面。\n前腳推地站起。\n一邊做完換邊。",
+    "warning": "前膝對齊腳尖；重心放在前腳。"
+  },
+  {
+    "name": "臀橋",
+    "parts": "臀大肌、腿後腱、核心",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "BEGINNER",
+    "instructions": "仰臥屈膝、腳踩地，雙手放體側約 45 度、掌心向上。\n用腳跟推地，把臀部抬到肩膀到膝蓋成一直線。\n夾緊臀部，頂峰停最多 5 秒再慢放。",
+    "warning": "用腳跟發力，不要用腳尖；腰不要過度反拱。"
+  },
+  {
+    "name": "地面Y-T-I抬升",
+    "parts": "中下斜方、旋轉肌群、後三角",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "BEGINNER",
+    "instructions": "俯臥，雙臂伸直。先做 Y：手臂與身體約 30 度、掌心相對、拇指朝上，抬到最高稍停慢放。\n再做 T、再做 I，每個字母各 10 下。",
+    "warning": "動作放慢，感受肩胛收緊；脖子保持中立。"
+  },
+  {
+    "name": "等長爆發跳蹲",
+    "parts": "股四頭、臀大肌、心肺",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "手指放腦後、手肘後張。\n下蹲到底並停住 5 秒。\n奮力向上跳到最高。\n落地立刻再蹲再跳。",
+    "warning": "落地屈膝緩衝；膝蓋對齊腳尖。"
+  },
+  {
+    "name": "等長爆發伏地挺身",
+    "parts": "胸大肌、肱三頭、核心",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "伏地挺身姿勢，身體成一直線。\n下放到最低點並停住 5 秒。\n爆發推起。\n慢落到底，接下一下。",
+    "warning": "全程核心收緊，腰不要塌陷。"
+  },
+  {
+    "name": "單腳臀橋",
+    "parts": "臀大肌、腿後腱",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "仰臥，一膝屈曲、一腿伸直抬到與大腿同高。\n屈曲腿腳跟推地，把臀部抬起。\n稍停後慢放；一邊做完換邊。",
+    "warning": "骨盆保持水平，不要歪向一側。"
+  },
+  {
+    "name": "反向肩推",
+    "parts": "三角肌、肱三頭、上胸",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "ADVANCED",
+    "instructions": "從伏地挺身姿勢開始，雙腳往前走、抬高臀部，直到軀幹接近垂直地面。\n雙手略寬於肩、手臂打直。\n保持身體姿勢不變，屈肘低頭至接近觸地。\n稍停後推回手臂打直。",
+    "warning": "量力而為；脖子不適就先降難度。"
+  },
+  {
+    "name": "俯臥眼鏡蛇伸展",
+    "parts": "豎脊肌、臀大肌、中下斜方",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "STATIC",
+    "difficulty": "BEGINNER",
+    "instructions": "俯臥，雙腿伸直、雙手放體側掌心向下。\n收緊臀部與下背，同時把頭、胸、手、腿抬離地面，拇指朝上。\n此時只有髖部觸地。\n維持秒數再慢放。",
+    "warning": "動作溫和控制，不要猛力後仰。"
+  },
+  {
+    "name": "開合跳",
+    "parts": "心肺、小腿、肩",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "CARDIO",
+    "difficulty": "BEGINNER",
+    "instructions": "併腿站立，雙手放體側。\n跳開雙腿，同時雙手上舉過頭。\n再跳回併腿。\n連續進行 30 秒。",
+    "warning": "落地屈膝緩衝；穿合適的鞋子。"
+  },
+  {
+    "name": "囚犯深蹲",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "BEGINNER",
+    "instructions": "手指放腦後，手肘與肩膀後張。\n挺胸下蹲至大腿約與地面平行。\n腳跟推地站起。",
+    "warning": "膝蓋對齊腳尖；上身不要前傾太多。"
+  },
+  {
+    "name": "窄距伏地挺身",
+    "parts": "胸大肌、肱三頭",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手直接放在肩膀正下方。\n下落時手肘夾緊身體兩側。\n推回起始位置。",
+    "warning": "身體全程成一直線，不要塌腰。"
+  },
+  {
+    "name": "行走弓步",
+    "parts": "股四頭、臀大肌、核心",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "BEGINNER",
+    "instructions": "站直向前跨出一大步。\n雙膝彎曲，後膝接近地面、前膝對齊腳尖。\n前腳推起併腿，再換腳向前跨。",
+    "warning": "步伐穩定再換腳；膝蓋不要內夾。"
+  },
+  {
+    "name": "徒手單腿硬舉",
+    "parts": "腿後腱、臀大肌、核心",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "單腳站立。\n髖部向後推、俯身，自由腿向後伸直與軀幹成一直線。\n站立腿後側有拉伸感後回正。\n一邊做完換邊。",
+    "warning": "骨盆保持水平；初學可輕扶牆面輔助平衡。"
+  },
+  {
+    "name": "T伏地挺身",
+    "parts": "胸、核心、肩",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "BODYWEIGHT",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "做一下標準伏地挺身。\n推起時轉體，一手朝天、身體成 T 字形。\n回正後換邊交替。",
+    "warning": "轉體時腳跟轉動配合，不要扭膝蓋。"
+  },
+  {
+    "name": "原地跑",
+    "parts": "心肺、小腿",
+    "equipment": "自重",
+    "location": "ANY",
+    "movementType": "CARDIO",
+    "difficulty": "BEGINNER",
+    "instructions": "原地快速交替抬腿跑步。\n手肘彎曲自然擺臂。\n維持 30 秒或計時進行。",
+    "warning": "落地輕盈屈膝緩衝。"
   }
 ]

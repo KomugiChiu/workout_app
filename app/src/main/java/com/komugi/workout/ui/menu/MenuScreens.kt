@@ -221,6 +221,7 @@ fun MenuDetailScreen(
     menuId: String?,
     onBack: () -> Unit,
     onOpenGuide: (String) -> Unit,
+    onOpenExercise: (Long) -> Unit,
     onSessionCreated: (Long) -> Unit
 ) {
     val id = menuId ?: ""
@@ -557,6 +558,7 @@ fun MenuDetailScreen(
                             isAdjustable = true,
                             onSwap = { swapTarget = row },
                             onOpenGuide = onOpenGuide,
+                            onOpenExercise = { onOpenExercise(row.exerciseId) },
                             onOpenVideo = { openUrl(context, it) },
                             dragHandle = null
                         )
@@ -576,6 +578,7 @@ fun MenuDetailScreen(
                                 isAdjustable = false,
                                 onSwap = null,
                                 onOpenGuide = onOpenGuide,
+                                onOpenExercise = { onOpenExercise(row.exerciseId) },
                                 onOpenVideo = { openUrl(context, it) },
                                 dragHandle = {
                                     IconButton(
@@ -808,6 +811,7 @@ private fun MenuExerciseCard(
     isAdjustable: Boolean,
     onSwap: (() -> Unit)?,
     onOpenGuide: (String) -> Unit,
+    onOpenExercise: () -> Unit,
     onOpenVideo: (String) -> Unit,
     dragHandle: (@Composable () -> Unit)?
 ) {
@@ -873,6 +877,9 @@ private fun MenuExerciseCard(
                 dragHandle?.invoke()
             }
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                TextButton(onClick = onOpenExercise) {
+                    Text("動作詳情")
+                }
                 row.guideId?.let { guideId ->
                     TextButton(onClick = { onOpenGuide(guideId) }) {
                         Text("動作說明")

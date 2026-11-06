@@ -16,7 +16,7 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(12, menus.size)
+        assertEquals(18, menus.size)
 
         val planA = menus.first { it.id == "plan-a" }
         val planB = menus.first { it.id == "plan-b" }
@@ -60,6 +60,48 @@ class MenuSeedTest {
             listOf("75", "75", "60"),
             three.exercises.map { it.rest }
         )
+    }
+
+    @Test
+    fun bookBatch1MenusAreWellFormed() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val crowdedA = menus.first { it.id == "crowded-a" }
+        assertEquals(4, crowdedA.exercises.size)
+        assertEquals(
+            listOf("啞鈴臥推", "跪姿支撐啞鈴划船", "上斜啞鈴臥推", "啞鈴深蹲"),
+            crowdedA.exercises.map { it.name }
+        )
+        assertEquals(
+            listOf("1", "1", "2", "2"),
+            crowdedA.exercises.map { it.superset }
+        )
+
+        val crowdedB = menus.first { it.id == "crowded-b" }
+        assertEquals(4, crowdedB.exercises.size)
+        assertEquals("啞鈴直腿硬舉", crowdedB.exercises[2].name)
+        assertEquals("0", crowdedB.exercises[2].rest)
+
+        val crowdedC = menus.first { it.id == "crowded-c" }
+        assertEquals(4, crowdedC.exercises.size)
+
+        val bw1 = menus.first { it.id == "bw-1" }
+        assertEquals(5, bw1.exercises.size)
+        val bw2 = menus.first { it.id == "bw-2" }
+        assertEquals(5, bw2.exercises.size)
+        val bw3 = menus.first { it.id == "bw-3" }
+        assertEquals(8, bw3.exercises.size)
+        assertTrue(bw3.exercises.all { it.superset == "1" })
+
+        listOf(crowdedA, crowdedB, crowdedC, bw1, bw2, bw3).forEach { menu ->
+            assertTrue(!menu.template)
+            menu.exercises.forEach { exercise ->
+                assertTrue(exercise.name.isNotBlank())
+                assertTrue(exercise.sets!!.isNotBlank())
+                assertTrue(exercise.reps!!.isNotBlank())
+            }
+        }
     }
 
     @Test

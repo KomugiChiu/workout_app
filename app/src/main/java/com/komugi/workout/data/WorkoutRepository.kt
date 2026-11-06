@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 14
+        private const val SEED_VERSION = 15
     }
 
     private val dao = db.dao()
