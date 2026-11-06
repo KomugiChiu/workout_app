@@ -91,7 +91,7 @@
   },
   {
     "name": "羅馬尼亞硬舉",
-    "parts": "腿後腱、臀大肌、豎脊肌",
+    "parts": "腿後腱、臀大肌、豎脊肌、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -291,7 +291,7 @@
   },
   {
     "name": "早安運動",
-    "parts": "腿後腱、臀大肌、豎脊肌",
+    "parts": "腿後腱、臀大肌、豎脊肌、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -421,7 +421,7 @@
   },
   {
     "name": "啞鈴直腿硬舉",
-    "parts": "腿後腱、臀大肌、豎脊肌",
+    "parts": "腿後腱、臀大肌、豎脊肌、核心",
     "equipment": "啞鈴",
     "location": "HOME",
     "movementType": "WEIGHTED",
@@ -641,7 +641,7 @@
   },
   {
     "name": "槓鈴硬舉",
-    "parts": "臀大肌、腿後腱、豎脊肌、握力",
+    "parts": "臀大肌、腿後腱、豎脊肌、握力、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -651,7 +651,7 @@
   },
   {
     "name": "寬握槓鈴硬舉",
-    "parts": "臀大肌、腿後腱、上背、握力",
+    "parts": "臀大肌、腿後腱、上背、握力、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -661,7 +661,7 @@
   },
   {
     "name": "槓鈴直腿硬舉",
-    "parts": "腿後腱、臀大肌、豎脊肌",
+    "parts": "腿後腱、臀大肌、豎脊肌、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -681,7 +681,7 @@
   },
   {
     "name": "啞鈴硬舉",
-    "parts": "臀大肌、腿後腱、豎脊肌、握力",
+    "parts": "臀大肌、腿後腱、豎脊肌、握力、核心",
     "equipment": "啞鈴",
     "location": "HOME",
     "movementType": "WEIGHTED",
@@ -901,7 +901,7 @@
   },
   {
     "name": "啞鈴懸垂上拉",
-    "parts": "斜方肌、三角肌、臀大肌、腿後腱",
+    "parts": "斜方肌、三角肌、臀大肌、腿後腱、核心",
     "equipment": "啞鈴",
     "location": "HOME",
     "movementType": "WEIGHTED",
@@ -911,7 +911,7 @@
   },
   {
     "name": "單手啞鈴抓舉",
-    "parts": "三角肌、斜方肌、臀大肌、腿後腱",
+    "parts": "三角肌、斜方肌、臀大肌、腿後腱、核心",
     "equipment": "啞鈴",
     "location": "HOME",
     "movementType": "WEIGHTED",
@@ -1041,7 +1041,7 @@
   },
   {
     "name": "啞鈴借力推舉",
-    "parts": "三角肌、肱三頭、股四頭",
+    "parts": "三角肌、肱三頭、股四頭、核心",
     "equipment": "啞鈴",
     "location": "HOME",
     "movementType": "WEIGHTED",
@@ -1051,7 +1051,7 @@
   },
   {
     "name": "槓鈴借力推舉",
-    "parts": "三角肌、肱三頭、股四頭",
+    "parts": "三角肌、肱三頭、股四頭、核心",
     "equipment": "槓鈴",
     "location": "GYM",
     "movementType": "WEIGHTED",
@@ -1678,5 +1678,125 @@
     "difficulty": "INTERMEDIATE",
     "instructions": "標準伏地挺身推到頂後，肩胛再前推撐高。\n稍停後下放。\n全程身體成一直線。",
     "warning": "感受肩胛前引；腰不要塌。"
+  },
+  {
+    "name": "土耳其起立",
+    "parts": "核心、肩、臀大肌、股四頭",
+    "equipment": "啞鈴或壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "仰臥腿伸直，單手持鈴、手臂打直朝天。\n手臂全程朝天，翻身用另一手肘撐起。\n踩地腳站起至跪姿再站直；原路回去。\n一邊做完換邊。",
+    "warning": "重量先輕，動作分段練熟再連起來。"
+  },
+  {
+    "name": "槓鈴高拉",
+    "parts": "斜方肌、三角肌、臀大肌、腿後腱、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "輕重量槓貼小腿，握距略寬於肩。\n屈髖屈膝下蹲，背不圓、胸髖同時繃緊。\n臀前推爆發站起、屈肘把槓拉到最高（會踮腳）。\n慢放回地。",
+    "warning": "用髖爆發帶動，不要只用手臂硬拉。"
+  },
+  {
+    "name": "槓鈴懸垂上拉",
+    "parts": "斜方肌、三角肌、臀大肌、腿後腱、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "槓置大腿前（膝上）開始，微屈髖膝。\n臀腿爆發伸展、聳肩把槓拉到胸前。\n慢放回起始位置。",
+    "warning": "下背保持中立；重量循序漸進。"
+  },
+  {
+    "name": "槓鈴跳聳肩",
+    "parts": "斜方肌、股四頭、小腿、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "輕重量持槓，屈髖屈膝半蹲。\n爆發跳起，同時聳肩到最高。\n落地屈膝緩衝立刻接下一下。",
+    "warning": "重量要輕；落地務必緩衝。"
+  },
+  {
+    "name": "寬握跳聳肩",
+    "parts": "斜方肌、股四頭、小腿、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "採寬握，其餘同槓鈴跳聳肩。\n半蹲後爆發跳起＋聳肩。\n落地屈膝緩衝。",
+    "warning": "重量要輕；落地務必緩衝。"
+  },
+  {
+    "name": "啞鈴跳聳肩",
+    "parts": "斜方肌、股四頭、小腿、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "雙手持鈴垂體側，屈髖屈膝半蹲。\n爆發跳起，同時聳肩到最高。\n落地屈膝緩衝。",
+    "warning": "重量要輕；落地務必緩衝。"
+  },
+  {
+    "name": "單手懸垂抓舉",
+    "parts": "三角肌、斜方肌、臀大肌、腿後腱、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "鈴置膝下開始（不從地板）。\n臀腿爆發一口氣拉到頭頂、手臂打直。\n慢放回膝下；一邊做完換邊。",
+    "warning": "動作連貫；周圍淨空。"
+  },
+  {
+    "name": "單手壺鈴抓舉",
+    "parts": "三角肌、斜方肌、臀大肌、腿後腱、核心",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "ADVANCED",
+    "instructions": "單手持壺鈴於兩腿間。\n臀腿爆發把鈴翻到頭頂、手臂打直。\n慢放回地；換邊。",
+    "warning": "手腕保持中立，翻鈴不要砸手腕。"
+  },
+  {
+    "name": "槓鈴前蹲推",
+    "parts": "股四頭、臀大肌、三角肌、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "正握槓置鎖骨前、手肘抬至上臂平行地面。\n下蹲到底，背不圓。\n站起同時把槓推過頭到手臂打直。",
+    "warning": "手肘全程抬高；推過頭不拱腰。"
+  },
+  {
+    "name": "槓鈴直腿硬舉划船",
+    "parts": "腿後腱、背闊肌、臀大肌、核心",
+    "equipment": "槓鈴",
+    "location": "GYM",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "正握槓置大腿前，膝微彎。\n髖後推俯身至軀幹近水平。\n收肩胛把槓拉向上腹稍停。\n原路回去（先放下再站起）。",
+    "warning": "背部中立；拉時不轉體。"
+  },
+  {
+    "name": "啞鈴直腿硬舉划船",
+    "parts": "腿後腱、背闊肌、臀大肌、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "雙手持鈴，膝微彎。\n髖後推俯身，鈴貼身下降。\n收肩胛把鈴拉向上腹稍停再原路回去。",
+    "warning": "背部中立；拉時不轉體。"
+  },
+  {
+    "name": "啞鈴錘式彎舉弓步推舉",
+    "parts": "肱二頭、股四頭、三角肌、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "掌心相對持鈴站直。\n左腳前跨弓步，同時彎舉。\n弓步到底起身前把鈴推過頭。\n站回放下換邊。",
+    "warning": "前膝對腳尖；推舉不拱腰。"
   }
 ]

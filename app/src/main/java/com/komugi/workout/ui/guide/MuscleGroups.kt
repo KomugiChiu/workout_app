@@ -40,6 +40,7 @@ import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.ExerciseMeta
 import com.komugi.workout.ui.components.MuscleGroup
+import com.komugi.workout.ui.components.isFullBodyExercise
 import com.komugi.workout.ui.components.muscleGroupLabel
 import com.komugi.workout.ui.components.muscleGroupsIn
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
@@ -62,7 +63,11 @@ fun MuscleGroupsScreen(
         MuscleGroup.entries.mapNotNull { group ->
             val matched = exercises.filter { exercise ->
                 (keyword.isBlank() || exercise.name.contains(keyword, ignoreCase = true)) &&
-                    muscleGroupsIn(exercise.parts, limit = 10).contains(group)
+                    if (group == MuscleGroup.FULL_BODY) {
+                        isFullBodyExercise(exercise.parts)
+                    } else {
+                        muscleGroupsIn(exercise.parts, limit = 10).contains(group)
+                    }
             }
             if (matched.isEmpty()) null else group to matched.sortedBy { it.name }
         }

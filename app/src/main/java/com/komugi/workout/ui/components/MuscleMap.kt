@@ -108,6 +108,35 @@ fun muscleGroupLabel(group: MuscleGroup): String = when (group) {
     MuscleGroup.FULL_BODY -> "全身"
 }
 
+/**
+ * 是否算全身動作：部位文字含「全身」，或同時動用到
+ * 上肢（胸背肩臂）＋下肢（臀腿）＋核心三區的複合動作。
+ */
+fun isFullBodyExercise(parts: String?): Boolean {
+    val text = parts?.trim().orEmpty()
+    if (text.isEmpty()) return false
+    if (text.contains("全身")) return true
+    val groups = muscleGroupsIn(text, limit = 10).toSet()
+    val upper = setOf(
+        MuscleGroup.CHEST,
+        MuscleGroup.BACK,
+        MuscleGroup.SHOULDERS,
+        MuscleGroup.BICEPS,
+        MuscleGroup.TRICEPS,
+        MuscleGroup.FOREARMS,
+        MuscleGroup.ARMS
+    )
+    val lower = setOf(
+        MuscleGroup.GLUTES,
+        MuscleGroup.QUADS,
+        MuscleGroup.HAMSTRINGS,
+        MuscleGroup.CALVES
+    )
+    return MuscleGroup.CORE in groups &&
+        groups.any { it in upper } &&
+        groups.any { it in lower }
+}
+
 /** 圖示視角：前側或後側 */
 private fun muscleGroupView(group: MuscleGroup): String? = when (group) {
     MuscleGroup.CHEST,
