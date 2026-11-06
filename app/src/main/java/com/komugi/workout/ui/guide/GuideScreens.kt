@@ -60,12 +60,17 @@ fun GuideListScreen(
         }
     }
 
+    // 肌肉部位已獨立成資料頁入口，這裡不再列出全圖鑑
+    val guideSource = remember(repository.guides) {
+        repository.guides.filterNot { it.id == "muscles" }
+    }
+
     val filtered = remember(query, guideTexts) {
         val keyword = query.trim()
         if (keyword.isEmpty()) {
-            repository.guides
+            guideSource
         } else {
-            repository.guides.filter { guide ->
+            guideSource.filter { guide ->
                 guide.title.contains(keyword, ignoreCase = true) ||
                     guide.subtitle?.contains(keyword, ignoreCase = true) == true ||
                     guide.parts?.contains(keyword, ignoreCase = true) == true ||
