@@ -28,8 +28,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.body.BodyMetricsScreen
+import com.komugi.workout.ui.guide.BookPlansScreen
+import com.komugi.workout.ui.guide.DataHubScreen
 import com.komugi.workout.ui.guide.GuideDetailScreen
 import com.komugi.workout.ui.guide.GuideListScreen
+import com.komugi.workout.ui.guide.MuscleGroupsScreen
 import com.komugi.workout.ui.library.ExerciseLibraryDetailScreen
 import com.komugi.workout.ui.library.ExerciseLibraryScreen
 import com.komugi.workout.ui.log.AddExercisesScreen
@@ -86,7 +89,9 @@ fun AppRoot(
                         "logs" -> route == "logs" || route?.startsWith("log/") == true ||
                             route?.startsWith("exercise/") == true
                         "body" -> route == "body"
-                        "guides" -> route == "guides" || route?.startsWith("guide/") == true ||
+                        "guides" -> route == "guides" || route == "bookplans" ||
+                            route == "guideslist" || route == "muscles" ||
+                            route?.startsWith("guide/") == true ||
                             route?.startsWith("ref/") == true ||
                             route == "library" || route?.startsWith("library/") == true
                         else -> route == "settings"
@@ -213,12 +218,35 @@ fun AppRoot(
                 )
             }
             composable("guides") {
+                DataHubScreen(
+                    repository = repository,
+                    onOpenLibrary = { navController.navigate("library") },
+                    onOpenBookPlans = { navController.navigate("bookplans") },
+                    onOpenGuides = { navController.navigate("guideslist") },
+                    onOpenMuscles = { navController.navigate("muscles") }
+                )
+            }
+            composable("bookplans") {
+                BookPlansScreen(
+                    repository = repository,
+                    onBack = { navController.popBackStack() },
+                    onOpenReferenceMenu = { navController.navigate("ref/$it") },
+                    onOpenTemplateMenu = { navController.navigate("menu/$it") }
+                )
+            }
+            composable("guideslist") {
                 GuideListScreen(
                     repository = repository,
                     onOpenGuide = { navController.navigate("guide/${it.id}") },
-                    onOpenLibrary = { navController.navigate("library") },
-                    onOpenReferenceMenu = { navController.navigate("ref/$it") },
-                    onOpenTemplateMenu = { navController.navigate("menu/$it") }
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable("muscles") {
+                MuscleGroupsScreen(
+                    repository = repository,
+                    onBack = { navController.popBackStack() },
+                    onOpenExercise = { navController.navigate("library/$it") },
+                    onOpenAtlas = { navController.navigate("guide/muscles") }
                 )
             }
             composable("library") {

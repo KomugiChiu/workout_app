@@ -50,16 +50,9 @@ import com.komugi.workout.util.MarkdownWebView
 fun GuideListScreen(
     repository: WorkoutRepository,
     onOpenGuide: (GuideRef) -> Unit,
-    onOpenLibrary: () -> Unit,
-    onOpenReferenceMenu: (String) -> Unit,
-    onOpenTemplateMenu: (String) -> Unit
+    onBack: () -> Unit
 ) {
     var query by remember { mutableStateOf("") }
-    val exercises by repository.observeExercises().collectAsState(initial = emptyList())
-    val menuSummaries by repository.observeMenuSummaries().collectAsState(initial = emptyList())
-    val summariesById = remember(menuSummaries) {
-        menuSummaries.associateBy { it.menu.id }
-    }
 
     val guideTexts = remember(repository.guides) {
         repository.guides.associate { guide ->
@@ -82,7 +75,17 @@ fun GuideListScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("資料") }, colors = komugiTopAppBarColors()) }
+        topBar = {
+            TopAppBar(
+                title = { Text("動作說明") },
+                colors = komugiTopAppBarColors(),
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
+                    }
+                }
+            )
+        }
     ) { padding ->
         Column(
             Modifier
@@ -95,7 +98,7 @@ fun GuideListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("搜尋動作、課表…") },
+                placeholder = { Text("搜尋動作名稱或內文…") },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
@@ -109,7 +112,7 @@ fun GuideListScreen(
 
             if (query.isNotBlank()) {
                 Text(
-                    "動作說明找到 ${filtered.size} 筆",
+                    "找到 ${filtered.size} 筆",
                     modifier = Modifier.padding(horizontal = 20.dp),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -117,31 +120,13 @@ fun GuideListScreen(
                 Spacer(Modifier.height(4.dp))
             }
 
-            val keyword = query.trim()
-            val planSummaries = remember(keyword, summariesById) {
-                if (keyword.isBlank()) {
-                    summariesById
-                } else {
-                    summariesById.filter { (id, summary) ->
-                        summary.menu.name.contains(keyword, ignoreCase = true) ||
-                            BOOK_PLAN_GROUPS.firstOrNull { it.menuIds.contains(id) }
-                                ?.title?.contains(keyword, ignoreCase = true) == true
-                    }
-                }
-            }
-            val matchingGroups = remember(keyword, planSummaries) {
-                BOOK_PLAN_GROUPS.filter { group ->
-                    group.menuIds.any { planSummaries.containsKey(it) }
-                }
-            }
-
-            if (filtered.isEmpty() && matchingGroups.isEmpty()) {
+            if (filtered.isEmpty()) {
                 Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "找不到符合的資料",
+                        "找不到符合的動作說明",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -152,51 +137,6 @@ fun GuideListScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    item {
-                        Card(
-                            onClick = onOpenLibrary,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column(Modifier.padding(16.dp)) {
-                                Text(
-                                    "動作庫",
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                Text(
-                                    "依分類、器材、型態與替代動作瀏覽 ${exercises.size} 個動作",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                        }
-                    }
-                    item {
-                        Text(
-                            "書本課表",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            "出自《Men's Health Big Book of Exercises》，純參考；可進動作詳情看步驟",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    items(matchingGroups, key = { it.key }) { group ->
-                        BookPlanGroupCard(
-                            group = group,
-                            summaries = planSummaries,
-                            forceExpanded = keyword.isNotBlank(),
-                            onOpenReference = onOpenReferenceMenu,
-                            onOpenTemplate = onOpenTemplateMenu
-                        )
-                    }
-                    item {
-                        Text(
-                            "動作說明",
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
-                    }
                     items(filtered, key = { it.id }) { guide ->
                         Card(
                             onClick = { onOpenGuide(guide) },
