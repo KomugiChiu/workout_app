@@ -487,8 +487,12 @@ class WorkoutRepository(
     /**
      * 可調重訓計畫上次選的 A/B 天（全域記住，重開維持）。
      */
-    suspend fun planFlexDay(): String =
-        dao.metaValue("plan_flex_day") ?: "A"
+    suspend fun planFlexDay(): String {
+        // 舊版誤寫的 key（讀寫後綴不一致），讀到即清掉，只會清一次
+        dao.deleteMeta("menu_last_used_plan-flex-plan-flex-A")
+        dao.deleteMeta("menu_last_used_plan-flex-plan-flex-B")
+        return dao.metaValue("plan_flex_day") ?: "A"
+    }
 
     suspend fun savePlanFlexDay(day: String) {
         dao.upsertMeta(

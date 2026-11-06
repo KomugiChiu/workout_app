@@ -152,6 +152,9 @@ interface WorkoutDao {
     @Query("SELECT value FROM app_meta WHERE `key` = :key LIMIT 1")
     suspend fun metaValue(key: String): String?
 
+    @Query("DELETE FROM app_meta WHERE `key` = :key")
+    suspend fun deleteMeta(key: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertMeta(meta: AppMetaEntity)
 
