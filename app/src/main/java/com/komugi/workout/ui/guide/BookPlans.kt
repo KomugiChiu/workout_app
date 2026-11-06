@@ -56,7 +56,7 @@ val BOOK_PLAN_GROUPS: List<BookPlanGroup> = listOf(
         key = "four-week",
         title = "四週減脂計畫",
         subtitle = "第 3 章・Craig Rasmussen",
-        menuIds = listOf("plan-a", "plan-b")
+        menuIds = listOf("plan-flex")
     ),
     BookPlanGroup(
         key = "getback",

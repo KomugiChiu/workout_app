@@ -1,9 +1,7 @@
 [
   {
-    "id": "plan-a",
-    "name": "重訓計畫 A",
-    "subtitle": "後鏈＋胸｜一週 3 天・A/B 輪替・每個動作 3×12・休 60 秒",
-    "note": "2A＋2B、3A＋3B 為配對組；可依今天器材更換動作，組數、休息與順序不變。",
+    "id": "plan-flex",
+    "name": "重訓計畫",
     "template": true,
     "exercises": [
       {
@@ -69,79 +67,6 @@
         "role": "胸肌",
         "laterality": "通用",
         "pattern": "水平推"
-      }
-    ]
-  },
-  {
-    "id": "plan-b",
-    "name": "重訓計畫 B",
-    "subtitle": "股四頭＋背闊＋肩｜一週 3 天・A/B 輪替・每個動作 3×12・休 60 秒",
-    "note": "2A＋2B、3A＋3B 為配對組；可依今天器材更換動作，組數、休息與順序不變。",
-    "template": true,
-    "exercises": [
-      {
-        "name": "鳥狗式",
-        "equipment": "自重",
-        "parts": "腹橫肌、臀大肌、豎脊肌、肩胛穩定",
-        "sets": "3",
-        "reps": "12",
-        "rest": "60",
-        "slot": "1",
-        "role": "核心平衡",
-        "laterality": "通用",
-        "pattern": "核心"
-      },
-      {
-        "name": "保加利亞分腿蹲",
-        "equipment": "4–6kg×2",
-        "parts": "股四頭、臀大肌、腿後腱、核心",
-        "sets": "3",
-        "reps": "12",
-        "rest": "60",
-        "superset": "2",
-        "slot": "2A",
-        "role": "股四頭肌",
-        "laterality": "單邊",
-        "pattern": "蹲"
-      },
-      {
-        "name": "滑輪下拉",
-        "equipment": "滑輪、高位下拉機",
-        "parts": "背闊肌、肱二頭",
-        "sets": "3",
-        "reps": "12",
-        "rest": "60",
-        "superset": "2",
-        "slot": "2B",
-        "role": "背闊肌",
-        "laterality": "通用",
-        "pattern": "垂直拉"
-      },
-      {
-        "name": "啞鈴 RDL",
-        "equipment": "10kg×2",
-        "parts": "腿後腱、臀大肌、豎脊肌、握力",
-        "sets": "3",
-        "reps": "12",
-        "rest": "60",
-        "superset": "3",
-        "slot": "3A",
-        "role": "腿後肌與臀肌",
-        "laterality": "雙邊",
-        "pattern": "髖主導"
-      },
-      {
-        "name": "阿諾德推舉",
-        "equipment": "啞鈴",
-        "parts": "三角肌、肱三頭",
-        "sets": "3",
-        "reps": "12",
-        "rest": "60",
-        "superset": "3",
-        "slot": "3B",
-        "role": "肩膀",
-        "laterality": "通用",
-        "pattern": "垂直推"
       }
     ]
   },

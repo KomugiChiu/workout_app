@@ -245,6 +245,12 @@ fun MenuDetailScreen(
     var swapTarget by remember { mutableStateOf<MenuExerciseRow?>(null) }
     var cycleDay by remember(id) { mutableStateOf(CycleFlexDay.A) }
     var cycleDayLoaded by remember(id) { mutableStateOf(false) }
+    var planDay by remember(id) { mutableStateOf(PlanFlexDay.A) }
+    var planDayLoaded by remember(id) { mutableStateOf(false) }
+    var planCacheA by remember(id) { mutableStateOf<List<MenuExerciseRow>?>(null) }
+    var planCacheB by remember(id) { mutableStateOf<List<MenuExerciseRow>?>(null) }
+    var planBaselineA by remember(id) { mutableStateOf<List<MenuExerciseRow>?>(null) }
+    var planBaselineB by remember(id) { mutableStateOf<List<MenuExerciseRow>?>(null) }
     var equipmentFilter by remember(id) { mutableStateOf<Set<String>>(emptySet()) }
     var equipmentLoaded by remember(id) { mutableStateOf(false) }
     var draftTouched by remember(id) { mutableStateOf(false) }
@@ -261,32 +267,70 @@ fun MenuDetailScreen(
     val lazyListState = rememberLazyListState()
 
     val isAdjustable = rows.any { it.slotKey != null }
+    val isCycleFlex = id == CycleFlex.MENU_ID
+    val isPlanFlex = id == PlanFlex.MENU_ID
 
     // 可調三天循環：全草稿固定 7 列，畫面只顯示當天組合（A/B 切換不丟已換動作）。
     val fullDraft = rowList.toList()
     val dayRows = remember(fullDraft, rows, cycleDay) {
         CycleFlex.applyDay(fullDraft, cycleDay, rows)
     }
-    val dayBaseline = remember(baselineRows, rows, cycleDay) {
-        CycleFlex.applyDay(baselineRows, cycleDay, rows)
+    val planTemplateA = remember(rows, exercises) {
+        PlanFlex.templateFor(rows, PlanFlexDay.A) { n -> exercises.firstOrNull { it.name == n } }
     }
-    val dayTemplate = remember(rows, cycleDay) {
-        CycleFlex.applyDay(rows, cycleDay, rows)
+    val planTemplateB = remember(rows, exercises) {
+        PlanFlex.templateFor(rows, PlanFlexDay.B) { n -> exercises.firstOrNull { it.name == n } }
+    }
+    val dayBaseline = remember(baselineRows, rows, cycleDay, planDay, planBaselineA, planBaselineB, planTemplateA, planTemplateB) {
+        if (isPlanFlex) {
+            (if (planDay == PlanFlexDay.A) planBaselineA else planBaselineB)
+                ?: (if (planDay == PlanFlexDay.A) planTemplateA else planTemplateB)
+        } else {
+            CycleFlex.applyDay(baselineRows, cycleDay, rows)
+        }
+    }
+    val dayTemplate = remember(rows, cycleDay, planDay, planTemplateA, planTemplateB) {
+        if (isPlanFlex) {
+            if (planDay == PlanFlexDay.A) planTemplateA else planTemplateB
+        } else {
+            CycleFlex.applyDay(rows, cycleDay, rows)
+        }
     }
 
     LaunchedEffect(rows, exercises) {
         if (!loaded && rows.isNotEmpty() && exercises.isNotEmpty()) {
-            val overrides = if (isAdjustable) {
-                repository.lastUsedMenuExercises(id)
+            if (isPlanFlex) {
+                val byName = { n: String -> exercises.firstOrNull { it.name == n } }
+                val tA = PlanFlex.templateFor(rows, PlanFlexDay.A, byName)
+                val tB = PlanFlex.templateFor(rows, PlanFlexDay.B, byName)
+                val bA = resolveExerciseOverrides(tA, repository.lastUsedMenuExercises(id, "A")) { exerciseId ->
+                    exercises.firstOrNull { it.id == exerciseId }
+                }
+                val bB = resolveExerciseOverrides(tB, repository.lastUsedMenuExercises(id, "B")) { exerciseId ->
+                    exercises.firstOrNull { it.id == exerciseId }
+                }
+                planBaselineA = bA
+                planBaselineB = bB
+                val startDay = PlanFlex.dayFromStored(repository.planFlexDay())
+                planDay = startDay
+                planDayLoaded = true
+                planCacheA = null
+                planCacheB = null
+                rowList.clear()
+                rowList.addAll(if (startDay == PlanFlexDay.A) bA else bB)
             } else {
-                emptyList()
+                val overrides = if (isAdjustable) {
+                    repository.lastUsedMenuExercises(id)
+                } else {
+                    emptyList()
+                }
+                val applied = resolveExerciseOverrides(rows, overrides) { exerciseId ->
+                    exercises.firstOrNull { it.id == exerciseId }
+                }
+                rowList.clear()
+                rowList.addAll(applied)
+                baselineRows = applied
             }
-            val applied = resolveExerciseOverrides(rows, overrides) { exerciseId ->
-                exercises.firstOrNull { it.id == exerciseId }
-            }
-            rowList.clear()
-            rowList.addAll(applied)
-            baselineRows = applied
             loaded = true
         } else if (loaded && !draftTouched && !isAdjustable) {
             val currentIds = rowList.map { it.menuExerciseId }.toSet()
@@ -314,6 +358,10 @@ fun MenuDetailScreen(
             cycleDay = CycleFlex.dayFromStored(repository.cycleFlexDay())
             cycleDayLoaded = true
         }
+        if (!planDayLoaded && !isPlanFlex) {
+            planDay = PlanFlex.dayFromStored(repository.planFlexDay())
+            planDayLoaded = true
+        }
     }
 
     LaunchedEffect(equipmentFilter, equipmentLoaded) {
@@ -322,19 +370,31 @@ fun MenuDetailScreen(
         }
     }
 
-    LaunchedEffect(rowList.toList(), rows, loaded, isAdjustable) {
+    LaunchedEffect(rowList.toList(), rows, loaded, isAdjustable, planDay) {
         if (loaded && isAdjustable) {
             val current = rowList.toList()
-            repository.saveLastUsedMenuExercises(
-                id,
-                if (current == rows) emptyList() else current,
-                rows
-            )
+            if (isPlanFlex) {
+                val template = if (planDay == PlanFlexDay.A) planTemplateA else planTemplateB
+                repository.saveLastUsedMenuExercises(
+                    id,
+                    if (current == template) emptyList() else current,
+                    template,
+                    PlanFlex.memoryNamespace(planDay)
+                )
+            } else {
+                repository.saveLastUsedMenuExercises(
+                    id,
+                    if (current == rows) emptyList() else current,
+                    rows
+                )
+            }
         }
     }
 
     val hasEdits = isAdjustable && loaded && dayRows != dayBaseline
-    val hasOverrides = isAdjustable && loaded && baselineRows != rows
+    val planHasOverrides = (planBaselineA != null && planBaselineA != planTemplateA) ||
+        (planBaselineB != null && planBaselineB != planTemplateB)
+    val hasOverrides = isAdjustable && loaded && if (isPlanFlex) planHasOverrides else baselineRows != rows
     val canReset = hasEdits || hasOverrides
     val differsFromTemplate = loaded && dayRows != dayTemplate
 
@@ -349,6 +409,18 @@ fun MenuDetailScreen(
                 )
             }
         }
+    }
+
+    fun selectPlanDay(day: PlanFlexDay) {
+        if (!loaded || day == planDay) return
+        if (planDay == PlanFlexDay.A) planCacheA = rowList.toList() else planCacheB = rowList.toList()
+        planDay = day
+        val next = (if (day == PlanFlexDay.A) planCacheA else planCacheB)
+            ?: (if (day == PlanFlexDay.A) planBaselineA else planBaselineB)
+            ?: (if (day == PlanFlexDay.A) planTemplateA else planTemplateB)
+        rowList.clear()
+        rowList.addAll(next)
+        scope.launch { repository.savePlanFlexDay(PlanFlex.dayToStored(day)) }
     }
 
     fun startSession() {
@@ -567,16 +639,35 @@ fun MenuDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 if (isAdjustable && !readOnly) {
-                    if (id == CycleFlex.MENU_ID) {
+                    if (isCycleFlex) {
                         item {
-                            CycleDaySwitcher(
-                                selected = cycleDay,
-                                onSelect = { day ->
-                                    cycleDay = day
+                            DaySwitcher(
+                                aLabel = CycleFlex.dayLabel(CycleFlexDay.A),
+                                bLabel = CycleFlex.dayLabel(CycleFlexDay.B),
+                                selectA = cycleDay == CycleFlexDay.A,
+                                onSelectA = {
+                                    cycleDay = CycleFlexDay.A
                                     scope.launch {
-                                        repository.saveCycleFlexDay(CycleFlex.dayToStored(day))
+                                        repository.saveCycleFlexDay(CycleFlex.dayToStored(CycleFlexDay.A))
+                                    }
+                                },
+                                onSelectB = {
+                                    cycleDay = CycleFlexDay.B
+                                    scope.launch {
+                                        repository.saveCycleFlexDay(CycleFlex.dayToStored(CycleFlexDay.B))
                                     }
                                 }
+                            )
+                        }
+                    }
+                    if (isPlanFlex) {
+                        item {
+                            DaySwitcher(
+                                aLabel = PlanFlex.dayLabel(PlanFlexDay.A),
+                                bLabel = PlanFlex.dayLabel(PlanFlexDay.B),
+                                selectA = planDay == PlanFlexDay.A,
+                                onSelectA = { selectPlanDay(PlanFlexDay.A) },
+                                onSelectB = { selectPlanDay(PlanFlexDay.B) }
                             )
                         }
                     }
@@ -732,9 +823,16 @@ fun MenuDetailScreen(
                 TextButton(
                     onClick = {
                         showReset = false
-                        rowList.clear()
-                        rowList.addAll(rows)
-                        baselineRows = rows
+                        if (isPlanFlex) {
+                            val template = if (planDay == PlanFlexDay.A) planTemplateA else planTemplateB
+                            rowList.clear()
+                            rowList.addAll(template)
+                            if (planDay == PlanFlexDay.A) planBaselineA = template else planBaselineB = template
+                        } else {
+                            rowList.clear()
+                            rowList.addAll(rows)
+                            baselineRows = rows
+                        }
                         draftTouched = false
                     }
                 ) { Text("恢復") }
@@ -809,22 +907,28 @@ fun MenuDetailScreen(
 }
 
 @Composable
-private fun CycleDaySwitcher(
-    selected: CycleFlexDay,
-    onSelect: (CycleFlexDay) -> Unit
+private fun DaySwitcher(
+    aLabel: String,
+    bLabel: String,
+    selectA: Boolean,
+    onSelectA: () -> Unit,
+    onSelectB: () -> Unit
 ) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
             Text("今天練哪一天？", style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                CycleFlexDay.entries.forEach { day ->
-                    FilterChip(
-                        selected = day == selected,
-                        onClick = { if (day != selected) onSelect(day) },
-                        label = { Text(CycleFlex.dayLabel(day)) }
-                    )
-                }
+                FilterChip(
+                    selected = selectA,
+                    onClick = { if (!selectA) onSelectA() },
+                    label = { Text(aLabel) }
+                )
+                FilterChip(
+                    selected = !selectA,
+                    onClick = { if (selectA) onSelectB() },
+                    label = { Text(bLabel) }
+                )
             }
         }
     }

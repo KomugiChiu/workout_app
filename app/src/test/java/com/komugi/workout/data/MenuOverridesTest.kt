@@ -13,7 +13,7 @@ class MenuOverridesTest {
         name: String
     ) = MenuExerciseRow(
         menuExerciseId = menuExerciseId,
-        menuId = "plan-a",
+        menuId = "plan-flex",
         exerciseId = exerciseId,
         orderIndex = 0,
         equipment = "啞鈴",

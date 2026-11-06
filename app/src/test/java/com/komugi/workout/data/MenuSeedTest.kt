@@ -16,27 +16,27 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(88, menus.size)
+        assertEquals(87, menus.size)
 
-        val planA = menus.first { it.id == "plan-a" }
-        val planB = menus.first { it.id == "plan-b" }
-        assertTrue(planA.template)
-        assertTrue(planB.template)
+        assertTrue(menus.none { it.id == "plan-a" || it.id == "plan-b" })
+
+        val plan = menus.first { it.id == "plan-flex" }
+        assertEquals("重訓計畫", plan.name)
+        assertTrue(plan.template)
+        assertTrue(!plan.reference)
 
         val expectedSlots = listOf("1", "2A", "2B", "3A", "3B")
         val expectedSupersets = listOf(null, "2", "2", "3", "3")
-        listOf(planA, planB).forEach { plan ->
-            assertEquals(5, plan.exercises.size)
-            assertEquals(expectedSlots, plan.exercises.map { it.slot })
-            assertEquals(expectedSupersets, plan.exercises.map { it.superset })
-            plan.exercises.forEach { exercise ->
-                assertEquals("3", exercise.sets)
-                assertEquals("12", exercise.reps)
-                assertEquals("60", exercise.rest)
-                assertNotNull(exercise.role)
-                assertNotNull(exercise.laterality)
-                assertNotNull(exercise.pattern)
-            }
+        assertEquals(5, plan.exercises.size)
+        assertEquals(expectedSlots, plan.exercises.map { it.slot })
+        assertEquals(expectedSupersets, plan.exercises.map { it.superset })
+        plan.exercises.forEach { exercise ->
+            assertEquals("3", exercise.sets)
+            assertEquals("12", exercise.reps)
+            assertEquals("60", exercise.rest)
+            assertNotNull(exercise.role)
+            assertNotNull(exercise.laterality)
+            assertNotNull(exercise.pattern)
         }
     }
 
@@ -190,10 +190,10 @@ class MenuSeedTest {
         val reference = menus.filter { it.reference }
         val trainable = menus.filterNot { it.reference }
         assertEquals(77, reference.size)
-        assertEquals(11, trainable.size)
+        assertEquals(10, trainable.size)
         // 可調模板留在菜單頁（資料頁只做入口）
-        assertTrue(menus.first { it.id == "plan-a" }.template)
-        assertTrue(!menus.first { it.id == "plan-a" }.reference)
+        assertTrue(menus.first { it.id == "plan-flex" }.template)
+        assertTrue(!menus.first { it.id == "plan-flex" }.reference)
         assertTrue(menus.first { it.id == "three-exercise" }.template)
         assertTrue(menus.first { it.id == "cycle-flex" }.template)
         assertTrue(!menus.first { it.id == "cycle-flex" }.reference)

@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 20
+        private const val SEED_VERSION = 21
     }
 
     private val dao = db.dao()
@@ -443,8 +443,12 @@ class WorkoutRepository(
      * 每個訓練計畫記住上次使用的動作（以 slotKey 配對，種子重建也不會失效）。
      * 只儲存差異；回到原模板時會寫入空清單。
      */
-    suspend fun lastUsedMenuExercises(menuId: String): List<MenuExerciseLastUsed> {
-        val raw = dao.metaValue("menu_last_used_$menuId") ?: return emptyList()
+    suspend fun lastUsedMenuExercises(
+        menuId: String,
+        namespace: String? = null
+    ): List<MenuExerciseLastUsed> {
+        val key = "menu_last_used_$menuId" + (namespace?.let { "-$it" } ?: "")
+        val raw = dao.metaValue(key) ?: return emptyList()
         return runCatching {
             json.decodeFromString<List<MenuExerciseLastUsed>>(raw)
         }.getOrNull() ?: emptyList()
@@ -453,11 +457,13 @@ class WorkoutRepository(
     suspend fun saveLastUsedMenuExercises(
         menuId: String,
         rows: List<MenuExerciseRow>,
-        templateRows: List<MenuExerciseRow>
+        templateRows: List<MenuExerciseRow>,
+        namespace: String? = null
     ) {
+        val key = "menu_last_used_$menuId" + (namespace?.let { "-$it" } ?: "")
         dao.upsertMeta(
             AppMetaEntity(
-                key = "menu_last_used_$menuId",
+                key = key,
                 value = json.encodeToString(diffExerciseOverrides(rows, templateRows))
             )
         )
@@ -473,6 +479,21 @@ class WorkoutRepository(
         dao.upsertMeta(
             AppMetaEntity(
                 key = "cycle_flex_day",
+                value = day
+            )
+        )
+    }
+
+    /**
+     * 可調重訓計畫上次選的 A/B 天（全域記住，重開維持）。
+     */
+    suspend fun planFlexDay(): String =
+        dao.metaValue("plan_flex_day") ?: "A"
+
+    suspend fun savePlanFlexDay(day: String) {
+        dao.upsertMeta(
+            AppMetaEntity(
+                key = "plan_flex_day",
                 value = day
             )
         )
