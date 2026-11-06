@@ -16,7 +16,7 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(11, menus.size)
+        assertEquals(12, menus.size)
 
         val planA = menus.first { it.id == "plan-a" }
         val planB = menus.first { it.id == "plan-b" }
@@ -38,6 +38,28 @@ class MenuSeedTest {
                 assertNotNull(exercise.pattern)
             }
         }
+    }
+
+    @Test
+    fun threeExerciseTemplateIsWellFormed() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val three = menus.first { it.id == "three-exercise" }
+        assertTrue(three.template)
+        assertEquals(3, three.exercises.size)
+        assertEquals(listOf("1", "2", "3"), three.exercises.map { it.slot })
+        assertEquals(
+            listOf("下肢", "上肢拉", "上肢推"),
+            three.exercises.map { it.role }
+        )
+        assertTrue(three.exercises.all { it.superset == null })
+        assertTrue(three.exercises.all { it.sets == "4-5" })
+        assertTrue(three.exercises.all { it.reps == "6-8" })
+        assertEquals(
+            listOf("75", "75", "60"),
+            three.exercises.map { it.rest }
+        )
     }
 
     @Test

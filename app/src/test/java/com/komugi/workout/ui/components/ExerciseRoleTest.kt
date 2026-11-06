@@ -143,6 +143,46 @@ class ExerciseRoleTest {
     }
 
     @Test
+    fun genericRolesMatchWholeRegions() {
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("高腳杯深蹲", "股四頭、臀大肌、核心（前側負重）", "壺鈴"),
+                ExerciseRole.ROLE_LOWER
+            )
+        )
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("單手壺鈴 RDL", "腿後腱、臀大肌", "8kg 壺鈴"),
+                ExerciseRole.ROLE_LOWER
+            )
+        )
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("引體向上", "背闊肌、肱二頭、核心", "單槓"),
+                ExerciseRole.ROLE_PULL
+            )
+        )
+        assertTrue(
+            ExerciseRole.matchesRole(
+                exercise("伏地挺身", "胸大肌、前三角、肱三頭、核心", "自重"),
+                ExerciseRole.ROLE_PUSH
+            )
+        )
+        assertFalse(
+            ExerciseRole.matchesRole(
+                exercise("滑輪下拉", "背闊肌、肱二頭", "滑輪"),
+                ExerciseRole.ROLE_PUSH
+            )
+        )
+        assertFalse(
+            ExerciseRole.matchesRole(
+                exercise("平板支撐", "核心、肩、臀", "自重"),
+                ExerciseRole.ROLE_LOWER
+            )
+        )
+    }
+
+    @Test
     fun recommendationsAreAvailableForTemplateSlots() {
         val names = SlotRecommendations.namesFor("腿後肌與臀肌", "單邊", "髖主導")
         assertTrue(names.contains("單手壺鈴 RDL"))
@@ -151,5 +191,17 @@ class ExerciseRoleTest {
         val shoulder = SlotRecommendations.namesFor("肩膀", "通用", "垂直推")
         assertTrue(shoulder.contains("啞鈴肩推"))
         assertTrue(shoulder.contains("阿諾德推舉"))
+
+        val lower = SlotRecommendations.namesFor("下肢", "通用", null)
+        assertTrue(lower.contains("高腳杯深蹲"))
+        assertTrue(lower.contains("啞鈴 RDL"))
+
+        val pull = SlotRecommendations.namesFor("上肢拉", "通用", null)
+        assertTrue(pull.contains("單手啞鈴划船"))
+        assertTrue(pull.contains("引體向上"))
+
+        val push = SlotRecommendations.namesFor("上肢推", "通用", null)
+        assertTrue(push.contains("中性握地板臥推"))
+        assertTrue(push.contains("啞鈴肩推"))
     }
 }

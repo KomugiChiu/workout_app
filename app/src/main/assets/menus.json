@@ -146,6 +146,51 @@
     ]
   },
   {
+    "id": "three-exercise",
+    "name": "三動作全身｜下肢＋拉＋推",
+    "subtitle": "一週 3 天・每次 3 個大動作・循環 4-5 輪",
+    "note": "照順序循環：下肢 → 上肢拉 → 上肢推；可依今天器材更換動作，組數、休息與順序不變。",
+    "template": true,
+    "exercises": [
+      {
+        "name": "高腳杯深蹲",
+        "equipment": "壺鈴",
+        "parts": "股四頭、臀大肌、核心（前側負重）",
+        "sets": "4-5",
+        "reps": "6-8",
+        "rest": "75",
+        "slot": "1",
+        "role": "下肢",
+        "laterality": "通用",
+        "pattern": null
+      },
+      {
+        "name": "單手啞鈴划船",
+        "equipment": "8–10kg",
+        "parts": "背闊肌、菱形肌、中下斜方、肱二頭（輔助）",
+        "sets": "4-5",
+        "reps": "6-8",
+        "rest": "75",
+        "slot": "2",
+        "role": "上肢拉",
+        "laterality": "通用",
+        "pattern": null
+      },
+      {
+        "name": "中性握地板臥推",
+        "equipment": "6–8kg×2",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "4-5",
+        "reps": "6-8",
+        "rest": "60",
+        "slot": "3",
+        "role": "上肢推",
+        "laterality": "通用",
+        "pattern": null
+      }
+    ]
+  },
+  {
     "id": "upper-recovery",
     "name": "上半身恢復日",
     "subtitle": "TRX 隔天｜低握力、手腕中立",

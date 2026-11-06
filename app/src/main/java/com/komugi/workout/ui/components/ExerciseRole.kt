@@ -29,6 +29,10 @@ object ExerciseRole {
     const val PATTERN_RAISE = "平舉"
     const val PATTERN_OTHER = "其他"
 
+    const val ROLE_LOWER = "下肢"
+    const val ROLE_PULL = "上肢拉"
+    const val ROLE_PUSH = "上肢推"
+
     private val singleKeywords = listOf(
         "單腳", "單手", "單臂", "單邊", "分腿", "弓步", "登階", "跨步", "交替", "左右"
     )
@@ -37,12 +41,19 @@ object ExerciseRole {
         val role = row.role?.takeIf { it.isNotBlank() }
             ?: current?.let { roleOf(it) }
             ?: "其他"
+        // 三動作模板的槽位是通用角色（下肢／上肢拉／上肢推），
+        // 模式不限，才能同時接受蹲與髖主導、水平與垂直拉推。
+        val generic = role == ROLE_LOWER || role == ROLE_PULL || role == ROLE_PUSH
         return SlotRequirement(
             role = role,
             laterality = row.laterality?.takeIf { it.isNotBlank() }
                 ?: current?.let { lateralityOf(it) },
-            pattern = row.pattern?.takeIf { it.isNotBlank() }
-                ?: current?.let { patternOf(it) }
+            pattern = if (generic) {
+                null
+            } else {
+                row.pattern?.takeIf { it.isNotBlank() }
+                    ?: current?.let { patternOf(it) }
+            }
         )
     }
 
@@ -108,6 +119,9 @@ object ExerciseRole {
         role.contains("股四頭") -> listOf("股四頭")
         role.contains("胸") -> listOf("胸大肌")
         role.contains("肩") -> listOf("三角肌")
+        role == ROLE_LOWER -> listOf("股四頭", "腿後腱", "臀大肌", "臀中肌", "臀小肌", "小腿")
+        role == ROLE_PULL -> listOf("背闊肌", "菱形肌", "斜方肌", "中下斜方", "上背", "肱二頭")
+        role == ROLE_PUSH -> listOf("胸大肌", "三角肌", "肱三頭")
         else -> listOf(role)
     }
 
@@ -120,6 +134,11 @@ object ExerciseRole {
         role.contains("背闊") -> setOf(MuscleGroup.BACK)
         role.contains("胸") -> setOf(MuscleGroup.CHEST)
         role.contains("肩") -> setOf(MuscleGroup.SHOULDERS)
+        role == ROLE_LOWER ->
+            setOf(MuscleGroup.QUADS, MuscleGroup.GLUTES, MuscleGroup.HAMSTRINGS, MuscleGroup.CALVES)
+        role == ROLE_PULL -> setOf(MuscleGroup.BACK, MuscleGroup.BICEPS)
+        role == ROLE_PUSH ->
+            setOf(MuscleGroup.CHEST, MuscleGroup.SHOULDERS, MuscleGroup.TRICEPS)
         else -> emptySet()
     }
 

@@ -4,8 +4,9 @@
 
 ## 功能
 
-- **菜單**：11 份內建菜單（重訓計畫 A/B、恢復日、A/B/C 循環、TRX、居家輕裝、全啞鈴、彈力帶＋壺鈴、手臂＋握力），每份附動作組次建議、**訓練部位**、影片連結、動作說明入口
+- **菜單**：12 份內建菜單（重訓計畫 A/B、三動作全身、恢復日、A/B/C 循環、TRX、居家輕裝、全啞鈴、彈力帶＋壺鈴、手臂＋握力），每份附動作組次建議、**訓練部位**、影片連結、動作說明入口
 - **重訓計畫 A/B（可依器材調整）**：A/B 輪替模板，固定 5 個角色槽位（核心、2A/2B、3A/3B），每槽 3×12、休 60 秒；可選「今日器材」一鍵替換，或逐槽更換符合部位／單雙邊的動作；會記住上次使用的器材與每個槽位的動作，下次自動帶入；調整只影響當次紀錄，原模板不變；「恢復預設動作」會清除記憶並回到原模板，也可另存為自訂菜單
+- **三動作全身（可依器材調整）**：Three-Exercise 模板，固定 3 個通用槽位（下肢 → 上肢拉 → 上肢推），照順序循環 4-5 輪，每輪 6-8 下、休 60-75 秒；器材與動作記憶、更換、另存規則與 A/B 模板相同
 - **一鍵開始紀錄**：菜單底部「開始紀錄（今天）」→ 自動建立當日訓練並預載全部動作
 - **紀錄（月曆式）**：
   - 上方月曆選擇日期 → 下方即時列出該日訓練；**左右滑動可換月**，有紀錄的日期下方顯示綠點
@@ -69,7 +70,7 @@ export ANDROID_HOME=/home/user/starboard-toolchains/AndroidSdk
 ```
 app/src/main/
 ├── assets/
-│   ├── menus.json          # 11 份菜單（含 A/B 訓練計畫，首次啟動種子資料）
+│   ├── menus.json          # 12 份菜單（含訓練計畫模板，首次啟動種子資料）
 │   ├── exercises_extra.json # 34 個內建補充動作（動作庫用）
 │   ├── exercise_guides.json # 48 個原菜單動作的步驟與注意事項
 │   ├── guides.json         # 動作說明索引（11 份）
@@ -116,11 +117,12 @@ body_metrics（身體數據）
 - 舊版 `custom_exercises` 於 migration 4→5 併入 `exercises` 後移除
 - migration 6→7 新增 `entries.supersetKey` 與 `exercises.equipment`
 - migration 7→8 新增 `menus.isCustom` 與 `menu_exercises.supersetKey`；重新種子時只重建內建菜單，保留自訂菜單
-- migration 8→9 新增 `exercises` 的地點、型態、難度、步驟與注意事項欄位；`exercises_extra.json` 於種子版本 9 起匯入（最新種子版本 12）
+- migration 8→9 新增 `exercises` 的地點、型態、難度、步驟與注意事項欄位；`exercises_extra.json` 於種子版本 9 起匯入（最新種子版本 13）
 - `exercise_guides.json` 於種子版本 11 補上原 48 個菜單動作的步驟與注意事項；目前 86 個內建動作都有完整步驟
 - migration 9→10 新增 `sessions.startedAt` 與 `sessions.finishedAt`（目前保留相容，不在 UI 顯示訓練時長）
 - migration 10→11 新增 `body_metrics`（體重、體脂肪、日期）與唯一日期索引；第一次啟動會建立 70.1 kg / 21.3% 起始紀錄
 - migration 11→12 新增 `menus.isTemplate` 與 `menu_exercises` 的 `slotKey` / `role` / `laterality` / `pattern`；種子版本 12 新增「重訓計畫 A/B」與 4 個替代動作（單腳啞鈴 RDL、啞鈴深蹲、直臂下拉、啞鈴肩推）
+- 種子版本 13 新增「三動作全身」模板（下肢／上肢拉／上肢推三個通用槽位，無需資料庫遷移）
 
 ## 後續可加
 
