@@ -816,12 +816,6 @@ private fun CycleDaySwitcher(
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
             Text("今天練哪一天？", style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                "主幹相同，只換啟動器／收尾與分腿蹲組數；已換的動作會保留。",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 CycleFlexDay.entries.forEach { day ->

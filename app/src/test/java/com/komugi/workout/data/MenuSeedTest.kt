@@ -16,7 +16,7 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(90, menus.size)
+        assertEquals(88, menus.size)
 
         val planA = menus.first { it.id == "plan-a" }
         val planB = menus.first { it.id == "plan-b" }
@@ -190,13 +190,16 @@ class MenuSeedTest {
         val reference = menus.filter { it.reference }
         val trainable = menus.filterNot { it.reference }
         assertEquals(77, reference.size)
-        assertEquals(13, trainable.size)
+        assertEquals(11, trainable.size)
         // 可調模板留在菜單頁（資料頁只做入口）
         assertTrue(menus.first { it.id == "plan-a" }.template)
         assertTrue(!menus.first { it.id == "plan-a" }.reference)
         assertTrue(menus.first { it.id == "three-exercise" }.template)
         assertTrue(menus.first { it.id == "cycle-flex" }.template)
         assertTrue(!menus.first { it.id == "cycle-flex" }.reference)
+        assertEquals("肌力團課", menus.first { it.id == "cycle-flex" }.name)
+        assertEquals("肌力團課2", menus.first { it.id == "cycle-c" }.name)
+        assertTrue(menus.none { it.id == "cycle-a" || it.id == "cycle-b" })
         // 書本課表標記參考用
         assertTrue(menus.first { it.id == "crowded-a" }.reference)
         assertTrue(menus.first { it.id == "spartacus" }.reference)

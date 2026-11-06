@@ -574,130 +574,8 @@
     ]
   },
   {
-    "id": "cycle-a",
-    "name": "三天循環 A｜肌力＋心肺",
-    "subtitle": "平板開合跳收尾的混合日",
-    "exercises": [
-      {
-        "name": "六角槓硬舉",
-        "equipment": "六角槓",
-        "parts": "臀大肌、腿後腱、股四頭、豎脊肌、握力、核心",
-        "sets": "4",
-        "reps": "8–10",
-        "rest": "90–120s",
-        "video": "https://www.youtube.com/watch?v=PWJU5grrh4Y"
-      },
-      {
-        "name": "胸前蹲推 Thruster",
-        "equipment": "壺鈴／ViPR",
-        "parts": "股四頭、臀大肌、三角肌、肱三頭、核心",
-        "sets": "4",
-        "reps": "8–12",
-        "rest": "90s",
-        "video": "https://www.youtube.com/watch?v=0RJXwEZmcCg"
-      },
-      {
-        "name": "單腳登階",
-        "equipment": "啞鈴／自重",
-        "parts": "股四頭、臀大肌、腿後腱、小腿、核心",
-        "sets": "4",
-        "reps": "10–12/邊",
-        "rest": "60–90s",
-        "video": "https://www.youtube.com/watch?v=9ZknEYboBOQ"
-      },
-      {
-        "name": "持槓片分腿蹲",
-        "equipment": "槓片",
-        "parts": "股四頭、臀大肌、腿後腱、核心",
-        "sets": "3",
-        "reps": "10–12/邊",
-        "rest": "60–90s",
-        "video": "https://www.youtube.com/watch?v=YXZbptZtKCE"
-      },
-      {
-        "name": "上斜伏地挺身",
-        "equipment": "自重",
-        "parts": "胸大肌（上胸）、前三角、肱三頭",
-        "sets": "3",
-        "reps": "10–15",
-        "rest": "60s",
-        "video": "https://www.youtube.com/watch?v=-9S9gdRwwak"
-      },
-      {
-        "name": "平板開合跳",
-        "equipment": "自重",
-        "parts": "核心、肩胛穩定、髖屈肌、心肺",
-        "sets": "3",
-        "reps": "30 秒",
-        "rest": "45–60s",
-        "video": "https://www.youtube.com/watch?v=PR9nHQXCZMo"
-      }
-    ]
-  },
-  {
-    "id": "cycle-b",
-    "name": "三天循環 B｜純下肢肌力",
-    "subtitle": "最重的一天，高腳杯深蹲當啟動器",
-    "exercises": [
-      {
-        "name": "高腳杯深蹲",
-        "equipment": "壺鈴",
-        "parts": "股四頭、臀大肌、核心（前側負重）",
-        "sets": "3–4",
-        "reps": "10–12",
-        "rest": "90s",
-        "video": "https://www.youtube.com/watch?v=HPshy4NiKgs"
-      },
-      {
-        "name": "六角槓硬舉",
-        "equipment": "六角槓",
-        "parts": "臀大肌、腿後腱、股四頭、豎脊肌、握力、核心",
-        "sets": "4",
-        "reps": "8–10",
-        "rest": "90–120s",
-        "video": "https://www.youtube.com/watch?v=PWJU5grrh4Y"
-      },
-      {
-        "name": "胸前蹲推 Thruster",
-        "equipment": "壺鈴／ViPR",
-        "parts": "股四頭、臀大肌、三角肌、肱三頭、核心",
-        "sets": "4",
-        "reps": "8–12",
-        "rest": "90s",
-        "video": "https://www.youtube.com/watch?v=0RJXwEZmcCg"
-      },
-      {
-        "name": "單腳登階",
-        "equipment": "啞鈴／自重",
-        "parts": "股四頭、臀大肌、腿後腱、小腿、核心",
-        "sets": "4",
-        "reps": "10–12/邊",
-        "rest": "60–90s",
-        "video": "https://www.youtube.com/watch?v=9ZknEYboBOQ"
-      },
-      {
-        "name": "持槓片分腿蹲",
-        "equipment": "槓片",
-        "parts": "股四頭、臀大肌、腿後腱、核心",
-        "sets": "2–3",
-        "reps": "10–12/邊",
-        "rest": "60–90s",
-        "video": "https://www.youtube.com/watch?v=YXZbptZtKCE"
-      },
-      {
-        "name": "上斜伏地挺身",
-        "equipment": "自重",
-        "parts": "胸大肌（上胸）、前三角、肱三頭",
-        "sets": "3",
-        "reps": "10–15",
-        "rest": "60s",
-        "video": "https://www.youtube.com/watch?v=-9S9gdRwwak"
-      }
-    ]
-  },
-  {
     "id": "cycle-c",
-    "name": "三天循環 C｜肌肥大／技術",
+    "name": "肌力團課2",
     "subtitle": "保加利亞分腿蹲領銜的中負荷日",
     "exercises": [
       {
@@ -5103,9 +4981,7 @@
   },
   {
     "id": "cycle-flex",
-    "name": "三天循環（可調）",
-    "subtitle": "一週 3 天・A/B 輪替｜主幹相同，頭尾不同",
-    "note": "A：肌力＋心肺（平板開合跳收尾）；B：純下肢肌力（高腳杯深蹲啟動，分腿蹲 2–3 組）。切換只換當天組合；換動作不動組數、休息與順序。",
+    "name": "肌力團課",
     "template": true,
     "exercises": [
       {
