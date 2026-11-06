@@ -70,6 +70,7 @@ import com.komugi.workout.ui.components.ExerciseRole
 import com.komugi.workout.ui.components.SlotRecommendations
 import com.komugi.workout.ui.components.SlotRequirement
 import com.komugi.workout.ui.theme.komugiTopAppBarColors
+import com.komugi.workout.util.TargetParser
 import com.komugi.workout.util.openUrl
 import java.time.LocalDate
 import kotlinx.coroutines.launch
@@ -845,9 +846,9 @@ private fun MenuExerciseCard(
                         )
                     }
                     val meta = listOfNotNull(
-                        row.targetSets?.let { "$it 組" },
-                        row.targetReps?.let { "$it 下" },
-                        row.restSec?.let { "休 $it" }
+                        row.targetSets?.let { TargetParser.displaySets(it) },
+                        row.targetReps?.let { TargetParser.displayReps(it) },
+                        row.restSec?.let { TargetParser.displayRest(it) }
                     ).joinToString(" · ")
                     if (meta.isNotBlank()) {
                         Text(

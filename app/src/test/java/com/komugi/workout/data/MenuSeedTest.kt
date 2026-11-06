@@ -16,7 +16,7 @@ class MenuSeedTest {
         val menus = json.decodeFromString<List<Menu>>(
             File("src/main/assets/menus.json").readText()
         )
-        assertEquals(18, menus.size)
+        assertEquals(89, menus.size)
 
         val planA = menus.first { it.id == "plan-a" }
         val planB = menus.first { it.id == "plan-b" }
@@ -102,6 +102,61 @@ class MenuSeedTest {
                 assertTrue(exercise.reps!!.isNotBlank())
             }
         }
+    }
+
+    @Test
+    fun bookBatch2MenusAreWellFormed() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val expected = mapOf(
+            "getback-p1" to 6, "getback-p2" to 6,
+            "getback-p3a" to 6, "getback-p3b" to 6,
+            "crowded2-a" to 3, "crowded2-b" to 3, "crowded2-c" to 3,
+            "crowded3-a" to 5, "crowded3-b" to 5,
+            "fatloss-p1a" to 6, "fatloss-p1b" to 6, "fatloss-p1c" to 6,
+            "fatloss-p2a" to 5, "fatloss-p2b" to 5, "fatloss-p2c" to 5,
+            "fatloss-p3a" to 6, "fatloss-p3b" to 5, "fatloss-p3c" to 6,
+            "beach-p1a" to 5, "beach-p1b" to 5, "beach-p1c" to 5,
+            "beach-p2a" to 5, "beach-p2b" to 4, "beach-p2c" to 5, "beach-p2d" to 4,
+            "beach-p3a" to 5, "beach-p3b" to 5, "beach-p3c" to 5,
+            "beach-p4a" to 5, "beach-p4b" to 4, "beach-p4c" to 5, "beach-p4d" to 4,
+            "wedding-p1a" to 6, "wedding-p1b" to 6, "wedding-p1c" to 5,
+            "wedding-p2a" to 6, "wedding-p2b" to 6, "wedding-p2c" to 5,
+            "vertical-p1a" to 6, "vertical-p1b" to 6,
+            "vertical-p2a" to 5, "vertical-p2b" to 6,
+            "scrawny-a" to 10, "scrawny-b" to 5, "scrawny-c" to 10,
+            "sports-a" to 9, "sports-b" to 8, "sports-c" to 9, "sports-d" to 9,
+            "bigbench-a" to 6, "bigbench-b" to 5,
+            "couples-a" to 4, "couples-b" to 5, "couples-c" to 5,
+            "couples-f1" to 4, "couples-f2" to 4, "couples-f3" to 4,
+            "couples-f4" to 4, "couples-f5" to 4, "couples-f6" to 4,
+            "min15-01" to 5, "min15-02" to 5, "min15-03" to 4, "min15-04" to 4,
+            "min15-05" to 4, "min15-06" to 5, "min15-07" to 4, "min15-08" to 5,
+            "min15-09" to 4, "min15-10" to 5,
+            "spartacus" to 10
+        )
+        assertEquals(71, expected.size)
+        expected.forEach { (id, count) ->
+            val menu = menus.first { it.id == id }
+            assertEquals(id, count, menu.exercises.size)
+            assertTrue(id, !menu.template)
+            menu.exercises.forEach { exercise ->
+                assertTrue(id, exercise.name.isNotBlank())
+                assertTrue(id, exercise.sets!!.isNotBlank())
+                assertTrue(id, exercise.reps!!.isNotBlank())
+                assertTrue(id, exercise.rest!!.isNotBlank())
+            }
+        }
+        // 招牌動作抽查
+        assertEquals(
+            "槓鈴硬舉",
+            menus.first { it.id == "vertical-p1a" }.exercises[3].name
+        )
+        assertEquals(
+            "深蹲推撐",
+            menus.first { it.id == "wedding-p1c" }.exercises[4].name
+        )
     }
 
     @Test

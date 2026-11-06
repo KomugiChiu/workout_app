@@ -755,14 +755,14 @@ private fun EntryCard(
                         )
                     }
                     val target = buildString {
-                        entry.targetSets?.let { append("$it 組") }
+                        entry.targetSets?.let { append(TargetParser.displaySets(it)) }
                         entry.targetReps?.let {
                             if (isNotEmpty()) append(" × ")
                             append(it)
                         }
                         entry.restSec?.let {
                             if (isNotEmpty()) append(" · ")
-                            append("休 $it")
+                            append(TargetParser.displayRest(it))
                         }
                     }
                     if (target.isNotEmpty()) {

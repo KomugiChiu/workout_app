@@ -1137,5 +1137,3891 @@
         "guide": "farmer"
       }
     ]
+  },
+  {
+    "id": "getback-p1",
+    "name": "恢復訓練 P1",
+    "subtitle": "打底全身｜2–3x10–12・休60秒",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一週三練，3 天都做同一套，每次至少休一天；另有有氧穿插。訓練前先熱身：側臥開胸轉體、弓步、側弓步、併膝臀橋、平板、瑞士球W上舉各 1 輪。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "滑輪臉拉",
+        "equipment": "滑輪、繩索",
+        "parts": "三角肌後束、上背",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "反向捲腹",
+        "equipment": "自重",
+        "parts": "下腹、腹直肌",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "俯臥眼鏡蛇伸展",
+        "equipment": "自重",
+        "parts": "豎脊肌、臀大肌、中下斜方",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "getback-p2",
+    "name": "恢復訓練 P2",
+    "subtitle": "啞鈴全身｜2–3x10–12・休60秒",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一週三練，3 天都做同一套，每次至少休一天。訓練前先熱身：仰臥屈膝轉體、肘觸腳弓步、自重側弓步、蚌式開合、側棒、瑞士球T上舉各 1 輪。",
+    "exercises": [
+      {
+        "name": "啞鈴分腿蹲",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "彈力帶輔助引體向上",
+        "equipment": "單槓、彈力帶",
+        "parts": "背闊肌、肱二頭",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "側捲腹",
+        "equipment": "自重",
+        "parts": "腹斜肌",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "鳥狗式",
+        "equipment": "自重",
+        "parts": "腹橫肌、臀大肌、豎脊肌、肩胛穩定",
+        "sets": "2–3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "getback-p3a",
+    "name": "恢復訓練 P3-A",
+    "subtitle": "硬舉＋推｜3x8–10・休60秒",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五輪替 A/B（下週 B/A/B），每次至少休一天。訓練前先熱身：貓駝伸展、肘觸腳弓步、行走抱膝、彈力帶側向行走、毛毛蟲、瑞士球Y上舉各 1 輪。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "部分單腿蹲",
+        "equipment": "自重、凳子",
+        "parts": "股四頭、臀大肌",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "跪姿支撐啞鈴划船",
+        "equipment": "啞鈴、凳子",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "錘式彎舉加推舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭、三角肌",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "getback-p3b",
+    "name": "恢復訓練 P3-B",
+    "subtitle": "登階＋拉｜3x8–12・休60秒",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五輪替 A/B（下週 B/A/B），每次至少休一天。熱身同 P3-A。",
+    "exercises": [
+      {
+        "name": "啞鈴登階",
+        "equipment": "啞鈴、階梯或穩固凳子",
+        "parts": "股四頭、臀大肌、小腿",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴反向飛鳥",
+        "equipment": "啞鈴",
+        "parts": "三角肌後束、上背",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "羅馬椅背伸展",
+        "equipment": "羅馬椅",
+        "parts": "豎脊肌、臀大肌",
+        "sets": "3",
+        "reps": "8–10",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "crowded2-a",
+    "name": "人多健身房2-A",
+    "subtitle": "密度制｜推＋拉＋蹲・10分鐘一站",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。45 分鐘密度課：每站 10 分鐘、全程同一重量不換。每站做 3 下休 10 秒重複，做不到 3 下就把休息加 10 秒（20 秒、30 秒…），直到 10 分鐘到。每週各站重量加 2–5 公斤。另自選核心 1 個＋手臂 1 個，各 2x10–12 休 60 秒；練後接 10 分鐘有氧（90% 強度 30 秒／休 30 秒交替）。",
+    "exercises": [
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      }
+    ]
+  },
+  {
+    "id": "crowded2-b",
+    "name": "人多健身房2-B",
+    "subtitle": "密度制｜腿＋推＋拉・10分鐘一站",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。做法同 2-A：每站 10 分鐘、3 下一組、休 10 秒起跳，做不到就加休息；每週加重量。另自選核心＋手臂；練後接 10 分鐘有氧。",
+    "exercises": [
+      {
+        "name": "啞鈴分腿蹲",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      }
+    ]
+  },
+  {
+    "id": "crowded2-c",
+    "name": "人多健身房2-C",
+    "subtitle": "密度制｜硬舉＋推＋蹲・10分鐘一站",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。做法同 2-A：每站 10 分鐘、3 下一組、休 10 秒起跳，做不到就加休息；每週加重量。另自選核心＋手臂；練後接 10 分鐘有氧。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      },
+      {
+        "name": "前蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "3",
+        "rest": "10 秒起"
+      }
+    ]
+  },
+  {
+    "id": "crowded3-a",
+    "name": "人多健身房3-前期",
+    "subtitle": "1–4 週｜藥球＋啞鈴・不換器材",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。每週三練，不用臥推椅和深蹲架、一小塊空地即可。訓練前先熱身：自重側弓步、靠牆滑臂、毛毛蟲各 1 輪。",
+    "exercises": [
+      {
+        "name": "雙手藥球伏地挺身",
+        "equipment": "藥球",
+        "parts": "胸大肌、肱三頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴前蹲",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "10",
+        "rest": "60–90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球屈體上舉",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、肩",
+        "sets": "2–3",
+        "reps": "10–15",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "單腳臀橋",
+        "equipment": "自重",
+        "parts": "臀大肌、腿後腱",
+        "sets": "2–3",
+        "reps": "12–15",
+        "rest": "60–90 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "crowded3-b",
+    "name": "人多健身房3-後期",
+    "subtitle": "5–8 週｜爆發＋壺鈴・不換器材",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。每週三練。訓練前先熱身：開髖弓步撐、坐姿啞鈴外旋、藥球砸地各 1 輪。",
+    "exercises": [
+      {
+        "name": "啞鈴借力推舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、股四頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身划船",
+        "equipment": "啞鈴",
+        "parts": "胸、背、核心",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "保加利亞分腿蹲",
+        "equipment": "4–6kg×2",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "10",
+        "rest": "60–90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴斜砍",
+        "equipment": "啞鈴",
+        "parts": "核心、腹斜肌、肩",
+        "sets": "2–3",
+        "reps": "12",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "俯臥眼鏡蛇伸展",
+        "equipment": "自重",
+        "parts": "豎脊肌、臀大肌、中下斜方",
+        "sets": "2–3",
+        "reps": "12–15",
+        "rest": "60–90 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p1a",
+    "name": "終極減脂P1-A",
+    "subtitle": "登階＋臥推｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次，每次至少休一天；另每週有氧 3 次穿插在重訓日之間。漸進：槓鈴登階 W1 2x15→W2 3x12→W3 3x10→W4 2x10；啞鈴臥推 W1 2x15→W2 3x12→W3 3x10→W4 2x10；雙手啞鈴划船 W1 2x15→W2 3x12→W3 3x10→W4 2x10；肩胛上舉 W1 2x15→W2 3x12→W3 3x10→W4 2x10；坐姿啞鈴外旋 W1 2x15→W2 2x12→W3 2x10→W4 2x10；平板支撐 W1 2x8→W2 2x10→W3 2x12→W4 2x10。",
+    "exercises": [
+      {
+        "name": "槓鈴登階",
+        "equipment": "槓鈴、階梯",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "15",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "2",
+        "reps": "15",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "2",
+        "reps": "15",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "肩胛上舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、中下斜方",
+        "sets": "2",
+        "reps": "15",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "坐姿啞鈴外旋",
+        "equipment": "啞鈴",
+        "parts": "旋轉肌群",
+        "sets": "2",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "2",
+        "reps": "8 秒",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p1b",
+    "name": "終極減脂P1-B",
+    "subtitle": "分腿蹲＋划船｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次，每次至少休一天；另每週有氧 3 次穿插在重訓日之間。漸進：槓鈴分腿蹲 W1 2x15→W2 3x15→W3 3x12→W4 2x12；伏地挺身 W1 2x12→W2 3x10→W3 3x8→W4 2x10；反向划船 W1 2x12→W2 3x10→W3 3x8→W4 2x10；複合肩上舉 W1 2x12→W2 3x10→W3 3x8→W4 2x10；仰臥肩外旋 W1 2x12→W2 3x10→W3 3x8→W4 2x10；側平板支撐 W1 2x8→W2 2x10→W3 2x12→W4 2x10。",
+    "exercises": [
+      {
+        "name": "槓鈴分腿蹲",
+        "equipment": "槓鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "15",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "反向划船",
+        "equipment": "單槓或TRX",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "複合肩上舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、斜方肌",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "仰臥肩外旋",
+        "equipment": "啞鈴",
+        "parts": "旋轉肌群",
+        "sets": "2",
+        "reps": "12",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "2",
+        "reps": "8 秒",
+        "rest": "30 秒"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p1c",
+    "name": "終極減脂P1-C",
+    "subtitle": "登階＋臥推｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次，每次至少休一天；另每週有氧 3 次穿插在重訓日之間。漸進：槓鈴登階 W1 2x12→W2 3x10→W3 3x8→W4 2x10；啞鈴臥推 W1 2x12→W2 3x10→W3 3x8→W4 2x10；雙手啞鈴划船 W1 2x12→W2 3x10→W3 3x8→W4 2x10；肩胛上舉 W1 2x12→W2 3x10→W3 3x8→W4 2x10；坐姿啞鈴外旋 W1 2x12→W2 2x10→W3 3x8→W4 2x10；平板支撐 W1 2x8→W2 2x12→W3 2x12→W4 2x10。",
+    "exercises": [
+      {
+        "name": "槓鈴登階",
+        "equipment": "槓鈴、階梯",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "肩胛上舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、中下斜方",
+        "sets": "2",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "坐姿啞鈴外旋",
+        "equipment": "啞鈴",
+        "parts": "旋轉肌群",
+        "sets": "2",
+        "reps": "12",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "2",
+        "reps": "8 秒",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p2a",
+    "name": "終極減脂P2-A",
+    "subtitle": "硬舉＋臥推｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：寬握槓鈴硬舉 W5 3x8→W6 3x10→W7 4x8→W8 3x10；槓鈴臥推 W5 3x8→W6 3x10→W7 4x8→W8 3x10；坐姿滑輪划船 W5 3x8→W6 3x10→W7 4x8→W8 3x10；纜繩斜向拉舉 W5 3x8→W6 3x10→W7 4x8→W8 3x10；瑞士球滾輪伸展 W5 3x12→W6 3x10→W7 4x12→W8 3x10。",
+    "exercises": [
+      {
+        "name": "寬握槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、上背、握力",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "坐姿滑輪划船",
+        "equipment": "滑輪、划船機",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "纜繩斜向拉舉",
+        "equipment": "纜繩",
+        "parts": "三角肌前束、胸大肌上部",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球滾輪伸展",
+        "equipment": "瑞士球",
+        "parts": "核心",
+        "sets": "3",
+        "reps": "12",
+        "rest": "30 秒"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p2b",
+    "name": "終極減脂P2-B",
+    "subtitle": "深蹲＋下拉｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：啞鈴深蹲 W5 3x8→W6 3x10→W7 4x8→W8 3x10；下斜伏地挺身 W5 3x12→W6 3x10→W7 4x8→W8 3x10；滑輪下拉 W5 3x8→W6 3x10→W7 4x8→W8 3x10；屈臂側平舉加外旋 W5 3x12→W6 3x10→W7 4x8→W8 3x10；單腳側棒式 W5 3x8→W6 3x10→W7 3x12→W8 3x10。",
+    "exercises": [
+      {
+        "name": "啞鈴深蹲",
+        "equipment": "8–12kg×2",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "8",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "下斜伏地挺身",
+        "equipment": "自重、凳子",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "1"
+      },
+      {
+        "name": "滑輪下拉",
+        "equipment": "滑輪、高位下拉機",
+        "parts": "背闊肌、肱二頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "屈臂側平舉加外旋",
+        "equipment": "啞鈴",
+        "parts": "三角肌、旋轉肌群",
+        "sets": "3",
+        "reps": "12",
+        "rest": "75 秒",
+        "superset": "2"
+      },
+      {
+        "name": "單腳側棒式",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "3",
+        "reps": "8 秒",
+        "rest": "30 秒"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p2c",
+    "name": "終極減脂P2-C",
+    "subtitle": "硬舉＋臥推｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：寬握槓鈴硬舉 W5 3x8→W6 3x8→W7 4x6→W8 3x8；槓鈴臥推 W5 3x8→W6 3x8→W7 4x6→W8 3x8；坐姿滑輪划船 W5 3x10→W6 3x8→W7 4x6→W8 3x8；纜繩斜向拉舉 W5 3x10→W6 3x8→W7 4x6→W8 3x8；瑞士球滾輪伸展 W5 3x8→W6 3x10→W7 3x12→W8 3x10。",
+    "exercises": [
+      {
+        "name": "寬握槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、上背、握力",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "坐姿滑輪划船",
+        "equipment": "滑輪、划船機",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "纜繩斜向拉舉",
+        "equipment": "纜繩",
+        "parts": "三角肌前束、胸大肌上部",
+        "sets": "3",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球滾輪伸展",
+        "equipment": "瑞士球",
+        "parts": "核心",
+        "sets": "3",
+        "reps": "8",
+        "rest": "30 秒"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p3a",
+    "name": "終極減脂P3-A",
+    "subtitle": "深蹲＋上斜推｜第9–12週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：槓鈴背蹲舉 W9 3x15→W10 3x12→W11 4x10→W12 3x8；上斜啞鈴臥推 W9 3x15→W10 3x12→W11 4x10→W12 3x8；反握滑輪下拉 W9 3x15→W10 3x12→W11 4x10→W12 3x8；啞鈴後弓步 W9 3x15→W10 3x12→W11 4x10→W12 3x8；滑輪臉拉 W9 3x15→W10 3x12→W11 4x10→W12 3x8；瑞士球屈腿收腹 W9 3x8→W10 3x10→W11 3x12→W12 3x10。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "反握滑輪下拉",
+        "equipment": "滑輪",
+        "parts": "背闊肌、肱二頭",
+        "sets": "3",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴後弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "滑輪臉拉",
+        "equipment": "滑輪、繩索",
+        "parts": "三角肌後束、上背",
+        "sets": "3",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "3",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p3b",
+    "name": "終極減脂P3-B",
+    "subtitle": "弓步＋划船｜第9–12週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：啞鈴弓步 W9 3x12→W10 3x10→W11 4x8→W12 3x10；T伏地挺身 W9 3x12→W10 3x10→W11 4x8→W12 3x10；槓鈴划船 W9 3x12→W10 3x10→W11 4x8→W12 3x10；上斜Y字上舉 W9 3x12→W10 3x10→W11 4x8→W12 3x10；站姿旋轉砍斫 W9 3x12→W10 3x10→W11 3x8→W12 3x10。",
+    "exercises": [
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "T伏地挺身",
+        "equipment": "自重",
+        "parts": "胸、核心、肩",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "上斜Y字上舉",
+        "equipment": "上斜凳",
+        "parts": "下斜方、旋轉肌群",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "站姿旋轉砍斫",
+        "equipment": "纜繩或藥球",
+        "parts": "核心、腹斜肌、肩",
+        "sets": "3",
+        "reps": "12",
+        "rest": "30 秒"
+      }
+    ]
+  },
+  {
+    "id": "fatloss-p3c",
+    "name": "終極減脂P3-C",
+    "subtitle": "深蹲＋上斜推｜第9–12週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次；另每週有氧 3 次穿插。漸進：槓鈴背蹲舉 W9 3x12→W10 3x10→W11 4x8→W12 3x10；上斜啞鈴臥推 W9 3x12→W10 3x10→W11 4x8→W12 3x10；反握滑輪下拉 W9 3x12→W10 3x10→W11 4x8→W12 3x10；啞鈴後弓步 W9 3x12→W10 3x10→W11 4x8→W12 3x10；滑輪臉拉 W9 3x12→W10 3x10→W11 4x8→W12 3x10；瑞士球屈腿收腹 W9 3x8→W10 3x10→W11 3x12→W12 3x10。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "反握滑輪下拉",
+        "equipment": "滑輪",
+        "parts": "背闊肌、肱二頭",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴後弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "滑輪臉拉",
+        "equipment": "滑輪、繩索",
+        "parts": "三角肌後束、上背",
+        "sets": "3",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "3",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "beach-p1a",
+    "name": "海灘身材P1-A",
+    "subtitle": "深蹲＋推拉｜第1–2週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次，每次至少休一天。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "4",
+        "reps": "4",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "4",
+        "reps": "4",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "4",
+        "reps": "4",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴聳肩",
+        "equipment": "啞鈴",
+        "parts": "斜方肌",
+        "sets": "4",
+        "reps": "4",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "4",
+        "reps": "4",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "beach-p1b",
+    "name": "海灘身材P1-B",
+    "subtitle": "弓步＋撐體引體｜第1–2週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次。",
+    "exercises": [
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "4",
+        "reps": "12–15",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "4",
+        "reps": "12–15",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "雙槓撐體",
+        "equipment": "雙槓",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "30",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "beach-p1c",
+    "name": "海灘身材P1-C",
+    "subtitle": "硬舉＋肩背｜第1–2週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "4",
+        "reps": "4",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "4",
+        "reps": "4",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "寬握引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭",
+        "sets": "4",
+        "reps": "4",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "2",
+        "reps": "20",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "2",
+        "reps": "20",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "beach-p2a",
+    "name": "海灘身材P2-A",
+    "subtitle": "蹲＋直腿硬舉＋彎舉｜第3–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D，下週重來。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴彎舉",
+        "equipment": "槓鈴",
+        "parts": "肱二頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      }
+    ]
+  },
+  {
+    "id": "beach-p2b",
+    "name": "海灘身材P2-B",
+    "subtitle": "推拉＋肩＋腹｜第3–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "30",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "beach-p2c",
+    "name": "海灘身材P2-C",
+    "subtitle": "硬舉＋弓步＋窄推｜第3–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "窄握臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      }
+    ]
+  },
+  {
+    "id": "beach-p2d",
+    "name": "海灘身材P2-D",
+    "subtitle": "上斜推＋划船＋肩｜第3–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "坐姿滑輪划船",
+        "equipment": "滑輪、划船機",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "30",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "beach-p3a",
+    "name": "海灘身材P3-A",
+    "subtitle": "蹲＋推拉｜第5–6週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "6",
+        "reps": "6",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "6",
+        "reps": "6",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "6",
+        "reps": "6",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "側平舉",
+        "equipment": "2–4kg",
+        "parts": "三角肌（中束）",
+        "sets": "3",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "beach-p3b",
+    "name": "海灘身材P3-B",
+    "subtitle": "弓步＋撐體引體｜第5–6週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次。",
+    "exercises": [
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "4",
+        "reps": "8–12",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "4",
+        "reps": "8–12",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "雙槓撐體",
+        "equipment": "雙槓",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "30",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "beach-p3c",
+    "name": "海灘身材P3-C",
+    "subtitle": "硬舉＋肩背｜第5–6週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P1/P3：一、三、五各做 A/B/C 一次。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "6",
+        "reps": "6",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "6",
+        "reps": "6",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "寬握引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭",
+        "sets": "6",
+        "reps": "6",
+        "rest": "90 秒",
+        "superset": "2"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "beach-p4a",
+    "name": "海灘身材P4-A",
+    "subtitle": "蹲＋直腿＋彎舉｜第7–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴彎舉",
+        "equipment": "槓鈴",
+        "parts": "肱二頭",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      }
+    ]
+  },
+  {
+    "id": "beach-p4b",
+    "name": "海灘身材P4-B",
+    "subtitle": "推拉＋肩＋腹｜第7–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "7",
+        "reps": "7",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "7",
+        "reps": "7",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "3",
+        "reps": "30",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "beach-p4c",
+    "name": "海灘身材P4-C",
+    "subtitle": "硬舉＋弓步＋窄推｜第7–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "窄握臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "30",
+        "rest": "30 秒",
+        "superset": "4"
+      }
+    ]
+  },
+  {
+    "id": "beach-p4d",
+    "name": "海灘身材P4-D",
+    "subtitle": "上斜推＋划船＋肩｜第7–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。P2/P4：一二連做 A/B，休一到兩天，再四五連做 C/D。",
+    "exercises": [
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "7",
+        "reps": "7",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "坐姿滑輪划船",
+        "equipment": "滑輪、划船機",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "7",
+        "reps": "7",
+        "rest": "90 秒",
+        "superset": "1"
+      },
+      {
+        "name": "站姿槓鈴肩推",
+        "equipment": "槓鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "7",
+        "reps": "7",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "瑞士球捲腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌",
+        "sets": "2",
+        "reps": "20",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p1a",
+    "name": "婚禮特訓P1-A",
+    "subtitle": "推拉腿臀循環｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次，每次至少休一天；另每週跳繩有氧 2 次（15 分鐘盡量多下）。",
+    "exercises": [
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "反向划船",
+        "equipment": "單槓或TRX",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴分腿蹲",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "4",
+        "reps": "12–15",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "4",
+        "reps": "15–20",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "鳥狗式",
+        "equipment": "自重",
+        "parts": "腹橫肌、臀大肌、豎脊肌、肩胛穩定",
+        "sets": "4",
+        "reps": "8–10",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "開合跳",
+        "equipment": "自重",
+        "parts": "心肺、小腿、肩",
+        "sets": "4",
+        "reps": "30–50",
+        "rest": "45 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p1b",
+    "name": "婚禮特訓P1-B",
+    "subtitle": "登階擺盪肩｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次；另每週跳繩有氧 2 次。",
+    "exercises": [
+      {
+        "name": "啞鈴登階",
+        "equipment": "啞鈴、階梯或穩固凳子",
+        "parts": "股四頭、臀大肌、小腿",
+        "sets": "4",
+        "reps": "12–15",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單手壺鈴擺盪",
+        "equipment": null,
+        "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
+        "sets": "4",
+        "reps": "12–15",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "反向肩推",
+        "equipment": "自重",
+        "parts": "三角肌、肱三頭、上胸",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "離心引體向上",
+        "equipment": "單槓、凳子",
+        "parts": "背闊肌、肱二頭",
+        "sets": "4",
+        "reps": "力竭",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "4",
+        "reps": "10–12 秒",
+        "rest": "45 秒",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "4",
+        "reps": "30–50",
+        "rest": "45 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p1c",
+    "name": "婚禮特訓P1-C",
+    "subtitle": "肩背腿＋百下撐｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次。深蹲推撐 100 下計時做完、每次挑戰更快；跳繩有氧 2 次。",
+    "exercises": [
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "跪姿支撐啞鈴划船",
+        "equipment": "啞鈴、凳子",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單腿深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "單手壺鈴擺盪",
+        "equipment": null,
+        "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "1",
+        "reps": "100",
+        "rest": "盡量短"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p2a",
+    "name": "婚禮特訓P2-A",
+    "subtitle": "爆發推拉跳｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次。跳繩改為階梯式（正跳 100、反跳 100…每次減 10 到 10）計時完成。",
+    "exercises": [
+      {
+        "name": "爆發伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、肱三頭、核心",
+        "sets": "5",
+        "reps": "力竭",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "墊高腳反向划船",
+        "equipment": "單槓、凳子",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "5",
+        "reps": "力竭",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴後弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱",
+        "sets": "5",
+        "reps": "12–15",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單腳瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱",
+        "sets": "5",
+        "reps": "15–20",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "寬距對側手腳平板",
+        "equipment": "自重",
+        "parts": "核心、臀大肌",
+        "sets": "5",
+        "reps": "8–10 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "高箱跳",
+        "equipment": "跳箱",
+        "parts": "股四頭、臀大肌、小腿",
+        "sets": "5",
+        "reps": "30",
+        "rest": "60 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p2b",
+    "name": "婚禮特訓P2-B",
+    "subtitle": "肩背腿核心｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次；跳繩階梯計時 2 次。",
+    "exercises": [
+      {
+        "name": "反向肩推",
+        "equipment": "自重",
+        "parts": "三角肌、肱三頭、上胸",
+        "sets": "5",
+        "reps": "力竭",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "5",
+        "reps": "力竭",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴登階",
+        "equipment": "槓鈴、階梯",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "12–15",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴懸垂上拉",
+        "equipment": "啞鈴",
+        "parts": "斜方肌、三角肌、臀大肌、腿後腱",
+        "sets": "5",
+        "reps": "12–5",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "槓鈴滾輪",
+        "equipment": "槓鈴",
+        "parts": "核心",
+        "sets": "5",
+        "reps": "12–20",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "5",
+        "reps": "30–50",
+        "rest": "60 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "wedding-p2c",
+    "name": "婚禮特訓P2-C",
+    "subtitle": "單邊力量＋百下撐｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五各做 A/B/C 一次。深蹲推撐 100 下計時做完、每次挑戰更快。",
+    "exercises": [
+      {
+        "name": "單手啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "手槍深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "單手啞鈴抓舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、斜方肌、臀大肌、腿後腱",
+        "sets": "5",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "1",
+        "reps": "100",
+        "rest": "60 秒"
+      }
+    ]
+  },
+  {
+    "id": "vertical-p1a",
+    "name": "垂直跳躍P1-A",
+    "subtitle": "硬舉＋分腿蹲｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五輪替 A/B（下週 B/A/B），每次至少休一天。",
+    "exercises": [
+      {
+        "name": "跪姿髖屈肌伸展",
+        "equipment": "自重",
+        "parts": "髖屈肌、股四頭",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0"
+      },
+      {
+        "name": "反向髖伸展",
+        "equipment": "凳子或羅馬椅",
+        "parts": "臀大肌、腿後腱、豎脊肌",
+        "sets": "2",
+        "reps": "15",
+        "rest": "0"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "0"
+      },
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "1",
+        "reps": "5",
+        "rest": "0"
+      },
+      {
+        "name": "保加利亞分腿蹲",
+        "equipment": "4–6kg×2",
+        "parts": "股四頭、臀大肌、腿後腱、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "0"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "20",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "vertical-p1b",
+    "name": "垂直跳躍P1-B",
+    "subtitle": "深蹲＋抬臀彎腿｜第1–4週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一、三、五輪替 A/B。",
+    "exercises": [
+      {
+        "name": "跪姿髖屈肌伸展",
+        "equipment": "自重",
+        "parts": "髖屈肌、股四頭",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0"
+      },
+      {
+        "name": "反向髖伸展",
+        "equipment": "凳子或羅馬椅",
+        "parts": "臀大肌、腿後腱、豎脊肌",
+        "sets": "2",
+        "reps": "15",
+        "rest": "0"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "0"
+      },
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "5",
+        "rest": "0"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "8",
+        "rest": "0"
+      },
+      {
+        "name": "站姿槓鈴提踵",
+        "equipment": "槓鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "20",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "vertical-p2a",
+    "name": "垂直跳躍P2-A",
+    "subtitle": "跳深＋跳蹲｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。週一、五做 A，週三做 B。",
+    "exercises": [
+      {
+        "name": "跪姿髖屈肌伸展",
+        "equipment": "自重",
+        "parts": "髖屈肌、股四頭",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0"
+      },
+      {
+        "name": "反向髖伸展",
+        "equipment": "凳子或羅馬椅",
+        "parts": "臀大肌、腿後腱、豎脊肌",
+        "sets": "2",
+        "reps": "15",
+        "rest": "0"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "0"
+      },
+      {
+        "name": "跳深",
+        "equipment": "跳箱或階梯",
+        "parts": "股四頭、小腿、心肺",
+        "sets": "6",
+        "reps": "3",
+        "rest": "0"
+      },
+      {
+        "name": "槓鈴跳蹲",
+        "equipment": "槓鈴",
+        "parts": "股四頭、臀大肌、心肺",
+        "sets": "4",
+        "reps": "8",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "vertical-p2b",
+    "name": "垂直跳躍P2-B",
+    "subtitle": "跳深＋深蹲｜第5–8週",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。週一、五做 A，週三做 B。",
+    "exercises": [
+      {
+        "name": "跪姿髖屈肌伸展",
+        "equipment": "自重",
+        "parts": "髖屈肌、股四頭",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0"
+      },
+      {
+        "name": "反向髖伸展",
+        "equipment": "凳子或羅馬椅",
+        "parts": "臀大肌、腿後腱、豎脊肌",
+        "sets": "2",
+        "reps": "15",
+        "rest": "0"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "0"
+      },
+      {
+        "name": "跳深",
+        "equipment": "跳箱或階梯",
+        "parts": "股四頭、小腿、心肺",
+        "sets": "6",
+        "reps": "3",
+        "rest": "0"
+      },
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "5",
+        "rest": "0"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "8",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "scrawny-a",
+    "name": "瘦子增肌A",
+    "subtitle": "上肢＋核心｜每週一次",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。老派重訓：大重量基本功。A/B/C 每週各做一次，每次至少休一天。",
+    "exercises": [
+      {
+        "name": "單手啞鈴抓舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、斜方肌、臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "10–5",
+        "rest": "60 秒"
+      },
+      {
+        "name": "啞鈴反向飛鳥",
+        "equipment": "啞鈴",
+        "parts": "三角肌後束、上背",
+        "sets": "3",
+        "reps": "10",
+        "rest": "30 秒"
+      },
+      {
+        "name": "側平舉",
+        "equipment": "2–4kg",
+        "parts": "三角肌（中束）",
+        "sets": "3",
+        "reps": "10",
+        "rest": "30 秒"
+      },
+      {
+        "name": "槓鈴彎舉",
+        "equipment": "槓鈴",
+        "parts": "肱二頭",
+        "sets": "3",
+        "reps": "6–10",
+        "rest": "0",
+        "superset": "4"
+      },
+      {
+        "name": "雙槓撐體",
+        "equipment": "雙槓",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "4"
+      },
+      {
+        "name": "腕彎舉",
+        "equipment": "啞鈴或槓鈴",
+        "parts": "前臂",
+        "sets": "2",
+        "reps": "力竭",
+        "rest": "30 秒"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "1",
+        "reps": "15",
+        "rest": "0",
+        "superset": "6"
+      },
+      {
+        "name": "藥球V字起身",
+        "equipment": "藥球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "1",
+        "reps": "15",
+        "rest": "0",
+        "superset": "6"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "6"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "1",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "6"
+      }
+    ]
+  },
+  {
+    "id": "scrawny-b",
+    "name": "瘦子增肌B",
+    "subtitle": "下肢｜每週一次",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "5",
+        "reps": "10–5",
+        "rest": "90 秒"
+      },
+      {
+        "name": "槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "3",
+        "reps": "3",
+        "rest": "90 秒"
+      },
+      {
+        "name": "啞鈴行走弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、心肺",
+        "sets": "2",
+        "reps": "20",
+        "rest": "90 秒"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒"
+      },
+      {
+        "name": "單腳啞鈴提踵",
+        "equipment": "啞鈴",
+        "parts": "小腿",
+        "sets": "3",
+        "reps": "10–20",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "scrawny-c",
+    "name": "瘦子增肌C",
+    "subtitle": "推拉＋手臂＋腹｜每週一次",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次。",
+    "exercises": [
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "5",
+        "reps": "10–3",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "5",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "3",
+        "reps": "10–5",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "跪姿支撐啞鈴划船",
+        "equipment": "啞鈴、凳子",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "5",
+        "reps": "12–6",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "槓鈴聳肩",
+        "equipment": "槓鈴",
+        "parts": "斜方肌、握力",
+        "sets": "3",
+        "reps": "15–10",
+        "rest": "0",
+        "superset": "3"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "3"
+      },
+      {
+        "name": "槓鈴滾輪",
+        "equipment": "槓鈴",
+        "parts": "核心",
+        "sets": "1",
+        "reps": "10",
+        "rest": "0",
+        "superset": "4"
+      },
+      {
+        "name": "負重仰臥起坐",
+        "equipment": "槓片或啞鈴",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "1",
+        "reps": "15",
+        "rest": "0",
+        "superset": "4"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "1",
+        "reps": "15",
+        "rest": "0",
+        "superset": "4"
+      },
+      {
+        "name": "捲腹",
+        "equipment": "自重",
+        "parts": "腹直肌",
+        "sets": "1",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "4"
+      }
+    ]
+  },
+  {
+    "id": "sports-a",
+    "name": "運動員A",
+    "subtitle": "爆發＋核心｜W1・後兩週遞增",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一二連做 A/B，休一到兩天，再四五連做 C/D，下週重來。漸進：單手壺鈴擺盪 W1 3x10→W2 3x10→W3 3x10；纜繩核心推 W1 2x12→W2 2x14→W3 2x16；引體向上 W1 2x8→W2 3x8→W3 3x8；單腿深蹲 W1 2x8→W2 3x8→W3 3x8；側平板支撐 W1 2x30-sec hold→W2 2x40-sec hold→W3 2x50-sec hold；雙手啞鈴划船 W1 2x8→W2 2x8→W3 2x8；單腿槓鈴直腿硬舉 W1 2x8→W2 2x8→W3 2x8；滑輪臉拉 W1 2x8→W2 2x8→W3 2x8；半跪穩定反砍斫 W1 2x8→W2 2x8→W3 2x8。",
+    "exercises": [
+      {
+        "name": "單手壺鈴擺盪",
+        "equipment": null,
+        "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
+        "sets": "3",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "纜繩核心推",
+        "equipment": "纜繩",
+        "parts": "核心、腹斜肌",
+        "sets": "2",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "單腿深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "2",
+        "reps": "30-sec hold",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "單腿槓鈴直腿硬舉",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "滑輪臉拉",
+        "equipment": "滑輪、繩索",
+        "parts": "三角肌後束、上背",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "半跪穩定反砍斫",
+        "equipment": "纜繩或藥球",
+        "parts": "核心、腹斜肌",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "sports-b",
+    "name": "運動員B",
+    "subtitle": "推＋核心＋登山者｜W1",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一二連做 A/B，休一到兩天，再四五連做 C/D，下週重來。漸進：啞鈴臥推 W1 2x8→W2 3x8→W3 3x8；瑞士球滾輪伸展 W1 2x20→W2 2x30→W3 2x40；錘式彎舉加推舉 W1 2x8→W2 2x8→W3 2x8；靠牆滑臂 W1 2x10→W2 2x12→W3 2x14；平板支撐 W1 2x30-sec hold→W2 2x40-sec hold→W3 2x50-sec hold；登山者 W1 2x10→W2 2x12→W3 2x14；上斜Y-T-W-L上舉 W1 2x8→W2 2x10→W3 2x12；站姿纜繩髖內收 W1 2x10→W2 2x12→W3 2x14。",
+    "exercises": [
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球滾輪伸展",
+        "equipment": "瑞士球",
+        "parts": "核心",
+        "sets": "2",
+        "reps": "20",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "錘式彎舉加推舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭、三角肌",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "靠牆滑臂",
+        "equipment": "牆面",
+        "parts": "中下斜方、前鋸肌",
+        "sets": "2",
+        "reps": "10",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "2",
+        "reps": "30-sec hold",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "上斜Y-T-W-L上舉",
+        "equipment": "上斜凳",
+        "parts": "中下斜方、旋轉肌群、後三角",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿纜繩髖內收",
+        "equipment": "纜繩",
+        "parts": "髖內收肌、核心",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "sports-c",
+    "name": "運動員C",
+    "subtitle": "單腿＋拉＋核心｜W1",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一二連做 A/B，休一到兩天，再四五連做 C/D，下週重來。漸進：單手壺鈴擺盪 W1 3x5→W2 3x5→W3 3x5；纜繩核心推 W1 2x12→W2 2x14→W3 2x16；單腿深蹲 W1 2x8→W2 3x8→W3 3x8；反向划船 W1 2x15→W2 3x15→W3 3x15；側平板支撐 W1 2x30-sec hold→W2 2x40-sec hold→W3 2x50-sec hold；滑輪下拉 W1 2x15→W2 2x15→W3 2x15；啞鈴弓步 W1 2x8→W2 2x12→W3 2x15；瑞士球抬臀彎腿 W1 2x8→W2 2x10→W3 2x12；半跪穩定砍斫 W1 2x8→W2 2x8→W3 2x8。",
+    "exercises": [
+      {
+        "name": "單手壺鈴擺盪",
+        "equipment": null,
+        "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
+        "sets": "3",
+        "reps": "5",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "纜繩核心推",
+        "equipment": "纜繩",
+        "parts": "核心、腹斜肌",
+        "sets": "2",
+        "reps": "12",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單腿深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "反向划船",
+        "equipment": "單槓或TRX",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "2",
+        "reps": "15",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "2",
+        "reps": "30-sec hold",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "滑輪下拉",
+        "equipment": "滑輪、高位下拉機",
+        "parts": "背闊肌、肱二頭",
+        "sets": "2",
+        "reps": "15",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      },
+      {
+        "name": "半跪穩定砍斫",
+        "equipment": "纜繩或藥球",
+        "parts": "核心、腹斜肌",
+        "sets": "2",
+        "reps": "8",
+        "rest": "30 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "sports-d",
+    "name": "運動員D",
+    "subtitle": "窄推＋肩＋核心｜W1",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。一二連做 A/B，休一到兩天，再四五連做 C/D，下週重來。漸進：窄握臥推 W1 2x8→W2 3x8→W3 3x8；瑞士球滾輪伸展 W1 2x20→W2 2x30→W3 2x40；複合肩上舉 W1 2x10→W2 2x10→W3 2x10；靠牆滑臂 W1 2x10→W2 2x12→W3 2x14；平板支撐 W1 2x30-sec hold→W2 2x40-sec hold→W3 2x50-sec hold；登山者 W1 2x10→W2 2x12→W3 2x14；上斜Y-T-W-L上舉 W1 2x8→W2 2x10→W3 2x12；站姿纜繩髖內收 W1 2x10→W2 2x12→W3 2x14；纜繩核心推 W1 2x8→W2 2x8→W3 2x8。",
+    "exercises": [
+      {
+        "name": "窄握臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球滾輪伸展",
+        "equipment": "瑞士球",
+        "parts": "核心",
+        "sets": "2",
+        "reps": "20",
+        "rest": "60 秒",
+        "superset": "1"
+      },
+      {
+        "name": "複合肩上舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、斜方肌",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "2"
+      },
+      {
+        "name": "靠牆滑臂",
+        "equipment": "牆面",
+        "parts": "中下斜方、前鋸肌",
+        "sets": "2",
+        "reps": "10",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "2",
+        "reps": "30-sec hold",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "上斜Y-T-W-L上舉",
+        "equipment": "上斜凳",
+        "parts": "中下斜方、旋轉肌群、後三角",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "站姿纜繩髖內收",
+        "equipment": "纜繩",
+        "parts": "髖內收肌、核心",
+        "sets": "2",
+        "reps": "10",
+        "rest": "60 秒",
+        "superset": "3"
+      },
+      {
+        "name": "纜繩核心推",
+        "equipment": "纜繩",
+        "parts": "核心、腹斜肌",
+        "sets": "2",
+        "reps": "8",
+        "rest": "60 秒",
+        "superset": "3"
+      }
+    ]
+  },
+  {
+    "id": "bigbench-a",
+    "name": "臥推專項-速度日",
+    "subtitle": "快速推＋三頭背肩｜週一",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。週一速度日（輕重量快速推，突破黏滯點）、週五極限日，兩次至少休 3 天；兩天之間加練一次下肢。",
+    "exercises": [
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "9",
+        "reps": "3",
+        "rest": "45 秒"
+      },
+      {
+        "name": "窄握臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、肱三頭、前三角",
+        "sets": "2–3",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "EZ槓仰臥三頭伸展",
+        "equipment": "EZ槓、平凳",
+        "parts": "肱三頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "5",
+        "reps": "5",
+        "rest": "2–3 分"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "3",
+        "reps": "8",
+        "rest": "60 秒"
+      },
+      {
+        "name": "反握EZ槓彎舉",
+        "equipment": "EZ槓",
+        "parts": "肱橈肌、前臂、肱二頭",
+        "sets": "1",
+        "reps": "10",
+        "rest": "0"
+      }
+    ]
+  },
+  {
+    "id": "bigbench-b",
+    "name": "臥推專項-極限日",
+    "subtitle": "漸增到1RM｜週五",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。空槓 3 下起跳、休 45 秒，每次加 10–20 公斤再做 3 下；吃力後改只做 1 下、休 2 分鐘，一路加到只能做 1 下的重量並記錄，每次挑戰破紀錄。第一動可三選一（毛巾臥推／地板臥推／插銷臥推），每兩週換一種；一定要有捕手。",
+    "exercises": [
+      {
+        "name": "槓鈴臥推",
+        "equipment": "槓鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "漸增",
+        "reps": "3→1",
+        "rest": "45 秒→2 分"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "5",
+        "reps": "10",
+        "rest": "60–90 秒"
+      },
+      {
+        "name": "滑輪三頭下壓",
+        "equipment": "滑輪",
+        "parts": "肱三頭",
+        "sets": "5",
+        "reps": "10",
+        "rest": "60–90 秒"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "5",
+        "reps": "10",
+        "rest": "60–90 秒"
+      },
+      {
+        "name": "前平舉",
+        "equipment": "啞鈴或槓片",
+        "parts": "前三角",
+        "sets": "5",
+        "reps": "10",
+        "rest": "60–90 秒"
+      }
+    ]
+  },
+  {
+    "id": "couples-a",
+    "name": "雙人燃脂A",
+    "subtitle": "8分鐘循環｜推拉擺盪",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各做一次，每次至少休一天；另每週有氧 2 次（沒時間就接在其中兩次重訓後面）。主課表限時循環：8 分鐘內動作不停、盡量多組；之後可加選 4 分鐘加餐。兩人可同時做，或輪流接力。",
+    "exercises": [
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒"
+      }
+    ]
+  },
+  {
+    "id": "couples-b",
+    "name": "雙人燃脂B",
+    "subtitle": "10分鐘循環｜全身",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各一次。10 分鐘內動作不停、盡量多組；可加選 4 分鐘加餐。",
+    "exercises": [
+      {
+        "name": "胸前蹲推 Thruster",
+        "equipment": "4–6kg×2",
+        "parts": "股四頭、臀大肌、三角肌、肱三頭、核心",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴反向飛鳥",
+        "equipment": "啞鈴",
+        "parts": "三角肌後束、上背",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "盡量多組",
+        "reps": "12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴後弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "盡量多組",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-c",
+    "name": "雙人燃脂C",
+    "subtitle": "10分鐘循環｜拉推撐",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。A/B/C 每週各一次。10 分鐘內動作不停、盡量多組；可加選 4 分鐘加餐。",
+    "exercises": [
+      {
+        "name": "肘外展啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "上背、後三角、菱形肌",
+        "sets": "盡量多組",
+        "reps": "10",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "盡量多組",
+        "reps": "10",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "盡量多組",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴借力推舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、股四頭",
+        "sets": "盡量多組",
+        "reps": "10",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "12",
+        "rest": "0",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f1",
+    "name": "雙人加餐-手臂核心1",
+    "subtitle": "4分鐘｜彎舉＋撐體＋三頭",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。主課表後的 4 分鐘加選：每動作 20 秒、休 10 秒，4 分鐘內盡量多輪。",
+    "exercises": [
+      {
+        "name": "站姿啞鈴彎舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "深蹲推撐",
+        "equipment": "自重",
+        "parts": "股四頭、胸、核心、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f2",
+    "name": "雙人加餐-髖手臂核心",
+    "subtitle": "4分鐘｜窄推＋擺盪＋彎推",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。4 分鐘加選：每動作 20 秒、休 10 秒，盡量多輪。",
+    "exercises": [
+      {
+        "name": "窄距伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、肱三頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "錘式彎舉加推舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭、三角肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f3",
+    "name": "雙人加餐-手臂核心2",
+    "subtitle": "4分鐘｜收腹＋彎舉＋三頭",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。4 分鐘加選：每動作 20 秒、休 10 秒，盡量多輪。",
+    "exercises": [
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "錘式彎舉",
+        "equipment": "啞鈴 4–6kg",
+        "parts": "肱肌、肱橈肌、肱二頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f4",
+    "name": "雙人加餐-髖三頭核心",
+    "subtitle": "4分鐘｜抬臀＋登山＋三頭",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。4 分鐘加選：每動作 20 秒、休 10 秒，盡量多輪。",
+    "exercises": [
+      {
+        "name": "瑞士球抬臀",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、核心",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴仰臥三頭伸展",
+        "equipment": "啞鈴、平凳",
+        "parts": "肱三頭",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f5",
+    "name": "雙人加餐-髖腿核心",
+    "subtitle": "4分鐘｜收腹＋抬臀＋分腿跳",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。4 分鐘加選：每動作 20 秒、休 10 秒，盡量多輪。",
+    "exercises": [
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "分腿跳",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、心肺",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "couples-f6",
+    "name": "雙人加餐-髖腿肩手臂",
+    "subtitle": "4分鐘｜深蹲＋擺盪＋彎推",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。4 分鐘加選：每動作 20 秒、休 10 秒，盡量多輪。",
+    "exercises": [
+      {
+        "name": "啞鈴深蹲",
+        "equipment": "8–12kg×2",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "錘式彎舉加推舉",
+        "equipment": "啞鈴",
+        "parts": "肱二頭、三角肌",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "盡量多組",
+        "reps": "20 秒",
+        "rest": "10 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "min15-01",
+    "name": "15分鐘-01",
+    "subtitle": "蹲推髖划船棒式｜選一套一週三練",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週做 3 次、每次至少休一天，2–3 週後換一套；或選兩套輪替 4 週。太難可拉長休息，目標 15 分鐘做完。",
+    "exercises": [
+      {
+        "name": "槓鈴背蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "15",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "臀橋",
+        "equipment": "自重",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "12–15",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "平板支撐",
+        "equipment": "自重",
+        "parts": "核心、肩、臀",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "min15-02",
+    "name": "15分鐘-02",
+    "subtitle": "抬臀伏地挺身引體肩推",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換；太難可拉長休息。",
+    "exercises": [
+      {
+        "name": "瑞士球抬臀彎腿",
+        "equipment": "瑞士球",
+        "parts": "臀大肌、腿後腱、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身加撐",
+        "equipment": "自重",
+        "parts": "胸大肌、前鋸肌、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "1"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "2–3",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴肩推",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、核心",
+        "sets": "2–3",
+        "reps": "8–10",
+        "rest": "30 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "min15-03",
+    "name": "15分鐘-03",
+    "subtitle": "單手弓步推＋引體棒式",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "單手反向弓步推舉",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、肩、核心",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60 秒"
+      },
+      {
+        "name": "引體向上",
+        "equipment": "單槓",
+        "parts": "背闊肌、肱二頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "側平板支撐",
+        "equipment": "自重",
+        "parts": "腹斜肌、臀中肌",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "45 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "min15-04",
+    "name": "15分鐘-04",
+    "subtitle": "擺盪划船＋蹲推收腹",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "3",
+        "reps": "12",
+        "rest": "30 秒",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身划船",
+        "equipment": "啞鈴",
+        "parts": "胸、背、核心",
+        "sets": "3",
+        "reps": "12",
+        "rest": "30 秒",
+        "superset": "1"
+      },
+      {
+        "name": "胸前蹲推 Thruster",
+        "equipment": "4–6kg×2",
+        "parts": "股四頭、臀大肌、三角肌、肱三頭、核心",
+        "sets": "2",
+        "reps": "12",
+        "rest": "30 秒",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球屈腿收腹",
+        "equipment": "瑞士球",
+        "parts": "腹直肌、髖屈肌",
+        "sets": "2",
+        "reps": "12–15",
+        "rest": "30 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "min15-05",
+    "name": "15分鐘-05",
+    "subtitle": "側弓步＋單腿划船臀橋",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "側弓步加推舉",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、肩、三頭",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "60 秒"
+      },
+      {
+        "name": "單腿啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、核心、腿後腱",
+        "sets": "3",
+        "reps": "12–15",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "單腳臀橋",
+        "equipment": "自重",
+        "parts": "臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "T伏地挺身",
+        "equipment": "自重",
+        "parts": "胸、核心、肩",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "min15-06",
+    "name": "15分鐘-06",
+    "subtitle": "過頭弓步＋划船轉體",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "啞鈴過頭弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、肩、核心",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "單手轉體啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、腹斜肌",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "單手登階推舉",
+        "equipment": "啞鈴、階梯",
+        "parts": "股四頭、臀大肌、肩",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "伏地挺身",
+        "equipment": "自重",
+        "parts": "胸大肌、前三角、肱三頭、核心",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "俯臥眼鏡蛇伸展",
+        "equipment": "自重",
+        "parts": "豎脊肌、臀大肌、中下斜方",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "60 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "min15-07",
+    "name": "15分鐘-07",
+    "subtitle": "寬硬舉＋上斜推轉體弓步",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "寬握槓鈴硬舉",
+        "equipment": "槓鈴",
+        "parts": "臀大肌、腿後腱、上背、握力",
+        "sets": "4",
+        "reps": "5",
+        "rest": "90 秒"
+      },
+      {
+        "name": "上斜啞鈴臥推",
+        "equipment": "啞鈴、上斜椅",
+        "parts": "胸大肌（上胸）、前三角、肱三頭",
+        "sets": "2",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "瑞士球俄羅斯旋轉",
+        "equipment": "瑞士球",
+        "parts": "腹斜肌",
+        "sets": "2",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "啞鈴弓步",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "2",
+        "reps": "10–12",
+        "rest": "60 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "min15-08",
+    "name": "15分鐘-08",
+    "subtitle": "早安＋臥推深蹲划船登山",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "早安運動",
+        "equipment": "槓鈴",
+        "parts": "腿後腱、臀大肌、豎脊肌",
+        "sets": "3",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴臥推",
+        "equipment": "啞鈴、臥推椅",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "8",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "自重深蹲",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "10",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "15–30 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "min15-09",
+    "name": "15分鐘-09",
+    "subtitle": "硬舉跳繩推舉循環",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。跳繩 45 秒穿插在力量動作之間。",
+    "exercises": [
+      {
+        "name": "啞鈴硬舉",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、豎脊肌、握力",
+        "sets": "4",
+        "reps": "6",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "4",
+        "reps": "45 秒",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "啞鈴借力推舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、股四頭",
+        "sets": "4",
+        "reps": "6",
+        "rest": "0",
+        "superset": "1"
+      },
+      {
+        "name": "跳繩",
+        "equipment": "跳繩",
+        "parts": "心肺、小腿",
+        "sets": "4",
+        "reps": "45 秒",
+        "rest": "60 秒",
+        "superset": "1"
+      }
+    ]
+  },
+  {
+    "id": "min15-10",
+    "name": "15分鐘-10",
+    "subtitle": "前蹲＋划船核心擺盪",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。選一套每週 3 次，2–3 週後換。",
+    "exercises": [
+      {
+        "name": "前蹲舉",
+        "equipment": "槓鈴、深蹲架",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "6–8",
+        "rest": "60 秒"
+      },
+      {
+        "name": "槓鈴划船",
+        "equipment": "槓鈴",
+        "parts": "背闊肌、菱形肌、斜方肌、肱二頭",
+        "sets": "3",
+        "reps": "6–8",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "核心穩定撐體",
+        "equipment": "自重",
+        "parts": "核心",
+        "sets": "3",
+        "reps": "30 秒",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "3",
+        "reps": "10–12",
+        "rest": "0",
+        "superset": "2"
+      },
+      {
+        "name": "下斜伏地挺身",
+        "equipment": "自重、凳子",
+        "parts": "胸大肌、前三角、肱三頭",
+        "sets": "3",
+        "reps": "力竭",
+        "rest": "30 秒",
+        "superset": "2"
+      }
+    ]
+  },
+  {
+    "id": "spartacus",
+    "name": "斯巴達克斯循環",
+    "subtitle": "10站x60秒｜共3輪",
+    "note": "出自《Men's Health Big Book of Exercises》第 13 章。每站 60 秒盡量多下，站間轉換 15 秒；10 站跑完休 2 分鐘，共做 3 輪。訓練前先熱身 5–10 分鐘。可當主課表（一週 3 天）或排在重訓日之間加速減脂。",
+    "exercises": [
+      {
+        "name": "高腳杯深蹲",
+        "equipment": "壺鈴",
+        "parts": "股四頭、臀大肌、核心（前側負重）",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "登山者",
+        "equipment": "自重",
+        "parts": "核心、肩、心肺",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "單手啞鈴擺盪",
+        "equipment": "啞鈴",
+        "parts": "臀大肌、腿後腱、核心、握力",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "T伏地挺身",
+        "equipment": "自重",
+        "parts": "胸、核心、肩",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "分腿跳",
+        "equipment": "自重",
+        "parts": "股四頭、臀大肌、心肺",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "雙手啞鈴划船",
+        "equipment": "啞鈴",
+        "parts": "背闊肌、菱形肌、肱二頭",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "啞鈴側弓步觸地",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、腿後腱",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "伏地挺身划船",
+        "equipment": "啞鈴",
+        "parts": "胸、背、核心",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "啞鈴弓步轉體",
+        "equipment": "啞鈴",
+        "parts": "股四頭、臀大肌、核心",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      },
+      {
+        "name": "啞鈴借力推舉",
+        "equipment": "啞鈴",
+        "parts": "三角肌、肱三頭、股四頭",
+        "sets": "3",
+        "reps": "60 秒",
+        "rest": "15 秒"
+      }
+    ]
   }
 ]

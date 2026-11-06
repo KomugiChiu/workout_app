@@ -129,6 +129,22 @@ class BackupModelsTest {
     }
 
     @Test
+    fun displayHelpersKeepExistingUnits() {
+        assertEquals("3 組", TargetParser.displaySets("3"))
+        assertEquals("2–5 組", TargetParser.displaySets("2–5"))
+        assertEquals("盡量多組", TargetParser.displaySets("盡量多組"))
+        assertEquals("漸增", TargetParser.displaySets("漸增"))
+        assertEquals("12 下", TargetParser.displayReps("12"))
+        assertEquals("30 秒", TargetParser.displayReps("30 秒"))
+        assertEquals("力竭", TargetParser.displayReps("力竭"))
+        assertEquals("力竭前 2 下停", TargetParser.displayReps("力竭前 2 下停"))
+        assertEquals("10–12/邊", TargetParser.displayReps("10–12/邊"))
+        assertEquals("休 60 秒", TargetParser.displayRest("60 秒"))
+        assertEquals("直上", TargetParser.displayRest("0"))
+        assertEquals("休 盡量短", TargetParser.displayRest("盡量短"))
+    }
+
+    @Test
     fun oldBackupWithoutNewFieldsStillDecodes() {
         val text = """
             {

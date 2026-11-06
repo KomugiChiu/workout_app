@@ -402,14 +402,14 @@ private fun EntryProgressCard(entry: EntryProgress, onClick: () -> Unit) {
                 Column(Modifier.weight(1f)) {
                     Text(entry.entry.name, style = MaterialTheme.typography.titleMedium)
                     val target = buildString {
-                        entry.entry.targetSets?.let { append("$it 組") }
+                        entry.entry.targetSets?.let { append(TargetParser.displaySets(it)) }
                         entry.entry.targetReps?.let {
                             if (isNotEmpty()) append(" × ")
                             append(it)
                         }
                         entry.entry.restSec?.let {
                             if (isNotEmpty()) append(" · ")
-                            append("休 $it")
+                            append(TargetParser.displayRest(it))
                         }
                     }
                     Text(

@@ -33,4 +33,26 @@ object TargetParser {
             ?.value
             ?.toIntOrNull()
             ?.coerceIn(10, 600)
+
+    /** 菜單顯示用：已有單位的不重複加；"0" 表示動作間不停。 */
+    fun displaySets(text: String): String =
+        text.takeIf { it.isNotBlank() }?.let {
+            if (it.any(Char::isDigit)) "$it 組" else it
+        } ?: text
+
+    fun displayReps(text: String): String =
+        text.takeIf { it.isNotBlank() }?.let {
+            if (it.contains("下") || it.contains("秒") ||
+                it.contains("力竭") || it.contains("邊")
+            ) {
+                it
+            } else {
+                "$it 下"
+            }
+        } ?: text
+
+    fun displayRest(text: String): String =
+        text.takeIf { it.isNotBlank() }?.let {
+            if (it == "0") "直上" else "休 $it"
+        } ?: text
 }
