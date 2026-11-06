@@ -84,6 +84,8 @@ fun MenuListScreen(
     onOpenMenu: (String) -> Unit
 ) {
     val menus by repository.observeMenuSummaries().collectAsState(initial = emptyList())
+    // 書本參考課表只顯示在資料頁，這裡只留可訓練的菜單
+    val trainable = remember(menus) { menus.filterNot { it.menu.isReference } }
 
     Scaffold(
         topBar = {
@@ -108,8 +110,8 @@ fun MenuListScreen(
                 }
             }
         } else {
-            val templates = menus.filter { it.menu.isTemplate }
-            val others = menus.filterNot { it.menu.isTemplate }
+            val templates = trainable.filter { it.menu.isTemplate }
+            val others = trainable.filterNot { it.menu.isTemplate }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -223,7 +225,8 @@ fun MenuDetailScreen(
     onBack: () -> Unit,
     onOpenGuide: (String) -> Unit,
     onOpenExercise: (Long) -> Unit,
-    onSessionCreated: (Long) -> Unit
+    onSessionCreated: (Long) -> Unit,
+    readOnly: Boolean = false
 ) {
     val id = menuId ?: ""
     val menu by remember(id) { repository.observeMenu(id) }.collectAsState(initial = null)
@@ -425,7 +428,7 @@ fun MenuDetailScreen(
                     }
                 },
                 actions = {
-                    if (isAdjustable || menu?.isCustom == true) {
+                    if (!readOnly && (isAdjustable || menu?.isCustom == true)) {
                         Box {
                             TextButton(onClick = { showMore = true }) {
                                 Text("更多")
@@ -472,7 +475,7 @@ fun MenuDetailScreen(
             )
         },
         bottomBar = {
-            if (menu != null) {
+            if (menu != null && !readOnly) {
                 Surface(tonalElevation = 3.dp) {
                     Button(
                         onClick = {
@@ -533,7 +536,7 @@ fun MenuDetailScreen(
                 contentPadding = PaddingValues(16.dp, 12.dp, 16.dp, 96.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                if (isAdjustable) {
+                if (isAdjustable && !readOnly) {
                     item {
                         TemplateAdjustCard(
                             selected = equipmentFilter,
@@ -569,10 +572,7 @@ fun MenuDetailScreen(
                         rowList,
                         key = { _, row -> row.menuExerciseId }
                     ) { index, row ->
-                        ReorderableItem(
-                            state = reorderState,
-                            key = row.menuExerciseId
-                        ) { _ ->
+                        if (readOnly) {
                             MenuExerciseCard(
                                 index = index,
                                 row = row,
@@ -581,18 +581,34 @@ fun MenuDetailScreen(
                                 onOpenGuide = onOpenGuide,
                                 onOpenExercise = { onOpenExercise(row.exerciseId) },
                                 onOpenVideo = { openUrl(context, it) },
-                                dragHandle = {
-                                    IconButton(
-                                        onClick = {},
-                                        modifier = Modifier.draggableHandle()
-                                    ) {
-                                        Icon(
-                                            Icons.Filled.Menu,
-                                            contentDescription = "拖曳排序"
-                                        )
-                                    }
-                                }
+                                dragHandle = null
                             )
+                        } else {
+                            ReorderableItem(
+                                state = reorderState,
+                                key = row.menuExerciseId
+                            ) { _ ->
+                                MenuExerciseCard(
+                                    index = index,
+                                    row = row,
+                                    isAdjustable = false,
+                                    onSwap = null,
+                                    onOpenGuide = onOpenGuide,
+                                    onOpenExercise = { onOpenExercise(row.exerciseId) },
+                                    onOpenVideo = { openUrl(context, it) },
+                                    dragHandle = {
+                                        IconButton(
+                                            onClick = {},
+                                            modifier = Modifier.draggableHandle()
+                                        ) {
+                                            Icon(
+                                                Icons.Filled.Menu,
+                                                contentDescription = "拖曳排序"
+                                            )
+                                        }
+                                    }
+                                )
+                            }
                         }
                     }
                 }

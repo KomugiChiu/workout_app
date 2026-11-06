@@ -50,10 +50,16 @@ import com.komugi.workout.util.MarkdownWebView
 fun GuideListScreen(
     repository: WorkoutRepository,
     onOpenGuide: (GuideRef) -> Unit,
-    onOpenLibrary: () -> Unit
+    onOpenLibrary: () -> Unit,
+    onOpenReferenceMenu: (String) -> Unit,
+    onOpenTemplateMenu: (String) -> Unit
 ) {
     var query by remember { mutableStateOf("") }
     val exercises by repository.observeExercises().collectAsState(initial = emptyList())
+    val menuSummaries by repository.observeMenuSummaries().collectAsState(initial = emptyList())
+    val summariesById = remember(menuSummaries) {
+        menuSummaries.associateBy { it.menu.id }
+    }
 
     val guideTexts = remember(repository.guides) {
         repository.guides.associate { guide ->
@@ -76,7 +82,7 @@ fun GuideListScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("動作說明") }, colors = komugiTopAppBarColors()) }
+        topBar = { TopAppBar(title = { Text("資料") }, colors = komugiTopAppBarColors()) }
     ) { padding ->
         Column(
             Modifier
@@ -89,7 +95,7 @@ fun GuideListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("搜尋動作名稱或內文…") },
+                placeholder = { Text("搜尋動作、課表…") },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
@@ -103,7 +109,7 @@ fun GuideListScreen(
 
             if (query.isNotBlank()) {
                 Text(
-                    "找到 ${filtered.size} 筆",
+                    "動作說明找到 ${filtered.size} 筆",
                     modifier = Modifier.padding(horizontal = 20.dp),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -111,13 +117,31 @@ fun GuideListScreen(
                 Spacer(Modifier.height(4.dp))
             }
 
-            if (filtered.isEmpty()) {
+            val keyword = query.trim()
+            val planSummaries = remember(keyword, summariesById) {
+                if (keyword.isBlank()) {
+                    summariesById
+                } else {
+                    summariesById.filter { (id, summary) ->
+                        summary.menu.name.contains(keyword, ignoreCase = true) ||
+                            BOOK_PLAN_GROUPS.firstOrNull { it.menuIds.contains(id) }
+                                ?.title?.contains(keyword, ignoreCase = true) == true
+                    }
+                }
+            }
+            val matchingGroups = remember(keyword, planSummaries) {
+                BOOK_PLAN_GROUPS.filter { group ->
+                    group.menuIds.any { planSummaries.containsKey(it) }
+                }
+            }
+
+            if (filtered.isEmpty() && matchingGroups.isEmpty()) {
                 Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "找不到符合的動作說明",
+                        "找不到符合的資料",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -145,6 +169,33 @@ fun GuideListScreen(
                                 )
                             }
                         }
+                    }
+                    item {
+                        Text(
+                            "書本課表",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            "出自《Men's Health Big Book of Exercises》，純參考；可進動作詳情看步驟",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    items(matchingGroups, key = { it.key }) { group ->
+                        BookPlanGroupCard(
+                            group = group,
+                            summaries = planSummaries,
+                            forceExpanded = keyword.isNotBlank(),
+                            onOpenReference = onOpenReferenceMenu,
+                            onOpenTemplate = onOpenTemplateMenu
+                        )
+                    }
+                    item {
+                        Text(
+                            "動作說明",
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
                     }
                     items(filtered, key = { it.id }) { guide ->
                         Card(

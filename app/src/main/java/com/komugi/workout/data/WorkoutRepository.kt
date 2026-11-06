@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 16
+        private const val SEED_VERSION = 17
     }
 
     private val dao = db.dao()
@@ -185,7 +185,8 @@ class WorkoutRepository(
                         subtitle = menu.subtitle,
                         note = menu.note,
                         orderIndex = menuIndex,
-                        isTemplate = menu.template
+                        isTemplate = menu.template,
+                        isReference = menu.reference
                     )
                 )
                 menu.exercises.forEachIndexed { exIndex, ex ->
@@ -325,7 +326,15 @@ class WorkoutRepository(
                 dao.insertExercises(backup.exercises.map { it.toEntity() })
             }
             if (backup.menus.isNotEmpty()) {
-                dao.insertMenus(backup.menus.map { it.toEntity() })
+                // 內建書本課表的參考旗標以種子為準，避免舊備份把它們寫回菜單頁
+                val seedReference = menuSeed.associate { it.id to it.reference }
+                dao.insertMenus(
+                    backup.menus.map { menu ->
+                        menu.toEntity().copy(
+                            isReference = seedReference[menu.id] ?: menu.isReference
+                        )
+                    }
+                )
             }
             if (backup.menuExercises.isNotEmpty()) {
                 dao.insertMenuExercises(backup.menuExercises.map { it.toEntity() })

@@ -232,7 +232,8 @@
         "rest": "60",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded-b",
@@ -276,7 +277,8 @@
         "rest": "60",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded-c",
@@ -320,7 +322,8 @@
         "rest": "60",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "bw-1",
@@ -372,7 +375,8 @@
         "rest": "30",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "bw-2",
@@ -424,7 +428,8 @@
         "rest": "60",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "bw-3",
@@ -504,7 +509,8 @@
         "rest": "0",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "upper-recovery",
@@ -1196,7 +1202,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "getback-p2",
@@ -1258,7 +1265,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "getback-p3a",
@@ -1320,7 +1328,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "getback-p3b",
@@ -1382,7 +1391,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded2-a",
@@ -1414,7 +1424,8 @@
         "reps": "3",
         "rest": "10 秒起"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded2-b",
@@ -1446,7 +1457,8 @@
         "reps": "3",
         "rest": "10 秒起"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded2-c",
@@ -1478,7 +1490,8 @@
         "reps": "3",
         "rest": "10 秒起"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded3-a",
@@ -1531,7 +1544,8 @@
         "rest": "60–90 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "crowded3-b",
@@ -1584,7 +1598,8 @@
         "rest": "60–90 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p1a",
@@ -1646,7 +1661,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p1b",
@@ -1707,7 +1723,8 @@
         "reps": "8 秒",
         "rest": "30 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p1c",
@@ -1769,7 +1786,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p2a",
@@ -1821,7 +1839,8 @@
         "reps": "12",
         "rest": "30 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p2b",
@@ -1873,7 +1892,8 @@
         "reps": "8 秒",
         "rest": "30 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p2c",
@@ -1925,7 +1945,8 @@
         "reps": "8",
         "rest": "30 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p3a",
@@ -1987,7 +2008,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p3b",
@@ -2039,7 +2061,8 @@
         "reps": "12",
         "rest": "30 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "fatloss-p3c",
@@ -2101,7 +2124,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p1a",
@@ -2153,7 +2177,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p1b",
@@ -2205,7 +2230,8 @@
         "reps": "30",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p1c",
@@ -2257,7 +2283,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p2a",
@@ -2307,7 +2334,8 @@
         "rest": "30 秒",
         "superset": "4"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p2b",
@@ -2349,7 +2377,8 @@
         "reps": "30",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p2c",
@@ -2399,7 +2428,8 @@
         "rest": "30 秒",
         "superset": "4"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p2d",
@@ -2441,7 +2471,8 @@
         "reps": "30",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p3a",
@@ -2493,7 +2524,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p3b",
@@ -2545,7 +2577,8 @@
         "reps": "30",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p3c",
@@ -2597,7 +2630,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p4a",
@@ -2647,7 +2681,8 @@
         "rest": "30 秒",
         "superset": "4"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p4b",
@@ -2689,7 +2724,8 @@
         "reps": "30",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p4c",
@@ -2739,7 +2775,8 @@
         "rest": "30 秒",
         "superset": "4"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "beach-p4d",
@@ -2781,7 +2818,8 @@
         "reps": "20",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p1a",
@@ -2843,7 +2881,8 @@
         "rest": "45 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p1b",
@@ -2905,7 +2944,8 @@
         "rest": "45 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p1c",
@@ -2957,7 +2997,8 @@
         "reps": "100",
         "rest": "盡量短"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p2a",
@@ -3019,7 +3060,8 @@
         "rest": "60 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p2b",
@@ -3081,7 +3123,8 @@
         "rest": "60 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "wedding-p2c",
@@ -3133,7 +3176,8 @@
         "reps": "100",
         "rest": "60 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "vertical-p1a",
@@ -3189,7 +3233,8 @@
         "reps": "20",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "vertical-p1b",
@@ -3245,7 +3290,8 @@
         "reps": "20",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "vertical-p2a",
@@ -3293,7 +3339,8 @@
         "reps": "8",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "vertical-p2b",
@@ -3349,7 +3396,8 @@
         "reps": "8",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "scrawny-a",
@@ -3443,7 +3491,8 @@
         "rest": "0",
         "superset": "6"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "scrawny-b",
@@ -3491,7 +3540,8 @@
         "reps": "10–20",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "scrawny-c",
@@ -3589,7 +3639,8 @@
         "rest": "0",
         "superset": "4"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "sports-a",
@@ -3678,7 +3729,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "sports-b",
@@ -3758,7 +3810,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "sports-c",
@@ -3847,7 +3900,8 @@
         "rest": "30 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "sports-d",
@@ -3936,7 +3990,8 @@
         "rest": "60 秒",
         "superset": "3"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "bigbench-a",
@@ -3992,7 +4047,8 @@
         "reps": "10",
         "rest": "0"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "bigbench-b",
@@ -4040,7 +4096,8 @@
         "reps": "10",
         "rest": "60–90 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-a",
@@ -4083,7 +4140,8 @@
         "reps": "20 秒",
         "rest": "10 秒"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-b",
@@ -4136,7 +4194,8 @@
         "rest": "0",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-c",
@@ -4189,7 +4248,8 @@
         "rest": "0",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f1",
@@ -4233,7 +4293,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f2",
@@ -4277,7 +4338,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f3",
@@ -4321,7 +4383,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f4",
@@ -4365,7 +4428,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f5",
@@ -4409,7 +4473,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "couples-f6",
@@ -4453,7 +4518,8 @@
         "rest": "10 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-01",
@@ -4506,7 +4572,8 @@
         "rest": "0",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-02",
@@ -4559,7 +4626,8 @@
         "rest": "30 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-03",
@@ -4602,7 +4670,8 @@
         "rest": "45 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-04",
@@ -4646,7 +4715,8 @@
         "rest": "30 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-05",
@@ -4689,7 +4759,8 @@
         "rest": "30 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-06",
@@ -4742,7 +4813,8 @@
         "rest": "60 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-07",
@@ -4785,7 +4857,8 @@
         "rest": "60 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-08",
@@ -4838,7 +4911,8 @@
         "rest": "15–30 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-09",
@@ -4882,7 +4956,8 @@
         "rest": "60 秒",
         "superset": "1"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "min15-10",
@@ -4934,7 +5009,8 @@
         "rest": "30 秒",
         "superset": "2"
       }
-    ]
+    ],
+    "reference": true
   },
   {
     "id": "spartacus",
@@ -5022,6 +5098,7 @@
         "reps": "60 秒",
         "rest": "15 秒"
       }
-    ]
+    ],
+    "reference": true
   }
 ]

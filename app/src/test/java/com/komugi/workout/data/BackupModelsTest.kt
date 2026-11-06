@@ -42,7 +42,8 @@ class BackupModelsTest {
                     subtitle = "副標",
                     orderIndex = 9,
                     isCustom = true,
-                    isTemplate = true
+                    isTemplate = true,
+                    isReference = true
                 )
             ),
             menuExercises = listOf(

@@ -53,7 +53,8 @@ data class BackupMenu(
     val note: String? = null,
     val orderIndex: Int = 0,
     val isCustom: Boolean = false,
-    val isTemplate: Boolean = false
+    val isTemplate: Boolean = false,
+    val isReference: Boolean = false
 )
 
 @Serializable
@@ -161,7 +162,8 @@ fun MenuEntity.toBackup(): BackupMenu = BackupMenu(
     note = note,
     orderIndex = orderIndex,
     isCustom = isCustom,
-    isTemplate = isTemplate
+    isTemplate = isTemplate,
+    isReference = isReference
 )
 
 fun BackupMenu.toEntity(): MenuEntity = MenuEntity(
@@ -171,7 +173,8 @@ fun BackupMenu.toEntity(): MenuEntity = MenuEntity(
     note = note,
     orderIndex = orderIndex,
     isCustom = isCustom,
-    isTemplate = isTemplate
+    isTemplate = isTemplate,
+    isReference = isReference
 )
 
 fun MenuExerciseEntity.toBackup(): BackupMenuExercise = BackupMenuExercise(

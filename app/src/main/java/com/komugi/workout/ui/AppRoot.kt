@@ -61,7 +61,7 @@ fun AppRoot(
         Tab("menus", "菜單", Icons.AutoMirrored.Filled.List),
         Tab("logs", "紀錄", Icons.Filled.DateRange),
         Tab("body", "身體", Icons.Filled.Person),
-        Tab("guides", "動作說明", Icons.Filled.Info),
+        Tab("guides", "資料", Icons.Filled.Info),
         Tab("settings", "選項", Icons.Filled.Settings)
     )
 
@@ -87,6 +87,7 @@ fun AppRoot(
                             route?.startsWith("exercise/") == true
                         "body" -> route == "body"
                         "guides" -> route == "guides" || route?.startsWith("guide/") == true ||
+                            route?.startsWith("ref/") == true ||
                             route == "library" || route?.startsWith("library/") == true
                         else -> route == "settings"
                     }
@@ -151,6 +152,20 @@ fun AppRoot(
                 BodyMetricsScreen(repository = repository)
             }
             composable(
+                route = "ref/{menuId}",
+                arguments = listOf(navArgument("menuId") { type = NavType.StringType })
+            ) { entry ->
+                MenuDetailScreen(
+                    repository = repository,
+                    menuId = entry.arguments?.getString("menuId"),
+                    onBack = { navController.popBackStack() },
+                    onOpenGuide = { navController.navigate("guide/$it") },
+                    onOpenExercise = { navController.navigate("library/$it") },
+                    onSessionCreated = { },
+                    readOnly = true
+                )
+            }
+            composable(
                 route = "log/{sessionId}",
                 arguments = listOf(navArgument("sessionId") { type = NavType.LongType })
             ) { entry ->
@@ -201,7 +216,9 @@ fun AppRoot(
                 GuideListScreen(
                     repository = repository,
                     onOpenGuide = { navController.navigate("guide/${it.id}") },
-                    onOpenLibrary = { navController.navigate("library") }
+                    onOpenLibrary = { navController.navigate("library") },
+                    onOpenReferenceMenu = { navController.navigate("ref/$it") },
+                    onOpenTemplateMenu = { navController.navigate("menu/$it") }
                 )
             }
             composable("library") {

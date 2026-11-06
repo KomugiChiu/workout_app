@@ -26,7 +26,8 @@ data class Menu(
     val subtitle: String? = null,
     val note: String? = null,
     val exercises: List<MenuExercise> = emptyList(),
-    val template: Boolean = false
+    val template: Boolean = false,
+    val reference: Boolean = false
 )
 
 @Serializable

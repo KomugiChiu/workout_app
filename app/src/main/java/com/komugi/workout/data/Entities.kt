@@ -129,7 +129,9 @@ data class MenuEntity(
     val note: String? = null,
     val orderIndex: Int = 0,
     val isCustom: Boolean = false,
-    val isTemplate: Boolean = false
+    val isTemplate: Boolean = false,
+    /** 純參考用書本課表：只顯示在資料頁，不出現在菜單頁 */
+    val isReference: Boolean = false
 )
 
 /**

@@ -160,6 +160,26 @@ class MenuSeedTest {
     }
 
     @Test
+    fun referenceMenusAreMarkedForDataTab() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val reference = menus.filter { it.reference }
+        val trainable = menus.filterNot { it.reference }
+        assertEquals(77, reference.size)
+        assertEquals(12, trainable.size)
+        // 可調模板留在菜單頁（資料頁只做入口）
+        assertTrue(menus.first { it.id == "plan-a" }.template)
+        assertTrue(!menus.first { it.id == "plan-a" }.reference)
+        assertTrue(menus.first { it.id == "three-exercise" }.template)
+        // 書本課表標記參考用
+        assertTrue(menus.first { it.id == "crowded-a" }.reference)
+        assertTrue(menus.first { it.id == "spartacus" }.reference)
+        // App 原創留在菜單頁
+        assertTrue(!menus.first { it.id == "home-light" }.reference)
+    }
+
+    @Test
     fun extraSeedContainsReplacementExercises() {
         val extras = json.decodeFromString<List<ExtraExercise>>(
             File("src/main/assets/exercises_extra.json").readText()
