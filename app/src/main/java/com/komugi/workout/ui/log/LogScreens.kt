@@ -1,10 +1,6 @@
 package com.komugi.workout.ui.log
 
 import android.content.Context
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -96,7 +92,6 @@ import com.komugi.workout.util.openUrl
 import java.time.LocalDate
 import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -311,35 +306,9 @@ fun LogDetailScreen(
     var showOverflow by remember { mutableStateOf(false) }
     var showSaveAsMenu by remember { mutableStateOf(false) }
 
-    var restVisible by remember { mutableStateOf(false) }
-    var restTotal by remember { mutableStateOf(60) }
-    var restRemaining by remember { mutableStateOf(60) }
-    var restToken by remember { mutableStateOf(0) }
-
-    fun beginRest(seconds: Int) {
-        restTotal = seconds
-        restRemaining = seconds
-        restVisible = true
-        restToken += 1
-    }
-
-    fun resetRest() {
-        restVisible = false
-        restTotal = 60
-        restRemaining = 60
-        restToken += 1
-    }
-
-    LaunchedEffect(restToken) {
-        if (restToken == 0) return@LaunchedEffect
-        while (restVisible && restRemaining > 0) {
-            delay(1000)
-            restRemaining -= 1
-        }
-        if (restVisible && restRemaining == 0) {
-            vibrate(context)
-        }
-    }
+    // 組間休息為 App 層級計時器，切換頁面或切到背景都会繼續倒數
+    val rest by RestTimer.state.collectAsState()
+    LaunchedEffect(Unit) { RestTimer.sync() }
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showCopyPicker by remember { mutableStateOf(false) }
@@ -427,16 +396,12 @@ fun LogDetailScreen(
             ) {
                 LogFixedHeader(
                     dateText = formatEpochDay(data.session.dateEpochDay),
-                    restVisible = restVisible,
-                    remaining = restRemaining,
-                    total = restTotal,
-                    onAddTime = {
-                        restRemaining += 15
-                        restTotal += 15
-                        if (restRemaining == 15) restToken += 1
-                    },
-                    onSkip = { resetRest() },
-                    onStart = { beginRest(60) }
+                    restVisible = rest.visible,
+                    remaining = rest.remainingSec,
+                    total = rest.totalSec,
+                    onAddTime = { RestTimer.addTime(15) },
+                    onSkip = { RestTimer.skip() },
+                    onStart = { RestTimer.start(60) }
                 )
                 HorizontalDivider()
                 LazyColumn(
@@ -1310,24 +1275,6 @@ private fun formatClock(seconds: Long): String {
     }
 }
 
-private fun vibrate(context: Context) {
-    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)
-            ?.defaultVibrator
-    } else {
-        @Suppress("DEPRECATION")
-        context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-    } ?: return
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        vibrator.vibrate(
-            VibrationEffect.createOneShot(400, VibrationEffect.DEFAULT_AMPLITUDE)
-        )
-    } else {
-        @Suppress("DEPRECATION")
-        vibrator.vibrate(400)
-    }
-}
 
 @Composable
 private fun SaveSessionAsMenuDialog(

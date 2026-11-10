@@ -4,6 +4,7 @@ import android.app.Application
 import com.komugi.workout.data.AppDatabase
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.theme.ThemeManager
+import com.komugi.workout.ui.log.RestTimer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,6 +20,7 @@ class KomugiApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        RestTimer.init(this)
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             repository.ensureSeeded()
             repository.ensureBodyMetricSeed()
