@@ -32,4 +32,16 @@ class RestTimerTest {
         // 螢幕休眠 10 分鐘後回來也不會殘留舊值
         assertEquals(0, remainingSecondsAt(end, started + 600_000L))
     }
+
+    @Test
+    fun clockTextFormatsMinutesAndHours() {
+        assertEquals("0:00", formatClockText(0))
+        assertEquals("0:05", formatClockText(5))
+        assertEquals("1:00", formatClockText(60))
+        assertEquals("9:59", formatClockText(599))
+        assertEquals("1:00:00", formatClockText(3600))
+        assertEquals("2:05:09", formatClockText(7509))
+        // 負數不會出現負號
+        assertEquals("0:00", formatClockText(-3))
+    }
 }

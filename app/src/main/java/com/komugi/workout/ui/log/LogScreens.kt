@@ -52,7 +52,6 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -75,6 +74,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -1221,65 +1221,78 @@ private fun LogFixedHeader(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(Modifier.padding(14.dp)) {
+                    if (restVisible) {
+                        // 倒數中：圓形進度，直徑約螢幕寬 1/3
+                        val circleSize = LocalConfiguration.current.screenWidthDp.dp / 3f
+                        Column(
+                            Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                if (remaining > 0) "休息中" else "休息結束",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Box(
+                                Modifier.size(circleSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(
+                                    progress = {
+                                        if (total > 0) {
+                                            (remaining.toFloat() / total).coerceIn(0f, 1f)
+                                        } else {
+                                            0f
+                                        }
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                    strokeWidth = 10.dp,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    trackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.25f)
+                                )
+                                Text(
+                                    formatClock(remaining.toLong()),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                            Spacer(Modifier.height(8.dp))
+                            Row {
+                                TextButton(
+                                    onClick = onAddTime,
+                                    colors = ButtonDefaults.textButtonColors(
+                                        contentColor = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                ) { Text("+15 秒") }
+                                TextButton(
+                                    onClick = onSkip,
+                                    colors = ButtonDefaults.textButtonColors(
+                                        contentColor = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                ) {
+                                    Text(if (remaining > 0) "跳過" else "關閉")
+                                }
+                            }
+                        }
+                    } else {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                when {
-                                    !restVisible -> "組間休息"
-                                    remaining > 0 -> "休息中"
-                                    else -> "休息結束"
-                                },
+                                "組間休息",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = if (restVisible) {
-                                    MaterialTheme.colorScheme.onPrimary
-                                } else {
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                                }
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
                                 formatClock(remaining.toLong()),
-                                style = if (restVisible) {
-                                    MaterialTheme.typography.displaySmall
-                                } else {
-                                    MaterialTheme.typography.headlineSmall
-                                },
+                                style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.Bold,
-                                color = if (restVisible) {
-                                    MaterialTheme.colorScheme.onPrimary
-                                } else {
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                                }
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        if (restVisible) {
-                            TextButton(
-                                onClick = onAddTime,
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colorScheme.onPrimary
-                                )
-                            ) { Text("+15 秒") }
-                            TextButton(
-                                onClick = onSkip,
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colorScheme.onPrimary
-                                )
-                            ) {
-                                Text(if (remaining > 0) "跳過" else "關閉")
-                            }
-                        } else {
-                            Button(onClick = onStart) { Text("開始 60 秒") }
-                        }
+                        Button(onClick = onStart) { Text("開始 60 秒") }
                     }
-                    if (restVisible && total > 0) {
-                        Spacer(Modifier.height(6.dp))
-                        LinearProgressIndicator(
-                            progress = { (remaining.toFloat() / total).coerceIn(0f, 1f) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(6.dp),
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            trackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.25f)
-                        )
                     }
                 }
             }
