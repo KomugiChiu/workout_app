@@ -310,6 +310,13 @@ fun LogDetailScreen(
     val rest by RestTimer.state.collectAsState()
     LaunchedEffect(Unit) { RestTimer.sync() }
 
+    // 熱量估算用體重：取訓練日期當天或之前最近一次記錄
+    val bodyMetrics by repository.observeBodyMetrics().collectAsState(initial = emptyList())
+    val bodyWeightKg = remember(bodyMetrics, ui?.session?.dateEpochDay) {
+        val day = ui?.session?.dateEpochDay ?: LocalDate.now().toEpochDay()
+        Calories.weightForDate(bodyMetrics, day)
+    }
+
     var showDatePicker by remember { mutableStateOf(false) }
     var showCopyPicker by remember { mutableStateOf(false) }
     var showDeleteSession by remember { mutableStateOf(false) }
@@ -396,6 +403,9 @@ fun LogDetailScreen(
             ) {
                 LogFixedHeader(
                     dateText = formatEpochDay(data.session.dateEpochDay),
+                    kcalText = entryList
+                        .takeIf { it.isNotEmpty() }
+                        ?.let { "${Calories.displayKcal(Calories.sessionKcal(it, bodyWeightKg))} kcal" },
                     restVisible = rest.visible,
                     remaining = rest.remainingSec,
                     total = rest.totalSec,
@@ -425,6 +435,7 @@ fun LogDetailScreen(
                     ) { _ ->
                         EntryCard(
                             entryUi = entryUi,
+                            bodyWeightKg = bodyWeightKg,
                             dragHandleModifier = Modifier.draggableHandle(),
                             onAddRecord = { sheetEntry = entryUi },
                             onDuplicateSet = {
@@ -677,6 +688,7 @@ private fun applyRecord(
 @Composable
 private fun EntryCard(
     entryUi: EntryUi,
+    bodyWeightKg: Double,
     dragHandleModifier: Modifier = Modifier,
     onAddRecord: () -> Unit,
     onDuplicateSet: () -> Unit,
@@ -768,6 +780,8 @@ private fun EntryCard(
                     maxWeight?.let { add("最高 ${formatWeight(it)} kg") }
                     if (bodyweightCount > 0) add("自重 $bodyweightCount 組")
                     if (totalTime > 0) add("$totalTime 秒")
+                    val kcal = Calories.displayKcal(Calories.entryKcal(entryUi, bodyWeightKg))
+                    if (kcal > 0) add("約 $kcal kcal")
                 }
                 Text(
                     parts.joinToString(" · "),
@@ -1172,6 +1186,7 @@ private fun SessionCopyDatePicker(
 @Composable
 private fun LogFixedHeader(
     dateText: String,
+    kcalText: String?,
     restVisible: Boolean,
     remaining: Int,
     total: Int,
@@ -1185,7 +1200,16 @@ private fun LogFixedHeader(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
-            Text(dateText, style = MaterialTheme.typography.titleLarge)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(dateText, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                kcalText?.let {
+                    Text(
+                        "約 $it",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            }
             Spacer(Modifier.height(8.dp))
             Surface(
                 color = if (restVisible) {
