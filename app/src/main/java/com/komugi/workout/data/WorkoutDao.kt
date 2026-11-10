@@ -178,6 +178,21 @@ interface WorkoutDao {
     @Update
     suspend fun updateExercise(exercise: ExerciseEntity)
 
+    @Query("UPDATE entries SET exerciseId = :newId, name = :newName WHERE exerciseId = :oldId OR name = :oldName")
+    suspend fun repointEntries(oldId: Long, oldName: String, newId: Long, newName: String)
+
+    @Query("UPDATE menu_exercises SET exerciseId = :newId WHERE exerciseId = :oldId")
+    suspend fun repointMenuExercises(oldId: Long, newId: Long)
+
+    @Query("DELETE FROM exercises WHERE id = :id")
+    suspend fun deleteExerciseById(id: Long)
+
+    @Query("SELECT COUNT(*) FROM entries WHERE exerciseId = :id OR name = :name")
+    suspend fun countEntriesForExercise(id: Long, name: String): Int
+
+    @Query("SELECT COUNT(*) FROM menu_exercises WHERE exerciseId = :id")
+    suspend fun countMenuExercisesForExercise(id: Long): Int
+
     // ---------- 身體數據 ----------
 
     @Query("SELECT * FROM body_metrics ORDER BY dateEpochDay ASC")

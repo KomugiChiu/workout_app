@@ -856,7 +856,7 @@
         "rest": "60s"
       },
       {
-        "name": "壺鈴行李箱搬運",
+        "name": "行李箱搬運",
         "equipment": "8kg 壺鈴",
         "parts": "前臂握力、腹斜肌、臀中肌、上背",
         "sets": "3",
@@ -926,7 +926,7 @@
         "video": "https://www.youtube.com/watch?v=cyihFNmsq-A"
       },
       {
-        "name": "壺鈴單手擺盪",
+        "name": "單手壺鈴擺盪",
         "equipment": "8kg 壺鈴",
         "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
         "sets": "3",
@@ -2704,7 +2704,7 @@
       },
       {
         "name": "單手壺鈴擺盪",
-        "equipment": null,
+        "equipment": "8kg 壺鈴",
         "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
         "sets": "4",
         "reps": "12–15",
@@ -2785,7 +2785,7 @@
       },
       {
         "name": "單手壺鈴擺盪",
-        "equipment": null,
+        "equipment": "8kg 壺鈴",
         "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
         "sets": "5",
         "reps": "5",
@@ -3453,7 +3453,7 @@
     "exercises": [
       {
         "name": "單手壺鈴擺盪",
-        "equipment": null,
+        "equipment": "8kg 壺鈴",
         "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
         "sets": "3",
         "reps": "10",
@@ -3624,7 +3624,7 @@
     "exercises": [
       {
         "name": "單手壺鈴擺盪",
-        "equipment": null,
+        "equipment": "8kg 壺鈴",
         "parts": "臀大肌、腿後腱、核心（抗旋）、握力",
         "sets": "3",
         "reps": "5",

@@ -219,4 +219,39 @@ class MenuSeedTest {
             )
         )
     }
+
+    @Test
+    fun kettlebellExercisesAreMergedAndComplete() {
+        val menus = json.decodeFromString<List<Menu>>(
+            File("src/main/assets/menus.json").readText()
+        )
+        val menuExercises = menus.flatMap { it.exercises }
+        val menuNames = menuExercises.map { it.name }
+        // 重複名稱已合併為正式名
+        assertTrue(!menuNames.contains("壺鈴單手擺盪"))
+        assertTrue(!menuNames.contains("壺鈴行李箱搬運"))
+        assertEquals(5, menuNames.count { it == "單手壺鈴擺盪" })
+        assertEquals(2, menuNames.count { it == "行李箱搬運" })
+        // 器材欄不再留空
+        assertTrue(menuExercises.none { it.equipment.isNullOrBlank() })
+
+        val extras = json.decodeFromString<List<ExtraExercise>>(
+            File("src/main/assets/exercises_extra.json").readText()
+        )
+        val names = menuNames.toSet() + extras.map { it.name }.toSet()
+        assertEquals(232, names.size)
+        assertTrue(
+            names.containsAll(
+                listOf("雙手壺鈴硬舉", "壺鈴 Halo 繞頭", "壺鈴過頭行走", "雙手壺鈴肩推", "壺鈴地板臥推")
+            )
+        )
+
+        // 每個內建動作都有步驟說明（guideSeed 或 extra 內文）
+        val guides = json.decodeFromString<List<ExerciseGuideSeed>>(
+            File("src/main/assets/exercise_guides.json").readText()
+        )
+        val withInstructions = guides.map { it.name }.toSet() +
+            extras.filter { !it.instructions.isNullOrBlank() }.map { it.name }.toSet()
+        assertTrue(names.all { it in withInstructions })
+    }
 }

@@ -1798,5 +1798,55 @@
     "difficulty": "INTERMEDIATE",
     "instructions": "掌心相對持鈴站直。\n左腳前跨弓步，同時彎舉。\n弓步到底起身前把鈴推過頭。\n站回放下換邊。",
     "warning": "前膝對腳尖；推舉不拱腰。"
+  },
+  {
+    "name": "雙手壺鈴硬舉",
+    "parts": "臀大肌、腿後腱、豎脊肌、握力、核心",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "雙腳略寬於肩站於壺鈴兩側，俯身雙手握住把手。\n挺胸背部打平，臀部下沉繃緊腿後側。\n腳跟推地、髖前推站直，頂峰稍停再屈髖慢放。",
+    "warning": "全程背部中立，不要弓腰用腰拉起。"
+  },
+  {
+    "name": "壺鈴 Halo 繞頭",
+    "parts": "三角肌、斜方肌、核心",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "BEGINNER",
+    "instructions": "雙手倒握壺鈴把手兩側，鈴身朝上置於胸前。\n收緊核心，繞著頭部慢慢畫一圈。\n回到胸前稍停，換方向再做。",
+    "warning": "頭頸保持直立，不要被鈴帶著晃。"
+  },
+  {
+    "name": "壺鈴過頭行走",
+    "parts": "三角肌、核心、腹斜肌、上背",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "單手將壺鈴上舉過頭、手臂伸直，肩膀下沉遠離耳朵。\n收緊核心，小步向前行走。\n走完預定距離後換邊。",
+    "warning": "手臂不要彎；身體側傾就先降重量。"
+  },
+  {
+    "name": "雙手壺鈴肩推",
+    "parts": "三角肌、肱三頭、核心",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "站姿雙手各持壺鈴放在肩膀兩側。\n核心收緊，將壺鈴往頭上推，直到手臂接近伸直。\n慢慢降回肩膀高度，保持手肘在身體前方。",
+    "warning": "不要聳肩或拱腰；肩部不適就降重量。"
+  },
+  {
+    "name": "壺鈴地板臥推",
+    "parts": "胸大肌、肱三頭",
+    "equipment": "壺鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "躺地屈膝，雙手各持壺鈴置於胸上。\n下放至上臂觸地即推回。\n頂峰手臂伸直稍停。",
+    "warning": "手肘觸地即推，不要借力彈起。"
   }
 ]

@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 21
+        private const val SEED_VERSION = 22
     }
 
     private val dao = db.dao()
@@ -285,6 +285,31 @@ class WorkoutRepository(
                         warning = guide.warning ?: existing.warning
                     )
                 )
+            }
+
+            // 合併重複動作名稱（seed v22）：訓練紀錄與自訂菜單指向正式名後，刪除舊列
+            val renamedPairs = listOf(
+                "壺鈴單手擺盪" to "單手壺鈴擺盪",
+                "壺鈴行李箱搬運" to "行李箱搬運"
+            )
+            for ((oldName, newName) in renamedPairs) {
+                val old = dao.exerciseByName(oldName) ?: continue
+                val new = dao.exerciseByName(newName) ?: continue
+                if (old.id == new.id) continue
+                dao.repointEntries(old.id, oldName, new.id, newName)
+                dao.repointMenuExercises(old.id, new.id)
+                dao.deleteExerciseById(old.id)
+            }
+
+            // 清理無人引用的舊種子孤兒列（有紀錄或自訂菜單引用時保留）
+            for (orphan in listOf("壺鈴擺盪（雙手）", "彈力帶三頭下壓")) {
+                val row = dao.exerciseByName(orphan) ?: continue
+                if (row.isCustom) continue
+                if (dao.countEntriesForExercise(row.id, orphan) == 0 &&
+                    dao.countMenuExercisesForExercise(row.id) == 0
+                ) {
+                    dao.deleteExerciseById(row.id)
+                }
             }
 
             dao.upsertMeta(AppMetaEntity("seed_version", SEED_VERSION.toString()))
