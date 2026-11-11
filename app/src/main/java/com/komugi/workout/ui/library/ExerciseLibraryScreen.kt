@@ -36,6 +36,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,22 +56,26 @@ fun ExerciseLibraryScreen(
     onOpenExercise: (Long) -> Unit
 ) {
     val exercises by repository.observeExercises().collectAsState(initial = emptyList())
-    var search by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf<MuscleGroup?>(null) }
-    var type by remember { mutableStateOf<String?>(null) }
-    var location by remember { mutableStateOf<String?>(null) }
-    var equipment by remember { mutableStateOf<String?>(null) }
-    var showTags by remember { mutableStateOf(false) }
+    var search by rememberSaveable { mutableStateOf("") }
+    var category by rememberSaveable { mutableStateOf<MuscleGroup?>(null) }
+    var excludeCategory by rememberSaveable { mutableStateOf(false) }
+    var type by rememberSaveable { mutableStateOf<String?>(null) }
+    var location by rememberSaveable { mutableStateOf<String?>(null) }
+    var equipment by rememberSaveable { mutableStateOf<String?>(null) }
+    var showTags by rememberSaveable { mutableStateOf(false) }
 
-    val filtered = remember(exercises, search, category, type, location, equipment) {
+    val filtered = remember(exercises, search, category, excludeCategory, type, location, equipment) {
         val keyword = search.trim()
         exercises.filter { exercise ->
-            (keyword.isBlank() || exercise.name.contains(keyword, ignoreCase = true)) &&
-                (category == null || ExerciseMeta.categoryOf(exercise) == category) &&
-                (type == null || ExerciseMeta.movementTypeOf(exercise) == type) &&
-                (location == null || ExerciseMeta.locationOf(exercise) == location) &&
-                (equipment == null ||
-                    ExerciseMeta.equipmentCategory(exercise.equipment) == equipment)
+            ExerciseMeta.matchesLibraryFilter(
+                exercise = exercise,
+                keyword = keyword,
+                category = category,
+                excludeCategory = excludeCategory,
+                type = type,
+                location = location,
+                equipment = equipment
+            )
         }
     }
     val hasFilter = search.isNotBlank() || category != null || type != null ||
@@ -111,8 +116,20 @@ fun ExerciseLibraryScreen(
                     options = listOf<MuscleGroup?>(null) + MuscleGroup.entries,
                     selected = category,
                     label = { it?.let { group -> muscleGroupLabel(group) } ?: "全部" },
-                    onSelect = { category = it }
+                    onSelect = { category = it },
+                    titleSuffix = {
+                        TextButton(onClick = { excludeCategory = !excludeCategory }) {
+                            Text(if (excludeCategory) "排除模式" else "包含模式")
+                        }
+                    }
                 )
+                if (excludeCategory) {
+                    Text(
+                        "已選分類的相關動作會隱藏（例如選三頭，臥推也會隱藏）",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -169,6 +186,7 @@ fun ExerciseLibraryScreen(
                             onClick = {
                                 search = ""
                                 category = null
+                                excludeCategory = false
                                 type = null
                                 location = null
                                 equipment = null
@@ -210,14 +228,19 @@ private fun <T> LibraryFilterRow(
     options: List<T>,
     selected: T?,
     label: (T) -> String,
-    onSelect: (T?) -> Unit
+    onSelect: (T?) -> Unit,
+    titleSuffix: (@Composable () -> Unit)? = null
 ) {
     Column {
-        Text(
-            title,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                title,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f)
+            )
+            titleSuffix?.invoke()
+        }
         Spacer(Modifier.height(4.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(6.dp),

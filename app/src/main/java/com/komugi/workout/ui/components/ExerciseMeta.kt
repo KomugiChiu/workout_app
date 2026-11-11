@@ -81,6 +81,36 @@ object ExerciseMeta {
     fun categoryOf(exercise: ExerciseEntity): MuscleGroup? =
         primaryMuscleGroup(exercise.parts)
 
+    /**
+     * 動作庫篩選條件。分類有包含／排除兩種模式：
+     * 包含只看主要部位；排除則看部位文字提到的所有部位
+     *（例如隱藏三頭時，部位含肱三頭的臥推也會被隱藏）。
+     */
+    fun matchesLibraryFilter(
+        exercise: ExerciseEntity,
+        keyword: String,
+        category: MuscleGroup?,
+        excludeCategory: Boolean,
+        type: String?,
+        location: String?,
+        equipment: String?
+    ): Boolean {
+        if (keyword.isNotBlank() && !exercise.name.contains(keyword, ignoreCase = true)) {
+            return false
+        }
+        if (category != null) {
+            if (excludeCategory) {
+                if (muscleGroupsIn(exercise.parts).contains(category)) return false
+            } else if (categoryOf(exercise) != category) {
+                return false
+            }
+        }
+        if (type != null && movementTypeOf(exercise) != type) return false
+        if (location != null && locationOf(exercise) != location) return false
+        if (equipment != null && equipmentCategory(exercise.equipment) != equipment) return false
+        return true
+    }
+
     fun categoryLabel(exercise: ExerciseEntity): String =
         categoryOf(exercise)?.let { muscleGroupLabel(it) } ?: "未分類"
 
