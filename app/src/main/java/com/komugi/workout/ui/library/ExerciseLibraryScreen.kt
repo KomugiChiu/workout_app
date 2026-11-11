@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -118,18 +119,19 @@ fun ExerciseLibraryScreen(
                     label = { it?.let { group -> muscleGroupLabel(group) } ?: "全部" },
                     onSelect = { category = it },
                     titleSuffix = {
-                        TextButton(onClick = { excludeCategory = !excludeCategory }) {
-                            Text(if (excludeCategory) "排除模式" else "包含模式")
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = excludeCategory,
+                                onCheckedChange = { excludeCategory = it }
+                            )
+                            Text(
+                                "排除",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
                     }
                 )
-                if (excludeCategory) {
-                    Text(
-                        "已選分類的相關動作會隱藏（例如選三頭，臥推也會隱藏）",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
             }
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
