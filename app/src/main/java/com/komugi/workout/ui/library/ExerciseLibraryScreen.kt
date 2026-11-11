@@ -41,7 +41,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import java.net.URLEncoder
 import com.komugi.workout.data.ExerciseEntity
 import com.komugi.workout.data.WorkoutRepository
 import com.komugi.workout.ui.components.ExerciseMeta
@@ -223,6 +228,20 @@ fun ExerciseLibraryScreen(
     }
 }
 
+/**
+ * 用瀏覽器搜尋動作名稱；沒有可處理的瀏覽器時不做任何事。
+ */
+private fun openWebSearch(context: Context, name: String) {
+    val query = URLEncoder.encode(name, Charsets.UTF_8.name())
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://www.google.com/search?q=$query")
+    )
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun <T> LibraryFilterRow(
@@ -314,6 +333,7 @@ fun ExerciseLibraryDetailScreen(
 ) {
     val exercises by repository.observeExercises().collectAsState(initial = emptyList())
     val exercise = exercises.firstOrNull { it.id == exerciseId }
+    val context = LocalContext.current
     val alternatives = remember(exercise, exercises) {
         exercise?.let { ExerciseMeta.alternativesFor(it, exercises) } ?: emptyList()
     }
@@ -435,6 +455,9 @@ fun ExerciseLibraryDetailScreen(
                             TextButton(onClick = { onOpenGuide(guideId) }) {
                                 Text("查看動作說明")
                             }
+                        }
+                        TextButton(onClick = { openWebSearch(context, exercise.name) }) {
+                            Text("瀏覽器搜尋")
                         }
                     }
                 }
