@@ -232,6 +232,9 @@ class MenuSeedTest {
         assertTrue(!menuNames.contains("壺鈴行李箱搬運"))
         assertEquals(5, menuNames.count { it == "單手壺鈴擺盪" })
         assertEquals(2, menuNames.count { it == "行李箱搬運" })
+        assertTrue(!menuNames.contains("啞鈴反向飛鳥"))
+        assertTrue(!menuNames.contains("彈力帶反向飛鳥"))
+        assertEquals(4, menuNames.count { it == "反向飛鳥" })
         // 器材欄不再留空
         assertTrue(menuExercises.none { it.equipment.isNullOrBlank() })
 
@@ -239,7 +242,7 @@ class MenuSeedTest {
             File("src/main/assets/exercises_extra.json").readText()
         )
         val names = menuNames.toSet() + extras.map { it.name }.toSet()
-        assertEquals(232, names.size)
+        assertEquals(231, names.size)
         assertTrue(
             names.containsAll(
                 listOf("雙手壺鈴硬舉", "壺鈴 Halo 繞頭", "壺鈴過頭行走", "雙手壺鈴肩推", "壺鈴地板臥推")

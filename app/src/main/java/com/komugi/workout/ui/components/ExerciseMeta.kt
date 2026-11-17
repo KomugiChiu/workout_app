@@ -25,7 +25,7 @@ object ExerciseMeta {
     const val DIFFICULTY_ADVANCED = "ADVANCED"
 
     val equipmentCategories = listOf(
-        "自重", "啞鈴", "壺鈴", "槓鈴", "槓片", "彈力帶", "TRX", "有氧", "其他"
+        "自重", "啞鈴", "壺鈴", "槓鈴", "槓片", "滑輪", "彈力帶", "TRX", "有氧", "其他"
     )
 
     val locations = listOf(
@@ -60,20 +60,36 @@ object ExerciseMeta {
         else -> "中階"
     }
 
-    fun equipmentCategory(raw: String?): String {
+    /**
+     * 器材可能列多種（例如「啞鈴、彈力帶」）：逐項判斷，回傳所有符合的分類，
+     * 讓任一器材篩選都能找到它。
+     */
+    fun equipmentCategoryList(raw: String?): List<String> {
         val text = raw?.trim().orEmpty()
+        if (text.isEmpty()) return listOf("其他")
+        return text.split("、", "＋", "／", "或")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .map(::categoryOfToken)
+            .distinct()
+    }
+
+    fun equipmentCategory(raw: String?): String =
+        equipmentCategoryList(raw).firstOrNull() ?: "其他"
+
+    private fun categoryOfToken(token: String): String {
         return when {
-            text.isEmpty() -> "其他"
-            text.contains("自重") -> "自重"
-            text.contains("壺鈴") || text.contains("ViPR", ignoreCase = true) -> "壺鈴"
-            text.contains("TRX") || text.contains("懸吊") -> "TRX"
-            text.contains("彈力帶") || text.contains("帶") -> "彈力帶"
-            text.contains("槓片") -> "槓片"
-            text.contains("槓") -> "槓鈴"
-            text.contains("啞鈴") -> "啞鈴"
-            Regex("\\d+\\s*kg", RegexOption.IGNORE_CASE).containsMatchIn(text) -> "啞鈴"
-            text.contains("跑步") || text.contains("腳踏車") || text.contains("划船機") ||
-                text.contains("橢圓") || text.contains("踏步") || text.contains("跳繩") -> "有氧"
+            token.contains("自重") -> "自重"
+            token.contains("壺鈴") || token.contains("ViPR", ignoreCase = true) -> "壺鈴"
+            token.contains("TRX") || token.contains("懸吊") -> "TRX"
+            token.contains("滑輪") || token.contains("纜繩") -> "滑輪"
+            token.contains("彈力帶") || token.contains("帶") -> "彈力帶"
+            token.contains("槓片") -> "槓片"
+            token.contains("槓") -> "槓鈴"
+            token.contains("啞鈴") -> "啞鈴"
+            Regex("\\d+\\s*kg", RegexOption.IGNORE_CASE).containsMatchIn(token) -> "啞鈴"
+            token.contains("跑步") || token.contains("腳踏車") || token.contains("划船機") ||
+                token.contains("橢圓") || token.contains("踏步") || token.contains("跳繩") -> "有氧"
             else -> "其他"
         }
     }
@@ -107,7 +123,7 @@ object ExerciseMeta {
         }
         if (type != null && movementTypeOf(exercise) != type) return false
         if (location != null && locationOf(exercise) != location) return false
-        if (equipment != null && equipmentCategory(exercise.equipment) != equipment) return false
+        if (equipment != null && !equipmentCategoryList(exercise.equipment).contains(equipment)) return false
         return true
     }
 

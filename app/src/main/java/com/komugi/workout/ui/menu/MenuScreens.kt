@@ -480,7 +480,7 @@ fun MenuDetailScreen(
                 }
                 .filter { ExerciseRole.matchesRole(it, requirement.role) }
                 .filter { ExerciseRole.lateralityMatches(it, requirement.laterality) }
-                .filter { ExerciseMeta.equipmentCategory(it.equipment) in equipmentFilter }
+                .filter { ExerciseMeta.equipmentCategoryList(it.equipment).any { category -> category in equipmentFilter } }
                 .sortedWith(
                     compareByDescending<ExerciseEntity> {
                         ExerciseRole.matchScore(it, requirement)
@@ -1117,7 +1117,7 @@ private fun ExerciseSwapSheet(
             }
             .filter {
                 selectedEquipment.isEmpty() ||
-                    ExerciseMeta.equipmentCategory(it.equipment) in selectedEquipment
+                    ExerciseMeta.equipmentCategoryList(it.equipment).any { category -> category in selectedEquipment }
             }
             .filter { showAll || ExerciseRole.matchesRole(it, requirement.role) }
             .filter {

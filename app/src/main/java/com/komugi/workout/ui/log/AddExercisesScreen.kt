@@ -108,7 +108,7 @@ fun AddExercisesScreen(
                 (partFilter == null ||
                     muscleGroupsIn(exercise.parts, limit = 10).contains(partFilter)) &&
                 (equipmentFilter == null ||
-                    ExerciseMeta.equipmentCategory(exercise.equipment) == equipmentFilter)
+                    ExerciseMeta.equipmentCategoryList(exercise.equipment).contains(equipmentFilter))
         }
     }
 

@@ -1,6 +1,7 @@
 package com.komugi.workout.ui.components
 
 import com.komugi.workout.data.ExerciseEntity
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -90,5 +91,34 @@ class LibraryFilterTest {
             )
         )
         assertFalse(match(row, category = MuscleGroup.TRICEPS, excludeCategory = true, keyword = "臥推"))
+    }
+
+    @Test
+    fun multiEquipmentMatchesAnyCategory() {
+        val fly = exercise("反向飛鳥", "後三角、菱形肌、中下斜方", equipment = "啞鈴、彈力帶")
+        assertEquals(listOf("啞鈴", "彈力帶"), ExerciseMeta.equipmentCategoryList("啞鈴、彈力帶"))
+        assertEquals("啞鈴", ExerciseMeta.equipmentCategory("啞鈴、彈力帶"))
+        assertTrue(match(fly, equipment = "啞鈴"))
+        assertTrue(match(fly, equipment = "彈力帶"))
+        assertFalse(match(fly, equipment = "槓鈴"))
+
+        val combo = exercise("TRX 複合", "核心", equipment = "TRX＋啞鈴")
+        assertTrue(match(combo, equipment = "TRX"))
+        assertTrue(match(combo, equipment = "啞鈴"))
+
+        val cable = exercise("纜繩動作", "核心", equipment = "纜繩或藥球")
+        assertTrue(match(cable, equipment = "滑輪"))
+    }
+
+    @Test
+    fun cableEquipmentMapsToPulleyCategory() {
+        assertEquals("滑輪", ExerciseMeta.equipmentCategory("滑輪、龍門架"))
+        assertEquals("滑輪", ExerciseMeta.equipmentCategory("滑輪、繩索"))
+        assertEquals("滑輪", ExerciseMeta.equipmentCategory("纜繩"))
+        assertEquals("滑輪", ExerciseMeta.equipmentCategory("纜繩或藥球"))
+        // 既有分類不受影響
+        assertEquals("啞鈴", ExerciseMeta.equipmentCategory("啞鈴"))
+        assertEquals("彈力帶", ExerciseMeta.equipmentCategory("30kg 帶"))
+        assertTrue(ExerciseMeta.equipmentCategories.contains("滑輪"))
     }
 }

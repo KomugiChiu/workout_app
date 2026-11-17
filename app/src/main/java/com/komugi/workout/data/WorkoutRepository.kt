@@ -124,7 +124,7 @@ class WorkoutRepository(
 ) {
     companion object {
         /** 菜單種子版本：修改 assets/menus.json 後 += 1，已安裝的 App 會自動重建菜單。 */
-        private const val SEED_VERSION = 22
+        private const val SEED_VERSION = 23
     }
 
     private val dao = db.dao()
@@ -287,10 +287,12 @@ class WorkoutRepository(
                 )
             }
 
-            // 合併重複動作名稱（seed v22）：訓練紀錄與自訂菜單指向正式名後，刪除舊列
+            // 合併重複動作名稱：訓練紀錄與自訂菜單指向正式名後，刪除舊列
             val renamedPairs = listOf(
                 "壺鈴單手擺盪" to "單手壺鈴擺盪",
-                "壺鈴行李箱搬運" to "行李箱搬運"
+                "壺鈴行李箱搬運" to "行李箱搬運",
+                "啞鈴反向飛鳥" to "反向飛鳥",
+                "彈力帶反向飛鳥" to "反向飛鳥"
             )
             for ((oldName, newName) in renamedPairs) {
                 val old = dao.exerciseByName(oldName) ?: continue
@@ -299,6 +301,13 @@ class WorkoutRepository(
                 dao.repointEntries(old.id, oldName, new.id, newName)
                 dao.repointMenuExercises(old.id, new.id)
                 dao.deleteExerciseById(old.id)
+            }
+
+            // 反向飛鳥同時有啞鈴與彈力帶版本：正式列器材標示兩者
+            dao.exerciseByName("反向飛鳥")?.let { fly ->
+                if (!fly.isCustom && fly.equipment != "啞鈴、彈力帶") {
+                    dao.updateExercise(fly.copy(equipment = "啞鈴、彈力帶"))
+                }
             }
 
             // 清理無人引用的舊種子孤兒列（有紀錄或自訂菜單引用時保留）
@@ -776,6 +785,9 @@ class WorkoutRepository(
 
     suspend fun updateDate(session: SessionEntity, epochDay: Long) =
         dao.updateSession(session.copy(dateEpochDay = epochDay))
+
+    suspend fun updateNote(session: SessionEntity, note: String) =
+        dao.updateSession(session.copy(note = note.ifBlank { null }))
 
     suspend fun addEntry(
         sessionId: Long,

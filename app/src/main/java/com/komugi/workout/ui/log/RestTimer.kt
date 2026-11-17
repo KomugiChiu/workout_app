@@ -33,7 +33,7 @@ import java.util.Locale
  *
  * 以「結束時間」記帳（elapsedRealtime），剩餘秒數由現在時間推算，
  * 因此切到其他頁面、切到背景、甚至螢幕休眠後回來，倒數都會是正確的。
- * 震動由計時器自己負責，計時結束時即使不在訓練紀錄頁也會震動；
+ * 結束時震動＋通知提示音（平時倒數更新維持靜音），即使不在訓練紀錄頁也會提醒；
  * 倒數期間同步顯示通知（含進度），切到別的頁面也看得到。
  */
 object RestTimer {
@@ -140,6 +140,8 @@ object RestTimer {
                 if (remaining <= 0) break
                 delay(200)
             }
+            // 時間到：再發一次通知並允許提示音（平時更新維持靜音），同時震動
+            publishNotification(_state.value.copy(remainingSec = 0), alert = true)
             vibrate()
         }
     }
@@ -150,7 +152,7 @@ object RestTimer {
     }
 
     /** 把目前倒數進度寫進通知；沒有通知權限時靜默略過。 */
-    private fun publishNotification(state: State) {
+    private fun publishNotification(state: State, alert: Boolean = false) {
         val context = appContext ?: return
         if (!state.visible) {
             cancelNotification()
@@ -183,8 +185,9 @@ object RestTimer {
             .setProgress(state.totalSec, remaining, false)
             .setContentIntent(openApp)
             .setOngoing(remaining > 0)
-            .setOnlyAlertOnce(true)
+            .setOnlyAlertOnce(!alert)
             .setShowWhen(false)
+            .apply { if (alert) setDefaults(NotificationCompat.DEFAULT_SOUND) }
             .build()
         runCatching {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)

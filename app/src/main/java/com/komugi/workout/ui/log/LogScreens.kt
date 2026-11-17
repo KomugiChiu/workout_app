@@ -320,6 +320,7 @@ fun LogDetailScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     var showCopyPicker by remember { mutableStateOf(false) }
     var showDeleteSession by remember { mutableStateOf(false) }
+    var showNoteEditor by remember { mutableStateOf(false) }
     var sheetEntry by remember { mutableStateOf<EntryUi?>(null) }
     var dialogEntryUi by remember { mutableStateOf<EntryUi?>(null) }
     var dialogType by remember { mutableStateOf<RecordType?>(null) }
@@ -420,6 +421,39 @@ fun LogDetailScreen(
                     contentPadding = PaddingValues(16.dp, 12.dp, 16.dp, 96.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                item {
+                    val noteText = data.session.note?.takeIf { it.isNotBlank() }
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { showNoteEditor = true }
+                    ) {
+                        Column(Modifier.padding(14.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    "註解",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Text(
+                                    if (noteText == null) "新增" else "編輯",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                noteText ?: "點此記錄今天的狀況（例如睡眠、痠痛、器材限制）。",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (noteText == null) {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                } else {
+                                    MaterialTheme.colorScheme.onSurface
+                                }
+                            )
+                        }
+                    }
+                }
                 if (entryList.isEmpty()) {
                     item {
                         Text(
@@ -525,8 +559,37 @@ fun LogDetailScreen(
         )
     }
 
-    if (showCopyPicker && session != null) {
-        SessionCopyDatePicker(
+    if (showNoteEditor && session != null) {
+        var draft by remember(session.id) {
+            mutableStateOf(session.note.orEmpty())
+        }
+        AlertDialog(
+            onDismissRequest = { showNoteEditor = false },
+            title = { Text("訓練註解") },
+            text = {
+                OutlinedTextField(
+                    value = draft,
+                    onValueChange = { draft = it },
+                    label = { Text("例如：睡眠、痠痛、器材限制") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showNoteEditor = false
+                        scope.launch { repository.updateNote(session, draft) }
+                    }
+                ) { Text("儲存") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showNoteEditor = false }) { Text("取消") }
+            }
+        )
+    }
+
+    if (showCopyPicker && session != null) {        SessionCopyDatePicker(
             initialEpochDay = LocalDate.now().toEpochDay(),
             onDismiss = { showCopyPicker = false },
             onConfirm = { targetDay ->
