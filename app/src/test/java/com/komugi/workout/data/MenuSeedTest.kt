@@ -242,7 +242,12 @@ class MenuSeedTest {
             File("src/main/assets/exercises_extra.json").readText()
         )
         val names = menuNames.toSet() + extras.map { it.name }.toSet()
-        assertEquals(231, names.size)
+        assertEquals(232, names.size)
+        assertTrue(
+            names.containsAll(
+                listOf("雙手壺鈴硬舉", "壺鈴 Halo 繞頭", "壺鈴過頭行走", "雙手壺鈴肩推", "壺鈴地板臥推", "後三角 W Raise")
+            )
+        )
         assertTrue(
             names.containsAll(
                 listOf("雙手壺鈴硬舉", "壺鈴 Halo 繞頭", "壺鈴過頭行走", "雙手壺鈴肩推", "壺鈴地板臥推")

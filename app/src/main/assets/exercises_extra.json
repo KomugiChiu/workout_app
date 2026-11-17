@@ -1848,5 +1848,15 @@
     "difficulty": "INTERMEDIATE",
     "instructions": "躺地屈膝，雙手各持壺鈴置於胸上。\n下放至上臂觸地即推回。\n頂峰手臂伸直稍停。",
     "warning": "手肘觸地即推，不要借力彈起。"
+  },
+  {
+    "name": "後三角 W Raise",
+    "parts": "三角肌後束、中下斜方、核心",
+    "equipment": "啞鈴",
+    "location": "HOME",
+    "movementType": "WEIGHTED",
+    "difficulty": "INTERMEDIATE",
+    "instructions": "坐姿俯身、背部打直，雙手持鈴垂在肩膀正下方，手肘彎 90° 固定。\n用手肘帶動把上臂往身體後方伸，再把手往上抬並外轉。\n頂點停 1 秒，3 秒慢放回起始位置。",
+    "warning": "肩膀前側刺痛就停；不要聳肩、甩動或追重量。"
   }
 ]
