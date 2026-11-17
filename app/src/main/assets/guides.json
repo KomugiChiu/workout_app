@@ -50,6 +50,13 @@
       "parts": "三角肌後束、小圓肌／棘下肌（輔助）、中下斜方"
     },
     {
+      "id": "arnold-press",
+      "title": "阿諾德推舉完整拆解（Arnold Press）",
+      "asset": "exercises/arnold-press.md",
+      "subtitle": "前束＋中束：額頭高度才轉腕",
+      "parts": "三角肌前束、中束（後束僅約 11%）、肱三頭、核心（站姿）"
+    },
+    {
       "id": "farmer",
       "title": "農夫行走完整拆解",
       "asset": "exercises/farmer-carry.md",
